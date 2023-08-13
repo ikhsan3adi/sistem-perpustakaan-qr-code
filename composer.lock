@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4cca34a732b53bc59bd2ebe745a93006",
+    "content-hash": "9eed38e73f92193e1191adf98fe8e75e",
     "packages": [
         {
             "name": "codeigniter4/framework",
@@ -79,6 +79,134 @@
                 "source": "https://github.com/codeigniter4/CodeIgniter4"
             },
             "time": "2023-07-30T08:45:46+00:00"
+        },
+        {
+            "name": "codeigniter4/settings",
+            "version": "v2.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/codeigniter4/settings.git",
+                "reference": "854224baa190723f5f22d9dcc32cdb37aeaf79cd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/codeigniter4/settings/zipball/854224baa190723f5f22d9dcc32cdb37aeaf79cd",
+                "reference": "854224baa190723f5f22d9dcc32cdb37aeaf79cd",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.4 || ^8.0"
+            },
+            "require-dev": {
+                "codeigniter4/devkit": "^1.0",
+                "codeigniter4/framework": "^4.2.3",
+                "rector/rector": "0.16.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "CodeIgniter\\Settings\\": "src"
+                },
+                "exclude-from-classmap": [
+                    "**/Database/Migrations/**"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Lonnie Ezell",
+                    "email": "lonnieje@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Settings library for CodeIgniter 4",
+            "homepage": "https://github.com/codeigniter4/settings",
+            "keywords": [
+                "Settings",
+                "codeigniter",
+                "codeigniter4"
+            ],
+            "support": {
+                "issues": "https://github.com/codeigniter4/settings/issues",
+                "source": "https://github.com/codeigniter4/settings/tree/v2.1.2"
+            },
+            "time": "2023-06-02T07:15:16+00:00"
+        },
+        {
+            "name": "codeigniter4/shield",
+            "version": "v1.0.0-beta.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/codeigniter4/shield.git",
+                "reference": "b5fbc784e8ab6ee8e9de103e62b15f8248c05a9f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/codeigniter4/shield/zipball/b5fbc784e8ab6ee8e9de103e62b15f8248c05a9f",
+                "reference": "b5fbc784e8ab6ee8e9de103e62b15f8248c05a9f",
+                "shasum": ""
+            },
+            "require": {
+                "codeigniter4/settings": "^2.1",
+                "php": "^7.4.3 || ^8.0"
+            },
+            "provide": {
+                "codeigniter4/authentication-implementation": "1.0"
+            },
+            "require-dev": {
+                "codeigniter4/devkit": "^1.0",
+                "codeigniter4/framework": "^4.2.7",
+                "firebase/php-jwt": "^6.4",
+                "mikey179/vfsstream": "^1.6.7",
+                "mockery/mockery": "^1.0"
+            },
+            "suggest": {
+                "ext-curl": "Required to use the password validation rule via PwnedValidator class.",
+                "ext-openssl": "Required to use the JWT Authenticator."
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/Helpers/auth_helper.php",
+                    "src/Helpers/email_helper.php"
+                ],
+                "psr-4": {
+                    "CodeIgniter\\Shield\\": "src"
+                },
+                "exclude-from-classmap": [
+                    "**/Database/Migrations/**"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Lonnie Ezell",
+                    "email": "lonnieje@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Authentication and Authorization for CodeIgniter 4",
+            "homepage": "https://github.com/codeigniter4/shield",
+            "keywords": [
+                "Authentication",
+                "authorization",
+                "codeigniter",
+                "codeigniter4"
+            ],
+            "support": {
+                "docs": "https://github.com/codeigniter4/shield/blob/develop/docs/index.md",
+                "forum": "https://github.com/codeigniter4/shield/discussions",
+                "issues": "https://github.com/codeigniter4/shield/issues",
+                "slack": "https://codeigniterchat.slack.com",
+                "source": "https://github.com/codeigniter4/shield"
+            },
+            "time": "2023-04-26T08:31:55+00:00"
         },
         {
             "name": "laminas/laminas-escaper",
@@ -2217,9 +2345,9 @@
         }
     ],
     "aliases": [],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "stability-flags": [],
-    "prefer-stable": false,
+    "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": "^7.4 || ^8.0"
