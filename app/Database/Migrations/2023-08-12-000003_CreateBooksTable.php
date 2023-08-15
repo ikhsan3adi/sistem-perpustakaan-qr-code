@@ -15,9 +15,9 @@ class CreateBooksTable extends Migration
                 'unsigned'       => true,
                 'auto_increment' => true
             ],
-            'uid' => [
-                'type'           => 'INT',
-                'constraint'     => 11,
+            'slug' => [
+                'type'           => 'VARCHAR',
+                'constraint'     => 255,
             ],
             'title' => [
                 'type'           => 'VARCHAR',
@@ -62,7 +62,7 @@ class CreateBooksTable extends Migration
         $this->forge->addKey('id', primary: TRUE);
 
         // unique key
-        $this->forge->addKey('uid', unique: TRUE);
+        $this->forge->addKey('slug', unique: TRUE);
 
         // rack id foreign key
         $this->forge->addForeignKey('rack_id', 'racks', 'id', 'CASCADE', 'NO ACTION');
