@@ -13,7 +13,14 @@ class LoanModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = [];
+    protected $allowedFields    = [
+        'book_id',
+        'member_id',
+        'unique_code',
+        'loan_date',
+        'due_date',
+        'return_date',
+    ];
 
     // Dates
     protected $useTimestamps = false;
