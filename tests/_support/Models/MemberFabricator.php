@@ -13,9 +13,13 @@ class MemberFabricator extends MemberModel
         // 1: Male, 2: Female
         $gender = $faker->numberBetween(1, 2);
 
+        $firstName = $faker->firstName($gender == 1 ? Person::GENDER_MALE : Person::GENDER_FEMALE);
+        $lastName = $faker->lastName($gender == 1 ? Person::GENDER_MALE : Person::GENDER_FEMALE);
+
         return [
-            'first_name'    => $faker->firstName($gender == 1 ? Person::GENDER_MALE : Person::GENDER_FEMALE),
-            'last_name'     => $faker->lastName($gender == 1 ? Person::GENDER_MALE : Person::GENDER_FEMALE),
+            'uid'           => sha1($firstName . $lastName . rand(0, 100)),
+            'first_name'    => $firstName,
+            'last_name'     => $lastName,
             'email'         => $faker->email,
             'phone'         => $faker->phoneNumber,
             'address'       => $faker->address,

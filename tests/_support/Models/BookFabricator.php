@@ -12,7 +12,7 @@ class BookFabricator extends BookModel
         $title = $faker->sentence($faker->numberBetween(2, 4));
 
         return [
-            'slug'          => url_title($title, '-', true),
+            'slug'          => url_title($title, '-', true) . $faker->numberBetween(10000, 99999),
             'title'         => $title,
             'author'        => $faker->name,
             'publisher'     => $faker->company,

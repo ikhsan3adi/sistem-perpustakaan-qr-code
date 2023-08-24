@@ -20,6 +20,5 @@ class BookSeeder extends Seeder
         $fabricator->create(30);
 
         $this->call('BookStockSeeder');
-        $this->call('FineSeeder');
     }
 }
