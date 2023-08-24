@@ -51,18 +51,17 @@ class CreateBooksTable extends Migration
             ],
             'book_cover' => [
                 'type'           => 'VARCHAR',
-                'constraint'     => 255
+                'constraint'     => 255,
+                'null'           => true,
             ],
             'created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NULL',
             'updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NULL',
             'deleted_at TIMESTAMP NULL',
         ]);
 
-        // primary key
-        $this->forge->addKey('id', primary: TRUE);
+        $this->forge->addPrimaryKey('id');
 
-        // unique key
-        $this->forge->addKey('slug', unique: TRUE);
+        $this->forge->addUniqueKey('slug');
 
         // rack id foreign key
         $this->forge->addForeignKey('rack_id', 'racks', 'id', 'CASCADE', 'NO ACTION');

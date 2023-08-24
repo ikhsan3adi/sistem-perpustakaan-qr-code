@@ -24,8 +24,7 @@ class CreateCategoriesTable extends Migration
             'deleted_at TIMESTAMP NULL',
         ]);
 
-        // primary key
-        $this->forge->addKey('id', primary: TRUE);
+        $this->forge->addPrimaryKey('id');
 
         $this->forge->createTable('categories', TRUE);
     }

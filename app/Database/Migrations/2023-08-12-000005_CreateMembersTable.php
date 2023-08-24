@@ -10,50 +10,57 @@ class CreateMembersTable extends Migration
     {
         $this->forge->addField([
             'id' => [
-                'type' => 'INT',
-                'constraint' => 11,
-                'unsigned' => true,
+                'type'          => 'INT',
+                'constraint'    => 11,
+                'unsigned'      => true,
                 'auto_increment' => true,
             ],
-            'unique_code' => [
-                'type' => 'VARCHAR',
-                'constraint' => 255,
+            'uid' => [
+                'type'          => 'VARCHAR',
+                'constraint'    => 255,
             ],
             'first_name' => [
-                'type' => 'VARCHAR',
-                'constraint' => 100,
+                'type'          => 'VARCHAR',
+                'constraint'    => 100,
             ],
             'last_name' => [
-                'type' => 'VARCHAR',
-                'constraint' => 100,
+                'type'          => 'VARCHAR',
+                'constraint'    => 100,
+                'null'          => true,
             ],
             'email' => [
-                'type' => 'VARCHAR',
-                'constraint' => 255,
+                'type'          => 'VARCHAR',
+                'constraint'    => 255,
             ],
             'phone' => [
-                'type' => 'VARCHAR',
-                'constraint' => 20,
+                'type'          => 'VARCHAR',
+                'constraint'    => 20,
             ],
             'address' => [
-                'type' => 'TEXT',
-                'null' => true,
+                'type'          => 'TEXT',
+                'null'          => true,
             ],
             'date_of_birth' => [
-                'type' => 'DATE',
-                'null' => true,
+                'type'          => 'DATE',
+                'null'          => true,
             ],
             'gender' => [
-                'type' => 'ENUM',
-                'constraint' => ['Male', 'Female'],
+                'type'          => 'ENUM',
+                'constraint'    => ['Male', 'Female'],
+            ],
+            'qr_code' => [
+                'type'          => 'VARCHAR',
+                'constraint'    => 255,
+                'null'          => true
             ],
             'created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NULL',
             'updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NULL',
             'deleted_at TIMESTAMP NULL',
         ]);
 
-        // primary key
         $this->forge->addPrimaryKey('id');
+
+        $this->forge->addUniqueKey('uid');
 
         $this->forge->createTable('members', TRUE);
     }

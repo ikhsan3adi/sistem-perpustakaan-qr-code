@@ -21,15 +21,15 @@ class CreateRacksTable extends Migration
             ],
             'floor' => [
                 'type'           => 'VARCHAR',
-                'constraint'     => 16
+                'constraint'     => 16,
+                'default'        => 1
             ],
             'created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NULL',
             'updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NULL',
             'deleted_at TIMESTAMP NULL',
         ]);
 
-        // primary key
-        $this->forge->addKey('id', primary: TRUE);
+        $this->forge->addPrimaryKey('id');
 
         $this->forge->createTable('racks', TRUE);
     }
