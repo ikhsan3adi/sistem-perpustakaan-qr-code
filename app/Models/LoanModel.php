@@ -15,6 +15,7 @@ class LoanModel extends Model
     protected $protectFields    = true;
     protected $allowedFields    = [
         'book_id',
+        'quantity',
         'member_id',
         'unique_code',
         'loan_date',

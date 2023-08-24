@@ -4,21 +4,16 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class FineModel extends Model
+class BookStockModel extends Model
 {
     protected $DBGroup          = 'default';
-    protected $table            = 'fines';
+    protected $table            = 'book_stock';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
-    protected $useSoftDeletes   = true;
+    protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = [
-        'loan_id',
-        'amount_paid',
-        'fine_amount',
-        'paid_at'
-    ];
+    protected $allowedFields    = ['book_id', 'quantity'];
 
     // Dates
     protected $useTimestamps = true;

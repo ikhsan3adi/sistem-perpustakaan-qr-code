@@ -14,6 +14,7 @@ class MemberModel extends Model
     protected $useSoftDeletes   = true;
     protected $protectFields    = true;
     protected $allowedFields    = [
+        'uid',
         'first_name',
         'last_name',
         'email',
@@ -21,6 +22,7 @@ class MemberModel extends Model
         'address',
         'date_of_birth',
         'gender',
+        'qr_code'
     ];
 
     // Dates
