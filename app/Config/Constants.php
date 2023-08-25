@@ -92,3 +92,31 @@ define('EVENT_PRIORITY_NORMAL', 100);
  * @deprecated Use \CodeIgniter\Events\Events::PRIORITY_HIGH instead.
  */
 define('EVENT_PRIORITY_HIGH', 10);
+
+/**
+ * uploads path
+ * `public/uploads/`
+ */
+defined('UPLOADS_PATH') || define('UPLOADS_PATH', ROOTPATH . 'public' . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR);
+
+/**
+ * book cover path
+ * `public/uploads/book_cover/`
+ */
+defined('BOOK_COVER_PATH') || define('BOOK_COVER_PATH', UPLOADS_PATH . 'book_cover' . DIRECTORY_SEPARATOR);
+
+/**
+ * book cover uri
+ * 
+ * used in `<img src="">`
+ * 
+ * `uploads/book_cover/`
+ */
+defined('BOOK_COVER_URI') || define('BOOK_COVER_URI', 'uploads' . DIRECTORY_SEPARATOR . 'book_cover' . DIRECTORY_SEPARATOR);
+
+/**
+ * Default book cover filename
+ * `default.jpg`
+ */
+defined('DEFAULT_BOOK_COVER') || define('DEFAULT_BOOK_COVER', 'default.jpg');
+
