@@ -120,3 +120,21 @@ defined('BOOK_COVER_URI') || define('BOOK_COVER_URI', 'uploads' . DIRECTORY_SEPA
  */
 defined('DEFAULT_BOOK_COVER') || define('DEFAULT_BOOK_COVER', 'default.jpg');
 
+/**
+ * QR codes path
+ * `public/uploads/qr_codes/`
+ */
+defined('QR_CODES_PATH') || define('QR_CODES_PATH', UPLOADS_PATH . 'qr_codes' . DIRECTORY_SEPARATOR);
+
+/**
+ * Member's QR code path
+ * `public/uploads/qr_codes/members/`
+ */
+defined('MEMBERS_QR_CODE_PATH') || define('MEMBERS_QR_CODE_PATH', QR_CODES_PATH . 'members' . DIRECTORY_SEPARATOR);
+
+
+/**
+ * Member's QR code uri
+ * `uploads/qr_codes/members/`
+ */
+defined('MEMBERS_QR_CODE_URI') || define('MEMBERS_QR_CODE_URI', 'uploads' . DIRECTORY_SEPARATOR . 'qr_codes' . DIRECTORY_SEPARATOR . 'members' . DIRECTORY_SEPARATOR);

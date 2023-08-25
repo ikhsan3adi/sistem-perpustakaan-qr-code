@@ -41,3 +41,14 @@ function updateBookCover(\CodeIgniter\HTTP\Files\UploadedFile|null $newCoverImag
 
     return $newCoverImageFileName;
 }
+
+function deleteMembersQRCode(string|null $filename): bool
+{
+    $filePath = MEMBERS_QR_CODE_PATH . $filename;
+
+    if (!empty($filename) && file_exists($filePath)) {
+        return unlink($filePath);
+    } else {
+        return false;
+    }
+}
