@@ -10,14 +10,11 @@ File: js
 $(function () {
   "use strict";
   var url = window.location + "";
-  var path = url.replace(
-    window.location.protocol + "//" + window.location.host + "/",
-    ""
-  ).split('/', 2).join('/');
-  
+
   var element = $("ul#sidebarnav a").filter(function () {
-    return this.href === url || this.href === path || url.includes(this.href); // || url.href.indexOf(this.href) === 0;
+    return url.includes(`${this.href.split('/')[3]}/${this.href.split('/')[4]}`);
   });
+
   element.parentsUntil(".sidebar-nav").each(function (index) {
     if ($(this).is("li") && $(this).children("a").length !== 0) {
       $(this).children("a").addClass("active");
