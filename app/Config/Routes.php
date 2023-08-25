@@ -2,6 +2,8 @@
 
 namespace Config;
 
+use CodeIgniter\Router\RouteCollection;
+
 // Create a new instance of our RouteCollection class.
 $routes = Services::routes();
 
@@ -32,6 +34,11 @@ $routes->set404Override();
 $routes->get('/', 'Home::index');
 
 service('auth')->routes($routes);
+
+$routes->group('admin', function (RouteCollection $routes) {
+    $routes->resource('categories', ['controller' => 'Categories\CategoriesController']);
+    $routes->resource('racks', ['controller' => 'Racks\RacksController']);
+});
 
 /*
  * --------------------------------------------------------------------
