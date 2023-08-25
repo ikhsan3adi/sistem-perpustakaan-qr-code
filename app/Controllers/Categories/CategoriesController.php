@@ -55,6 +55,33 @@ class CategoriesController extends ResourceController
      */
     public function show($id = null)
     {
+        $category = $this->categoryModel->where('id', $id)->first();
+
+        if (empty($category)) {
+            throw new PageNotFoundException('Category not found');
+        }
+
+        $itemPerPage = 20;
+
+        $books = $this->bookModel
+            ->select('books.*, book_stock.quantity, categories.name as category, racks.name as rack, racks.floor')
+            ->join('book_stock', 'books.id = book_stock.book_id', 'LEFT')
+            ->join('categories', 'books.category_id = categories.id', 'LEFT')
+            ->join('racks', 'books.rack_id = racks.id', 'LEFT')
+            ->where('category_id', $id)
+            ->paginate($itemPerPage, 'books');
+
+        $data = [
+            'books'         => $books,
+            'pager'         => $this->bookModel->pager,
+            'currentPage'   => $this->request->getVar('page_books') ?? 1,
+            'itemPerPage'   => $itemPerPage,
+            'category'      => $this->categoryModel
+                ->select('categories.name')
+                ->where('id', $id)->first()['name']
+        ];
+
+        return view('books/index', $data);
     }
 
     /**

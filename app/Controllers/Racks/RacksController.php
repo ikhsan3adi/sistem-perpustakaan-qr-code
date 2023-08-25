@@ -55,6 +55,33 @@ class RacksController extends ResourceController
      */
     public function show($id = null)
     {
+        $rack = $this->rackModel->where('id', $id)->first();
+
+        if (empty($rack)) {
+            throw new PageNotFoundException('Rack not found');
+        }
+
+        $itemPerPage = 20;
+
+        $books = $this->bookModel
+            ->select('books.*, book_stock.quantity, categories.name as category, racks.name as rack, racks.floor')
+            ->join('book_stock', 'books.id = book_stock.book_id', 'LEFT')
+            ->join('categories', 'books.category_id = categories.id', 'LEFT')
+            ->join('racks', 'books.rack_id = racks.id', 'LEFT')
+            ->where('rack_id', $id)
+            ->paginate($itemPerPage, 'books');
+
+        $data = [
+            'books'         => $books,
+            'pager'         => $this->bookModel->pager,
+            'currentPage'   => $this->request->getVar('page_books') ?? 1,
+            'itemPerPage'   => $itemPerPage,
+            'rack'          => $this->rackModel
+                ->select('racks.name')
+                ->where('id', $id)->first()['name']
+        ];
+
+        return view('books/index', $data);
     }
 
     /**
