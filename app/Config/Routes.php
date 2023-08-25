@@ -36,6 +36,9 @@ $routes->get('/', 'Home::index');
 service('auth')->routes($routes);
 
 $routes->group('admin', function (RouteCollection $routes) {
+    $routes->get('/', 'Dashboard\DashboardController');
+    $routes->get('dashboard', 'Dashboard\DashboardController');
+
     $routes->resource('members', ['controller' => 'Members\MembersController']);
     $routes->resource('books', ['controller' => 'Books\BooksController']);
     $routes->resource('categories', ['controller' => 'Categories\CategoriesController']);
