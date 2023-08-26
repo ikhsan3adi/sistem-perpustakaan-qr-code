@@ -1,3 +1,15 @@
 *.jpg
 *.jpeg
 *.png
+
+!book_cover/book-1.jpg
+!book_cover/book-2.jpg
+!book_cover/book-3.jpg
+!book_cover/book-4.jpg
+!book_cover/book-5.jpg
+!book_cover/book-6.jpg
+!book_cover/book-7.jpg
+!book_cover/book-8.jpg
+!book_cover/book-9.jpg
+!book_cover/book-10.jpg
+!book_cover/default.jpg
