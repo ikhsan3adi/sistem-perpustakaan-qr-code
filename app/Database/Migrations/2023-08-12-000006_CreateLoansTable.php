@@ -15,6 +15,10 @@ class CreateLoansTable extends Migration
                 'unsigned'      => true,
                 'auto_increment' => true,
             ],
+            'uid' => [
+                'type'          => 'VARCHAR',
+                'constraint'    => 255,
+            ],
             'book_id' => [
                 'type'          => 'BIGINT',
                 'constraint'    => 20,
@@ -31,27 +35,24 @@ class CreateLoansTable extends Migration
                 'constraint'    => 11,
                 'unsigned'      => true,
             ],
-            'unique_code' => [
-                'type'          => 'VARCHAR',
-                'constraint'    => 255,
-            ],
-            'loan_date' => [
-                'type'          => 'DATE',
-            ],
+            'loan_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP',
             'due_date' => [
                 'type'          => 'DATE',
             ],
-            'return_date' => [
-                'type'          => 'DATE',
-                'null'          => true,
+            'return_date TIMESTAMP NULL',
+            'qr_code' => [
+                'type'          => 'VARCHAR',
+                'constraint'    => 255,
+                'null'          => true
             ],
             'created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NULL',
             'updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NULL',
             'deleted_at TIMESTAMP NULL',
         ]);
 
-        // primary key
         $this->forge->addPrimaryKey('id');
+
+        $this->forge->addUniqueKey('uid');
 
         // book id foreign key
         $this->forge->addForeignKey('book_id', 'books', 'id', 'CASCADE', 'NO ACTION');

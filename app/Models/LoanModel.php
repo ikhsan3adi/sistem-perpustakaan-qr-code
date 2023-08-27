@@ -17,10 +17,11 @@ class LoanModel extends Model
         'book_id',
         'quantity',
         'member_id',
-        'unique_code',
+        'uid',
         'loan_date',
         'due_date',
         'return_date',
+        'qr_code'
     ];
 
     // Dates
