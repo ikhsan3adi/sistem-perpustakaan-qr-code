@@ -8,8 +8,8 @@ use CodeIgniter\Pager\PagerRenderer;
 $pager->setSurroundCount(3);
 ?>
 
-<nav aria-label="<?= lang('Pager.pageNavigation') ?>">
-  <ul class="pagination">
+<nav aria-label="<?= lang('Pager.pageNavigation') ?>" class="d-flex">
+  <ul class="pagination m-auto">
     <?php if ($pager->hasPrevious()) : ?>
       <li class="page-item">
         <a class="page-link" href="<?= $pager->getFirst() ?>" aria-label="<?= lang('Pager.first') ?>">

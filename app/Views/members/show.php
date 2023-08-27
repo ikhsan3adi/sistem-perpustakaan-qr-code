@@ -11,11 +11,14 @@
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    max-width: 400px;
-    height: 400px;
+    max-width: 500px;
+    height: 300px;
   }
 </style>
 <?php
+
+use CodeIgniter\I18n\Time;
+
 if (session()->getFlashdata('msg')) : ?>
   <div class="pb-2">
     <div class="alert <?= (session()->getFlashdata('error') ?? false) ? 'alert-danger' : 'alert-success'; ?> alert-dismissible fade show" role="alert">
@@ -51,73 +54,44 @@ if (session()->getFlashdata('msg')) : ?>
       <div class="col-12 col-lg-7 d-flex flex-wrap">
         <div class="col-12">
           <div class="w-100 mb-4">
+            <?php
+            $tableData = [
+              'Nama Lengkap'  => [$member['first_name'] . ' ' . $member['last_name']],
+              'Email'         => $member['email'],
+              'Nomor telepon' => $member['phone'],
+              'Alamat'        => $member['address'],
+              'Tanggal lahir' => Time::parse($member['date_of_birth'], locale: 'id')->toLocalizedString('d MMMM Y'),
+              'Jenis kelamin' => $member['gender'] == 'Male' ? 'Laki-laki' : 'Perempuan',
+            ];
+            ?>
             <table>
-              <tr>
-                <td style="width:30%">
-                  <h5><b>Nama Lengkap</b></h5>
-                </td>
-                <td style="width:15px">
-                  <h5><b>:</b></h5>
-                </td>
-                <td>
-                  <h5><b><?= $member['first_name'] . ' ' . $member['last_name']; ?></b></h5>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <h5>Email</h5>
-                </td>
-                <td>
-                  <h5>:</h5>
-                </td>
-                <td>
-                  <h5><?= $member['email']; ?></h5>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <h5>Nomor telepon</h5>
-                </td>
-                <td>
-                  <h5>:</h5>
-                </td>
-                <td>
-                  <h5><?= $member['phone']; ?></h5>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <h5>Alamat</h5>
-                </td>
-                <td>
-                  <h5>:</h5>
-                </td>
-                <td>
-                  <h5><?= $member['address']; ?></h5>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <h5>Tanggal lahir</h5>
-                </td>
-                <td>
-                  <h5>:</h5>
-                </td>
-                <td>
-                  <h5><?= $ciTime::parse($member['date_of_birth'])->toLocalizedString('d MMMM Y'); ?></h5>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <h5>Jenis kelamin</h5>
-                </td>
-                <td>
-                  <h5>:</h5>
-                </td>
-                <td>
-                  <h5><?= $member['gender'] == 'Male' ? 'Laki-laki' : 'Perempuan' ?></h5>
-                </td>
-              </tr>
+              <?php foreach ($tableData as $key => $value) : ?>
+                <?php if (is_array($value)) : ?>
+                  <tr>
+                    <td>
+                      <h5><b><?= $key; ?></b></h5>
+                    </td>
+                    <td style="width:15px" class="text-center">
+                      <h5><b>:</b></h5>
+                    </td>
+                    <td>
+                      <h5><b><?= $value[0]; ?></b></h5>
+                    </td>
+                  </tr>
+                <?php else : ?>
+                  <tr>
+                    <td>
+                      <h5><?= $key; ?></h5>
+                    </td>
+                    <td class="text-center">
+                      <h5>:</h5>
+                    </td>
+                    <td>
+                      <h5><?= $value; ?></h5>
+                    </td>
+                  </tr>
+                <?php endif; ?>
+              <?php endforeach; ?>
             </table>
           </div>
         </div>
@@ -207,7 +181,7 @@ if (session()->getFlashdata('msg')) : ?>
       <div class="col-12 col-lg-5">
         <div class="card">
           <div class="card-body">
-            <div id="qr-code"></div>
+            <div id="qr-code" class="m-auto"></div>
           </div>
         </div>
         <h6 class="text-center">UID : <?= $member['uid']; ?></h6>
