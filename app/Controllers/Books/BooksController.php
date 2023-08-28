@@ -73,7 +73,10 @@ class BooksController extends ResourceController
             throw new PageNotFoundException('Book with slug \'' . $slug . '\' not found');
         }
 
-        $loans = $this->loanModel->where('book_id', $book['id'])->findAll();
+        $loans = $this->loanModel->where([
+            'book_id' => $book['id'],
+            'return_date' => null
+        ])->findAll();
 
         $loanCount = array_reduce(
             array_map(function ($loan) {
