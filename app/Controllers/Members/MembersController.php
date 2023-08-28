@@ -65,7 +65,10 @@ class MembersController extends ResourceController
             throw new PageNotFoundException('Member not found');
         }
 
-        $loans = $this->loanModel->where('member_id', $member['id'])->findAll();
+        $loans = $this->loanModel->where([
+            'member_id' => $member['id'],
+            'return_date' => null
+        ])->findAll();
 
         $fines = $this->loanModel
             ->select('loans.id, fines.amount_paid, fines.fine_amount, fines.paid_at')
@@ -112,10 +115,12 @@ class MembersController extends ResourceController
         // Create qr code if not exist
         if (!file_exists(MEMBERS_QR_CODE_PATH . $member['qr_code']) || empty($member['qr_code'])) {
             $qrGenerator = new QRGenerator();
+            $qrCodeLabel = $member['first_name'] . ($member['last_name'] ? ' ' . $member['last_name'] : '');
             $qrCode = $qrGenerator->generateQRCode(
                 $member['uid'],
+                labelText: $qrCodeLabel,
                 dir: MEMBERS_QR_CODE_PATH,
-                filename: $member['first_name'] . ($member['last_name'] ? ' ' . $member['last_name'] : '')
+                filename: $qrCodeLabel
             );
 
             $this->memberModel->update($member['id'], ['qr_code' => $qrCode]);
@@ -123,7 +128,6 @@ class MembersController extends ResourceController
         }
 
         $data = [
-            'ciTime'            => new Time(locale: 'id_ID'),
             'member'            => $member,
             'totalBooksLent'    => $totakBooksLent,
             'loanCount'         => count($loans),
@@ -181,13 +185,14 @@ class MembersController extends ResourceController
         );
 
         $qrGenerator = new QRGenerator();
-
+        $qrCodeLabel = $this->request->getVar('first_name')
+            . ($this->request->getVar('last_name')
+                ? ' ' . $this->request->getVar('last_name') : '');
         $qrCode = $qrGenerator->generateQRCode(
             data: $uid,
+            labelText: $qrCodeLabel,
             dir: MEMBERS_QR_CODE_PATH,
-            filename: $this->request->getVar('first_name')
-                . ($this->request->getVar('last_name')
-                    ? ' ' . $this->request->getVar('last_name') : '')
+            filename: $qrCodeLabel
         );
 
         if (!$this->memberModel->save([
@@ -281,12 +286,14 @@ class MembersController extends ResourceController
 
         if ($isChanged) {
             $qrGenerator = new QRGenerator();
+            $qrCodeLabel = $this->request->getVar('first_name')
+                . ($this->request->getVar('last_name')
+                    ? ' ' . $this->request->getVar('last_name') : '');
             $qrCode = $qrGenerator->generateQRCode(
                 $uid,
+                labelText: $qrCodeLabel,
                 dir: MEMBERS_QR_CODE_PATH,
-                filename: $this->request->getVar('first_name')
-                    . ($this->request->getVar('last_name')
-                        ? ' ' . $this->request->getVar('last_name') : '')
+                filename: $qrCodeLabel
             );
             deleteMembersQRCode($member['qr_code']);
         } else {
