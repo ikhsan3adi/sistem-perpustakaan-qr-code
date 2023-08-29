@@ -224,14 +224,14 @@ class DashboardController extends ResourceController
             $arrear = $carry + ($fine['fine_amount'] - $fine['amount_paid']);
             array_push($arrears, [
                 'arrear' => $arrear,
-                'date' => Time::parse($fine['created_at'])->toLocalizedString('d MMMM Y')
+                'date' => Time::parse($fine['created_at'], locale: 'id')->toLocalizedString('d MMMM Y')
             ]);
             $carry = $arrear;
         }
 
         $totalArrears = $totalFines - $totalFinesPaid;
 
-        $oldestFineDate = Time::parse($this->fineModel->selectMin('created_at')->first()['created_at']);
+        $oldestFineDate = Time::parse($this->fineModel->selectMin('created_at')->first()['created_at'], locale: 'id');
 
         return [
             'arrears' => $arrears,
