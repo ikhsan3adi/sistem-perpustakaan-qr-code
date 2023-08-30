@@ -1,4 +1,11 @@
 <!--  Header Start -->
+<style>
+  @media only screen and (max-width: 768px) {
+    #navBtn {
+      display: none;
+    }
+  }
+</style>
 <header class="app-header">
   <nav class="navbar navbar-expand-lg navbar-light">
     <ul class="navbar-nav">
@@ -7,19 +14,22 @@
           <i class="ti ti-menu-2"></i>
         </a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link nav-icon-hover" href="javascript:void(0)">
-          <i class="ti ti-bell-ringing"></i>
-          <div class="notification bg-primary rounded-circle"></div>
-        </a>
-      </li>
     </ul>
     <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
-      <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
-        <a href="https://adminmart.com/product/modernize-free-bootstrap-admin-dashboard/" target="_blank" class="btn btn-primary">Download Free</a>
+      <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end gap-2" id="headerCollapse">
+        <li class="nav-item" id="navBtn">
+          <a href=" <?= base_url('admin/loans/new/members/search'); ?>" target="_blank" class="btn btn-primary">Ajukan peminjaman</a>
+        </li>
+        <li class="nav-item" id="navBtn">
+          <a href="<?= base_url('admin/returns/new'); ?>" target="_blank" class="btn btn-outline-primary">Pengembalian buku</a>
+        </li>
+        <li class="nav-item" id="navBtn">
+          <a href="<?= base_url('admin/fines/new'); ?>" target="_blank" class="btn btn-outline-warning">Bayar denda</a>
+        </li>
         <li class="nav-item dropdown">
-          <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown" aria-expanded="false">
-            <img src="../assets/images/profile/user-1.jpg" alt="" width="35" height="35" class="rounded-circle">
+          <a class="nav-link nav-icon-hover position-relative" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown" aria-expanded="false">
+            <img alt="" width="35" height="35" class="rounded-circle border border-primary" style="background-color: white;">
+            <i class="ti ti-user position-absolute top-50 start-50 translate-middle text-primary"></i>
           </a>
           <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
             <div class="message-body">
