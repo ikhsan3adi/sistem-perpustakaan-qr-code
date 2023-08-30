@@ -132,9 +132,20 @@ defined('QR_CODES_PATH') || define('QR_CODES_PATH', UPLOADS_PATH . 'qr_codes' . 
  */
 defined('MEMBERS_QR_CODE_PATH') || define('MEMBERS_QR_CODE_PATH', QR_CODES_PATH . 'members' . DIRECTORY_SEPARATOR);
 
-
 /**
  * Member's QR code uri
  * `uploads/qr_codes/members/`
  */
 defined('MEMBERS_QR_CODE_URI') || define('MEMBERS_QR_CODE_URI', 'uploads' . DIRECTORY_SEPARATOR . 'qr_codes' . DIRECTORY_SEPARATOR . 'members' . DIRECTORY_SEPARATOR);
+
+/**
+ * Loan's QR code path
+ * `public/uploads/qr_codes/loans/`
+ */
+defined('LOANS_QR_CODE_PATH') || define('LOANS_QR_CODE_PATH', QR_CODES_PATH . 'loans' . DIRECTORY_SEPARATOR);
+
+/**
+ * Loan's QR code uri
+ * `uploads/qr_codes/loans/`
+ */
+defined('LOANS_QR_CODE_URI') || define('LOANS_QR_CODE_URI', 'uploads' . DIRECTORY_SEPARATOR . 'qr_codes' . DIRECTORY_SEPARATOR . 'loans' . DIRECTORY_SEPARATOR);

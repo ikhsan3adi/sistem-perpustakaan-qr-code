@@ -43,6 +43,10 @@ $routes->group('admin', function (RouteCollection $routes) {
     $routes->resource('books', ['controller' => 'Books\BooksController']);
     $routes->resource('categories', ['controller' => 'Categories\CategoriesController']);
     $routes->resource('racks', ['controller' => 'Racks\RacksController']);
+    $routes->get('loans/new/members/search', 'Loans\LoansController::searchMember');
+    $routes->get('loans/new/books/search', 'Loans\LoansController::searchBook');
+    $routes->post('loans/new', 'Loans\LoansController::new');
+    $routes->resource('loans', ['controller' => 'Loans\LoansController']);
 });
 
 /*

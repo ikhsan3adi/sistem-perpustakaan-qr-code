@@ -52,3 +52,14 @@ function deleteMembersQRCode(string|null $filename): bool
         return false;
     }
 }
+
+function deleteLoansQRCode(string|null $filename): bool
+{
+    $filePath = LOANS_QR_CODE_PATH . $filename;
+
+    if (!empty($filename) && file_exists($filePath)) {
+        return unlink($filePath);
+    } else {
+        return false;
+    }
+}
