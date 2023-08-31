@@ -29,27 +29,31 @@ if (session()->getFlashdata('msg')) : ?>
 <?php endif; ?>
 <div class="card">
   <div class="card-body">
-    <div class="d-flex justify-content-between mb-2">
-      <h5 class="card-title fw-semibold mb-4">Detail Anggota</h5>
-      <div class="d-flex gap-2 justify-content-end">
+    <div class="d-flex justify-content-between mb-4">
+      <div>
+        <a href="<?= base_url('admin/members'); ?>" class="btn btn-outline-primary">
+          <i class="ti ti-arrow-left"></i>
+          Kembali
+        </a>
+      </div>
+      <div class="d-flex gap-2 justify-content-end gap-2">
         <div>
           <a href="<?= base_url("admin/members/{$member['uid']}/edit"); ?>" class="btn btn-primary w-100">
             <i class="ti ti-edit"></i>
             Edit
           </a>
         </div>
-        <div>
-          <form action="<?= base_url("admin/members/{$member['uid']}"); ?>" method="post">
-            <?= csrf_field(); ?>
-            <input type="hidden" name="_method" value="DELETE">
-            <button type="submit" class="btn btn-danger w-100" onclick="return confirm('Are you sure?');">
-              <i class="ti ti-trash"></i>
-              Delete
-            </button>
-          </form>
-        </div>
+        <form action="<?= base_url("admin/members/{$member['uid']}"); ?>" method="post">
+          <?= csrf_field(); ?>
+          <input type="hidden" name="_method" value="DELETE">
+          <button type="submit" class="btn btn-danger w-100" onclick="return confirm('Are you sure?');">
+            <i class="ti ti-trash"></i>
+            Delete
+          </button>
+        </form>
       </div>
     </div>
+    <h5 class="card-title fw-semibold mb-4">Detail Anggota</h5>
     <div class="row mb-3">
       <div class="col-12 col-lg-7 d-flex flex-wrap">
         <div class="col-12">
