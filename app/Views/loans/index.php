@@ -36,7 +36,7 @@ if (session()->getFlashdata('msg')) : ?>
             </form>
           </div>
           <div>
-            <a href="<?= base_url('admin/loans/new/members/search'); ?>" class="btn btn-primary">
+            <a href="<?= base_url('admin/loans/new/members/search'); ?>" class="btn btn-primary py-2">
               <i class="ti ti-plus"></i>
               Peminjaman baru
             </a>
