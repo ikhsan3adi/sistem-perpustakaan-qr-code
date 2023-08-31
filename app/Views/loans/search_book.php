@@ -5,6 +5,10 @@
 <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
+<a href="<?= base_url('admin/loans/new/members/search'); ?>" class="btn btn-outline-primary mb-3">
+  <i class="ti ti-arrow-left"></i>
+  Kembali
+</a>
 <div class="card">
   <div class="card-body">
     <div class="row">

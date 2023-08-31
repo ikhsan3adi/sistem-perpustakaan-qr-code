@@ -34,7 +34,12 @@ if (session()->getFlashdata('msg')) : ?>
 <div class="card">
   <div class="card-body">
     <div class="d-flex justify-content-between mb-4">
-      <h5 class="card-title fw-semibold mb-4">Detail Peminjaman</h5>
+      <div>
+        <a href="<?= base_url('admin/loans'); ?>" class="btn btn-outline-primary">
+          <i class="ti ti-arrow-left"></i>
+          Kembali
+        </a>
+      </div>
       <div class="d-flex gap-2 justify-content-end gap-2">
         <form action="<?= base_url("admin/loans/{$loan['uid']}"); ?>" method="post">
           <?= csrf_field(); ?>
@@ -52,6 +57,7 @@ if (session()->getFlashdata('msg')) : ?>
         </div>
       </div>
     </div>
+    <h5 class="card-title fw-semibold mb-4">Detail Peminjaman</h5>
     <?php
     $memberData = [
       'Nama Lengkap'  => [$loan['first_name'] . ' ' . $loan['last_name']],

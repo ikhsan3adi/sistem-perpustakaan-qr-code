@@ -5,14 +5,10 @@
 <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
-<?php if (session()->getFlashdata('msg')) : ?>
-  <div class="pb-2">
-    <div class="alert <?= (session()->getFlashdata('error') ?? false) ? 'alert-danger' : 'alert-success'; ?> alert-dismissible fade show" role="alert">
-      <?= session()->getFlashdata('msg') ?>
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-  </div>
-<?php endif; ?>
+<a href="<?= base_url('admin/loans'); ?>" class="btn btn-outline-primary mb-3">
+  <i class="ti ti-arrow-left"></i>
+  Kembali
+</a>
 <div class="card">
   <div class="card-body">
     <div class="row">
