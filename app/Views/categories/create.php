@@ -5,6 +5,11 @@
 <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
+<a href="<?= base_url('admin/categories'); ?>" class="btn btn-outline-primary mb-3">
+  <i class="ti ti-arrow-left"></i>
+  Kembali
+</a>
+
 <?php if (session()->getFlashdata('msg')) : ?>
   <div class="pb-2">
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
