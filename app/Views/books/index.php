@@ -16,21 +16,35 @@
 
 <div class="card">
   <div class="card-body">
-    <div class="d-flex justify-content-between mb-2">
-      <h5 class="card-title fw-semibold mb-4">
-        <?php if (isset($category)) : ?>
-          <?= 'Data Buku Kategori ' . $category; ?>
-        <?php elseif (isset($rack)) : ?>
-          <?= 'Data Buku Rak ' . $rack; ?>
-        <?php else : ?>
-          Data Buku
-        <?php endif; ?>
-      </h5>
-      <div>
-        <a href="<?= base_url('admin/books/new'); ?>" class="btn btn-primary">
-          <i class="ti ti-plus"></i>
-          Tambah Data Buku
-        </a>
+    <div class="row mb-2">
+      <div class="col-12 col-lg-5">
+        <h5 class="card-title fw-semibold mb-4">
+          <?php if (isset($category)) : ?>
+            <?= 'Data Buku Kategori ' . $category; ?>
+          <?php elseif (isset($rack)) : ?>
+            <?= 'Data Buku Rak ' . $rack; ?>
+          <?php else : ?>
+            Data Buku
+          <?php endif; ?>
+        </h5>
+      </div>
+      <div class="col-12 col-lg-7">
+        <div class="d-flex gap-2 justify-content-md-end">
+          <div>
+            <form action="" method="get">
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" name="search" value="<?= $search ?? ''; ?>" placeholder="Cari buku" aria-label="Cari buku" aria-describedby="searchButton">
+                <button class="btn btn-outline-secondary" type="submit" id="searchButton">Cari</button>
+              </div>
+            </form>
+          </div>
+          <div>
+            <a href="<?= base_url('admin/books/new'); ?>" class="btn btn-primary py-2">
+              <i class="ti ti-plus"></i>
+              Tambah Data Buku
+            </a>
+          </div>
+        </div>
       </div>
     </div>
     <table class="table table-hover table-striped">
@@ -47,6 +61,11 @@
       </thead>
       <tbody class="table-group-divider">
         <?php $i = 1 + ($itemPerPage * ($currentPage - 1)) ?>
+        <?php if (empty($books)) : ?>
+          <tr>
+            <td class="text-center" colspan="7"><b>Tidak ada data</b></td>
+          </tr>
+        <?php endif; ?>
         <?php foreach ($books as $book) : ?>
           <tr>
             <th scope="row"><?= $i++; ?></th>

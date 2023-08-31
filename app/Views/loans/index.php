@@ -20,13 +20,28 @@ if (session()->getFlashdata('msg')) : ?>
 
 <div class="card">
   <div class="card-body">
-    <div class="d-flex justify-content-between mb-2">
-      <h5 class="card-title fw-semibold mb-4">Data Peminjaman</h5>
-      <div>
-        <a href="<?= base_url('admin/loans/new/members/search'); ?>" class="btn btn-primary">
-          <i class="ti ti-plus"></i>
-          Peminjaman baru
-        </a>
+
+    <div class="row mb-2">
+      <div class="col-12 col-lg-5">
+        <h5 class="card-title fw-semibold mb-4">Data Peminjaman</h5>
+      </div>
+      <div class="col-12 col-lg-7">
+        <div class="d-flex gap-2 justify-content-md-end">
+          <div>
+            <form action="" method="get">
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" name="search" value="<?= $search ?? ''; ?>" placeholder="Cari peminjaman" aria-label="Cari peminjaman" aria-describedby="searchButton">
+                <button class="btn btn-outline-secondary" type="submit" id="searchButton">Cari</button>
+              </div>
+            </form>
+          </div>
+          <div>
+            <a href="<?= base_url('admin/loans/new/members/search'); ?>" class="btn btn-primary">
+              <i class="ti ti-plus"></i>
+              Peminjaman baru
+            </a>
+          </div>
+        </div>
       </div>
     </div>
     <table class="table table-hover table-striped">
@@ -48,6 +63,11 @@ if (session()->getFlashdata('msg')) : ?>
 
         $now = Time::now(locale: 'id');
         ?>
+        <?php if (empty($loans)) : ?>
+          <tr>
+            <td class="text-center" colspan="8"><b>Tidak ada data</b></td>
+          </tr>
+        <?php endif; ?>
         <?php
         foreach ($loans as $key => $loan) :
           $loanCreateDate = Time::parse($loan['loan_date'], locale: 'id');

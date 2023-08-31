@@ -40,13 +40,27 @@ class MembersController extends ResourceController
     {
         $itemPerPage = 20;
 
-        $members =   $this->memberModel->paginate($itemPerPage, 'members');
+        if ($this->request->getGet('search')) {
+            $keyword = $this->request->getGet('search');
+            $members = $this->memberModel
+                ->like('first_name', $keyword, insensitiveSearch: true)
+                ->orLike('last_name', $keyword, insensitiveSearch: true)
+                ->orLike('email', $keyword, insensitiveSearch: true)
+                ->paginate($itemPerPage, 'members');
+
+            $members = array_filter($members, function ($member) {
+                return $member['deleted_at'] == null;
+            });
+        } else {
+            $members = $this->memberModel->paginate($itemPerPage, 'members');
+        }
 
         $data = [
             'members'           => $members,
             'pager'             => $this->memberModel->pager,
             'currentPage'       => $this->request->getVar('page_categories') ?? 1,
             'itemPerPage'       => $itemPerPage,
+            'search'            => $this->request->getGet('search')
         ];
 
         return view('members/index', $data);

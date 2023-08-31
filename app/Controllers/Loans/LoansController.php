@@ -34,12 +34,31 @@ class LoansController extends ResourceController
     {
         $itemPerPage = 20;
 
-        $loans = $this->loanModel
-            ->select('members.*, members.uid as member_uid, books.*, loans.*')
-            ->join('members', 'loans.member_id = members.id', 'LEFT')
-            ->join('books', 'loans.book_id = books.id', 'LEFT')
-            ->where('return_date')
-            ->paginate($itemPerPage, 'loans');
+        if ($this->request->getGet('search')) {
+            $keyword = $this->request->getGet('search');
+            $loans = $this->loanModel
+                ->select('members.*, members.uid as member_uid, books.*, loans.*')
+                ->join('members', 'loans.member_id = members.id', 'LEFT')
+                ->join('books', 'loans.book_id = books.id', 'LEFT')
+                ->like('first_name', $keyword, insensitiveSearch: true)
+                ->orLike('last_name', $keyword, insensitiveSearch: true)
+                ->orLike('email', $keyword, insensitiveSearch: true)
+                ->orLike('title', $keyword, insensitiveSearch: true)
+                ->orLike('slug', $keyword, insensitiveSearch: true)
+                ->where('return_date')
+                ->paginate($itemPerPage, 'loans');
+
+            $loans = array_filter($loans, function ($loan) {
+                return $loan['deleted_at'] == null && $loan['return_date'] == null;
+            });
+        } else {
+            $loans = $this->loanModel
+                ->select('members.*, members.uid as member_uid, books.*, loans.*')
+                ->join('members', 'loans.member_id = members.id', 'LEFT')
+                ->join('books', 'loans.book_id = books.id', 'LEFT')
+                ->where('return_date')
+                ->paginate($itemPerPage, 'loans');
+        }
 
         $data = [
             'loans'         => $loans,
