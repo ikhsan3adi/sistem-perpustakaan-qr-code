@@ -32,7 +32,10 @@ class CreateFinesTable extends Migration
                 'constraint'     => 11,
                 'unsigned'       => true,
             ],
-            'paid_at TIMESTAMP NULL',
+            'paid_at' => [
+                'type'           => 'DATETIME',
+                'null'           => true
+            ],
             'created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NULL',
             'updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NULL',
             'deleted_at TIMESTAMP NULL',

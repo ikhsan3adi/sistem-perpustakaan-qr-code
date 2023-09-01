@@ -35,11 +35,16 @@ class CreateLoansTable extends Migration
                 'constraint'    => 11,
                 'unsigned'      => true,
             ],
-            'loan_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP',
+            'loan_date' => [
+                'type'          => 'DATETIME',
+            ],
             'due_date' => [
                 'type'          => 'DATE',
             ],
-            'return_date TIMESTAMP NULL',
+            'return_date' => [
+                'type'          => 'DATETIME',
+                'null'          => true
+            ],
             'qr_code' => [
                 'type'          => 'VARCHAR',
                 'constraint'    => 255,
