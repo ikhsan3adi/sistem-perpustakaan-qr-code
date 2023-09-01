@@ -45,20 +45,18 @@ class LoansController extends ResourceController
                 ->orLike('email', $keyword, insensitiveSearch: true)
                 ->orLike('title', $keyword, insensitiveSearch: true)
                 ->orLike('slug', $keyword, insensitiveSearch: true)
-                ->where('return_date')
                 ->paginate($itemPerPage, 'loans');
-
-            $loans = array_filter($loans, function ($loan) {
-                return $loan['deleted_at'] == null && $loan['return_date'] == null;
-            });
         } else {
             $loans = $this->loanModel
                 ->select('members.*, members.uid as member_uid, books.*, loans.*')
                 ->join('members', 'loans.member_id = members.id', 'LEFT')
                 ->join('books', 'loans.book_id = books.id', 'LEFT')
-                ->where('return_date')
                 ->paginate($itemPerPage, 'loans');
         }
+
+        $loans = array_filter($loans, function ($loan) {
+            return $loan['deleted_at'] == null && $loan['return_date'] == null;
+        });
 
         $data = [
             'loans'         => $loans,
@@ -84,7 +82,7 @@ class LoansController extends ResourceController
             ->join('book_stock', 'books.id = book_stock.book_id', 'LEFT')
             ->join('racks', 'books.rack_id = racks.id', 'LEFT')
             ->join('categories', 'books.category_id = categories.id', 'LEFT')
-            ->where('return_date')->where('loans.uid', $uid)
+            ->where('loans.uid', $uid)
             ->first();
 
         if (empty($loan)) {
@@ -113,7 +111,7 @@ class LoansController extends ResourceController
                 ->join('book_stock', 'books.id = book_stock.book_id', 'LEFT')
                 ->join('racks', 'books.rack_id = racks.id', 'LEFT')
                 ->join('categories', 'books.category_id = categories.id', 'LEFT')
-                ->where('return_date')->where('loans.uid', $uid)
+                ->where('loans.uid', $uid)
                 ->first();
 
             return redirect()->to("admin/loans/{$loan['uid']}");

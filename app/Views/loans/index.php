@@ -52,7 +52,7 @@ if (session()->getFlashdata('msg')) : ?>
           <th scope="col">Judul buku</th>
           <th scope="col" class="text-center">Jumlah</th>
           <th scope="col">Tgl pinjam</th>
-          <th scope="col">Tgl pengembalian</th>
+          <th scope="col">Tenggat</th>
           <th scope="col" class="text-center">Status</th>
           <th scope="col" class="text-center">Aksi</th>
         </tr>
@@ -83,7 +83,7 @@ if (session()->getFlashdata('msg')) : ?>
             $status = 'Terlambat';
           }
         ?>
-          <tr class="<?= $isLate ? 'border-danger' : ''; ?>">
+          <tr>
             <th scope="row"><?= $i++; ?></th>
             <td>
               <a href="<?= base_url("admin/members/{$loan['member_uid']}"); ?>" class="text-primary-emphasis text-decoration-underline">
@@ -99,16 +99,17 @@ if (session()->getFlashdata('msg')) : ?>
               </a>
             </td>
             <td class="text-center"><?= $loan['quantity']; ?></td>
-            <td class="<?= $isLate ? 'table-warning text-warning-emphasis' : ''; ?>"><b><?= $loanCreateDate->toLocalizedString('d/M/y'); ?></b></td>
+            <td class="<?= $isLate ? 'table-warning text-warning-emphasis' : ''; ?>">
+              <b><?= $loanCreateDate->toLocalizedString('dd/MM/y HH:mm:ss'); ?></b>
+            </td>
             <td class="<?= $isLate ? 'table-danger text-danger-emphasis' : ''; ?>">
-              <b><?= $loanDueDate->toLocalizedString('d/M/y'); ?></b>
+              <b><?= $loanDueDate->toLocalizedString('dd/MM/y'); ?></b>
             </td>
             <td class="text-center <?= $isLate ? 'table-danger text-danger-emphasis' : 'table-success text-success-emphasis'; ?>">
               <b><?= $status; ?></b>
             </td>
             <td class="<?= $isLate ? 'table-danger' : 'table-success'; ?>">
               <a href="<?= base_url("admin/loans/{$loan['uid']}"); ?>" class="d-block btn btn-primary w-100 mb-2">
-                <i class="ti ti-eye"></i>
                 Detail
               </a>
             </td>
