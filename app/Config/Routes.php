@@ -41,8 +41,9 @@ $routes->group('admin', function (RouteCollection $routes) {
 
     $routes->resource('members', ['controller' => 'Members\MembersController']);
     $routes->resource('books', ['controller' => 'Books\BooksController']);
-    $routes->resource('categories', ['controller' => 'Categories\CategoriesController']);
-    $routes->resource('racks', ['controller' => 'Racks\RacksController']);
+    $routes->resource('categories', ['controller' => 'Books\CategoriesController']);
+    $routes->resource('racks', ['controller' => 'Books\RacksController']);
+
     $routes->get('loans/new/members/search', 'Loans\LoansController::searchMember');
     $routes->get('loans/new/books/search', 'Loans\LoansController::searchBook');
     $routes->post('loans/new', 'Loans\LoansController::new');

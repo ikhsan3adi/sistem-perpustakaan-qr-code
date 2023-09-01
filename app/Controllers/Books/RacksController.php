@@ -1,20 +1,20 @@
 <?php
 
-namespace App\Controllers\Categories;
+namespace App\Controllers\Books;
 
 use App\Models\BookModel;
-use App\Models\CategoryModel;
+use App\Models\RackModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\RESTful\ResourceController;
 
-class CategoriesController extends ResourceController
+class RacksController extends ResourceController
 {
-    protected CategoryModel $categoryModel;
+    protected RackModel $rackModel;
     protected BookModel $bookModel;
 
     public function __construct()
     {
-        $this->categoryModel = new CategoryModel;
+        $this->rackModel = new RackModel;
         $this->bookModel = new BookModel;
     }
 
@@ -27,25 +27,25 @@ class CategoriesController extends ResourceController
     {
         $itemPerPage = 20;
 
-        $categories = $this->categoryModel->paginate($itemPerPage, 'categories');
+        $racks = $this->rackModel->paginate($itemPerPage, 'racks');
 
-        $bookCountInCategories = [];
+        $bookCountInRacks = [];
 
-        foreach ($categories as $category) {
-            array_push($bookCountInCategories, $this->bookModel
-                ->where('category_id', $category['id'])
+        foreach ($racks as $rack) {
+            array_push($bookCountInRacks, $this->bookModel
+                ->where('rack_id', $rack['id'])
                 ->countAllResults());
         }
 
         $data = [
-            'categories'        => $categories,
-            'bookCountInCategories' => $bookCountInCategories,
-            'pager'             => $this->categoryModel->pager,
-            'currentPage'       => $this->request->getVar('page_categories') ?? 1,
+            'racks'             => $racks,
+            'bookCountInRacks'  => $bookCountInRacks,
+            'pager'             => $this->rackModel->pager,
+            'currentPage'       => $this->request->getVar('page_racks') ?? 1,
             'itemPerPage'       => $itemPerPage,
         ];
 
-        return view('categories/index', $data);
+        return view('racks/index', $data);
     }
 
     /**
@@ -55,10 +55,10 @@ class CategoriesController extends ResourceController
      */
     public function show($id = null)
     {
-        $category = $this->categoryModel->where('id', $id)->first();
+        $rack = $this->rackModel->where('id', $id)->first();
 
-        if (empty($category)) {
-            throw new PageNotFoundException('Category not found');
+        if (empty($rack)) {
+            throw new PageNotFoundException('Rack not found');
         }
 
         $itemPerPage = 20;
@@ -68,7 +68,7 @@ class CategoriesController extends ResourceController
             ->join('book_stock', 'books.id = book_stock.book_id', 'LEFT')
             ->join('categories', 'books.category_id = categories.id', 'LEFT')
             ->join('racks', 'books.rack_id = racks.id', 'LEFT')
-            ->where('category_id', $id)
+            ->where('rack_id', $id)
             ->paginate($itemPerPage, 'books');
 
         $data = [
@@ -76,8 +76,8 @@ class CategoriesController extends ResourceController
             'pager'         => $this->bookModel->pager,
             'currentPage'   => $this->request->getVar('page_books') ?? 1,
             'itemPerPage'   => $itemPerPage,
-            'category'      => $this->categoryModel
-                ->select('categories.name')
+            'rack'          => $this->rackModel
+                ->select('racks.name')
                 ->where('id', $id)->first()['name']
         ];
 
@@ -91,7 +91,7 @@ class CategoriesController extends ResourceController
      */
     public function new()
     {
-        return view('categories/create', [
+        return view('racks/create', [
             'validation' => \Config\Services::validation(),
         ]);
     }
@@ -104,18 +104,20 @@ class CategoriesController extends ResourceController
     public function create()
     {
         if (!$this->validate([
-            'category'  => 'required|string|min_length[2]',
+            'rack'  => 'required|alpha_numeric_punct|max_length[8]',
+            'floor' => 'permit_empty|if_exist|alpha_numeric_punct|max_length[16]',
         ])) {
             $data = [
                 'validation' => \Config\Services::validation(),
                 'oldInput'   => $this->request->getVar(),
             ];
 
-            return view('categories/create', $data);
+            return view('racks/create', $data);
         }
 
-        if (!$this->categoryModel->save([
-            'name' => $this->request->getVar('category'),
+        if (!$this->rackModel->save([
+            'name' => $this->request->getVar('rack'),
+            'floor' => !empty($this->request->getVar('floor')) ? $this->request->getVar('floor') : 1,
         ])) {
             $data = [
                 'validation' => \Config\Services::validation(),
@@ -123,11 +125,11 @@ class CategoriesController extends ResourceController
             ];
 
             session()->setFlashdata(['msg' => 'Insert failed']);
-            return view('categories/create', $data);
+            return view('racks/create', $data);
         }
 
-        session()->setFlashdata(['msg' => 'Insert new category successful']);
-        return redirect()->to('admin/categories');
+        session()->setFlashdata(['msg' => 'Insert new rack successful']);
+        return redirect()->to('admin/racks');
     }
 
     /**
@@ -137,18 +139,18 @@ class CategoriesController extends ResourceController
      */
     public function edit($id = null)
     {
-        $category = $this->categoryModel->where('id', $id)->first();
+        $rack = $this->rackModel->where('id', $id)->first();
 
-        if (empty($category)) {
-            throw new PageNotFoundException('Category not found');
+        if (empty($rack)) {
+            throw new PageNotFoundException('Rack not found');
         }
 
         $data = [
-            'category'       => $category,
-            'validation'     => \Config\Services::validation(),
+            'rack'          => $rack,
+            'validation'    => \Config\Services::validation(),
         ];
 
-        return view('categories/edit', $data);
+        return view('racks/edit', $data);
     }
 
     /**
@@ -158,40 +160,42 @@ class CategoriesController extends ResourceController
      */
     public function update($id = null)
     {
-        $category = $this->categoryModel->where('id', $id)->first();
+        $rack = $this->rackModel->where('id', $id)->first();
 
-        if (empty($category)) {
+        if (empty($rack)) {
             throw new PageNotFoundException('Category not found');
         }
 
         if (!$this->validate([
-            'category'  => 'required|string|min_length[2]',
+            'rack'  => 'required|alpha_numeric_punct|max_length[8]',
+            'floor' => 'permit_empty|if_exist|alpha_numeric_punct|max_length[16]',
         ])) {
             $data = [
-                'category'   => $category,
+                'rack'       => $rack,
                 'validation' => \Config\Services::validation(),
                 'oldInput'   => $this->request->getVar(),
             ];
 
-            return view('categories/edit', $data);
+            return view('racks/edit', $data);
         }
 
-        if (!$this->categoryModel->save([
+        if (!$this->rackModel->save([
             'id'   => $id,
-            'name' => $this->request->getVar('category'),
+            'name' => $this->request->getVar('rack'),
+            'floor' => !empty($this->request->getVar('floor')) ? $this->request->getVar('floor') : 1,
         ])) {
             $data = [
-                'category'   => $category,
+                'rack'   => $rack,
                 'validation' => \Config\Services::validation(),
                 'oldInput'   => $this->request->getVar(),
             ];
 
             session()->setFlashdata(['msg' => 'Insert failed']);
-            return view('categories/create', $data);
+            return view('racks/create', $data);
         }
 
-        session()->setFlashdata(['msg' => 'Update category successful']);
-        return redirect()->to('admin/categories');
+        session()->setFlashdata(['msg' => 'Update rack successful']);
+        return redirect()->to('admin/racks');
     }
 
     /**
@@ -201,18 +205,18 @@ class CategoriesController extends ResourceController
      */
     public function delete($id = null)
     {
-        $category = $this->categoryModel->where('id', $id)->first();
+        $rack = $this->rackModel->where('id', $id)->first();
 
-        if (empty($category)) {
-            throw new PageNotFoundException('Category not found');
+        if (empty($rack)) {
+            throw new PageNotFoundException('Rack not found');
         }
 
-        if (!$this->categoryModel->delete($id)) {
-            session()->setFlashdata(['msg' => 'Failed to delete category', 'error' => true]);
+        if (!$this->rackModel->delete($id)) {
+            session()->setFlashdata(['msg' => 'Failed to delete rack', 'error' => true]);
             return redirect()->back();
         }
 
-        session()->setFlashdata(['msg' => 'Category deleted successfully']);
-        return redirect()->to('admin/categories');
+        session()->setFlashdata(['msg' => 'Rack deleted successfully']);
+        return redirect()->to('admin/racks');
     }
 }
