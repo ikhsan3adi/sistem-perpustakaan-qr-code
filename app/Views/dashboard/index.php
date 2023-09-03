@@ -157,7 +157,7 @@
             <h5 class="card-title mb-9 fw-semibold"> Total Pendapatan Denda </h5>
             <div class="row align-items-start">
               <div class="col-9">
-                <h4 class="fw-semibold mb-3">Rp<?= $fineIncomeThisMonth['value']; ?></h4>
+                <h4 class="fw-semibold mb-3">Rp<?= $fineIncomeThisMonth['value'] ?? 0; ?></h4>
                 <div class="d-flex align-items-center">
                   <div class="me-4">
                     <span class="fs-2"><?= $dateNow->toLocalizedString('MMMM Y'); ?></span>

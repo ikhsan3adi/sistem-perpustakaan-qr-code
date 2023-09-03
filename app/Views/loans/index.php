@@ -74,6 +74,7 @@ if (session()->getFlashdata('msg')) : ?>
           $loanDueDate = Time::parse($loan['due_date'], locale: 'id');
 
           $isLate = $now->isAfter($loanDueDate);
+          $isDueDate = $now->today()->difference($loanDueDate)->getDays() == 0;
 
           if ($now->isBefore($loanDueDate)) {
             $status = 'Normal';
@@ -99,16 +100,19 @@ if (session()->getFlashdata('msg')) : ?>
               </a>
             </td>
             <td class="text-center"><?= $loan['quantity']; ?></td>
-            <td class="<?= $isLate ? 'table-warning text-warning-emphasis' : ''; ?>">
-              <b><?= $loanCreateDate->toLocalizedString('dd/MM/y HH:mm:ss'); ?></b>
+            <td>
+              <b><?= $loanCreateDate->toLocalizedString('dd/MM/y'); ?></b><br>
+              <b><?= $loanCreateDate->toLocalizedString('HH:mm:ss'); ?></b>
             </td>
-            <td class="<?= $isLate ? 'table-danger text-danger-emphasis' : ''; ?>">
+            <td>
               <b><?= $loanDueDate->toLocalizedString('dd/MM/y'); ?></b>
             </td>
-            <td class="text-center <?= $isLate ? 'table-danger text-danger-emphasis' : 'table-success text-success-emphasis'; ?>">
-              <b><?= $status; ?></b>
+            <td class="text-center">
+              <div class="p-1 bg-<?= $isDueDate ? 'warning' : (!$isLate ? 'success' : 'danger') ?>-subtle text-<?= $isDueDate ? 'warning' : (!$isLate ? 'success' : 'danger') ?>-emphasis border border-<?= $isDueDate ? 'warning' : (!$isLate ? 'success' : 'danger') ?>-subtle rounded-1">
+                <b><?= $status; ?></b>
+              </div>
             </td>
-            <td class="<?= $isLate ? 'table-danger' : 'table-success'; ?>">
+            <td>
               <a href="<?= base_url("admin/loans/{$loan['uid']}"); ?>" class="d-block btn btn-primary w-100 mb-2">
                 Detail
               </a>

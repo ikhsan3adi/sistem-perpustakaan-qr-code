@@ -9,41 +9,41 @@
   <i class="ti ti-arrow-left"></i>
   Kembali
 </a>
-<div class="card">
-  <div class="card-body">
-    <form action="<?= base_url('admin/loans'); ?>" method="post">
-      <?= csrf_field(); ?>
-      <input type="hidden" name="member_uid" value="<?= $member['uid']; ?>">
-      <!-- Member -->
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title fw-semibold mb-3">Data Anggota</h5>
-          <div class="row">
-            <div class="col-12 col-md-6 mb-3">
-              <label for="member_name" class="form-label">Nama anggota</label>
-              <input type="text" class="form-control" id="member_name" name="member_name" value="<?= "{$member['first_name']} {$member['last_name']}"; ?>" disabled>
-            </div>
-            <div class="col-12 col-md-6 mb-3">
-              <label for="member_email" class="form-label">Email</label>
-              <input type="text" class="form-control" id="member_email" name="member_email" value="<?= $member['email']; ?>" disabled>
-            </div>
-            <div class="col-12 col-md-6 mb-3">
-              <label for="member_phone" class="form-label">Nomor telepon</label>
-              <input type="text" class="form-control" id="member_phone" name="member_phone" value="<?= $member['phone']; ?>" disabled>
-            </div>
-            <div class="col-12 col-md-6 mb-3">
-              <label for="member_address" class="form-label">Alamat</label>
-              <input type="text" class="form-control" id="member_address" name="member_address" value="<?= $member['address']; ?>" disabled>
-            </div>
-          </div>
+<form action="<?= base_url('admin/loans'); ?>" method="post">
+  <?= csrf_field(); ?>
+  <input type="hidden" name="member_uid" value="<?= $member['uid']; ?>">
+  <!-- Member -->
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title fw-semibold mb-3">Data Anggota</h5>
+      <div class="row">
+        <div class="col-12 col-md-6 mb-3">
+          <label for="member_name" class="form-label">Nama anggota</label>
+          <input type="text" class="form-control" id="member_name" name="member_name" value="<?= "{$member['first_name']} {$member['last_name']}"; ?>" disabled>
+        </div>
+        <div class="col-12 col-md-6 mb-3">
+          <label for="member_email" class="form-label">Email</label>
+          <input type="text" class="form-control" id="member_email" name="member_email" value="<?= $member['email']; ?>" disabled>
+        </div>
+        <div class="col-12 col-md-6 mb-3">
+          <label for="member_phone" class="form-label">Nomor telepon</label>
+          <input type="text" class="form-control" id="member_phone" name="member_phone" value="<?= $member['phone']; ?>" disabled>
+        </div>
+        <div class="col-12 col-md-6 mb-3">
+          <label for="member_address" class="form-label">Alamat</label>
+          <input type="text" class="form-control" id="member_address" name="member_address" value="<?= $member['address']; ?>" disabled>
         </div>
       </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
       <h5 class="card-title fw-semibold mb-4">Form Peminjaman Buku</h5>
       <div class="row">
         <?php foreach ($books as $book) : ?>
           <input type="hidden" name="slugs[]" value="<?= $book['slug']; ?>">
           <div class="col-12">
-            <div class="card overflow-hidden position-relative">
+            <div class="card border border-2 border-primary overflow-hidden position-relative">
               <div class="card-body">
                 <div class="position-absolute top-50 start-0 translate-middle-y border border-black me-4" style="background-image: url(<?= base_url(BOOK_COVER_URI) . $book['book_cover']; ?>); height: 160px; width: 120px; background-position: center; background-size: cover;">
                 </div>
@@ -98,9 +98,9 @@
         <?php endforeach; ?>
       </div>
       <button type="submit" class="btn btn-primary">Simpan</button>
-    </form>
+    </div>
   </div>
-</div>
+</form>
 <?= $this->endSection() ?>
 
 <?= $this->section('scripts') ?>
