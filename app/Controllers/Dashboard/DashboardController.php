@@ -231,7 +231,7 @@ class DashboardController extends ResourceController
 
         $totalArrears = $totalFines - $totalFinesPaid;
 
-        $oldestFineDate = Time::parse($this->fineModel->selectMin('created_at')->first()['created_at'], locale: 'id');
+        $oldestFineDate = Time::parse($this->fineModel->selectMin('created_at')->first()['created_at'] ?? 'now', locale: 'id');
 
         return [
             'arrears' => $arrears,

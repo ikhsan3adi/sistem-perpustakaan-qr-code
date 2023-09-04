@@ -89,7 +89,7 @@ class LoansController extends ResourceController
             throw new PageNotFoundException('Loan not found');
         }
 
-        if ($this->request->getGet('update-qr-code')) {
+        if ($this->request->getGet('update-qr-code') && $loan['return_date'] == null) {
             $qrGenerator = new QRGenerator();
             $qrCodeLabel = substr($loan['first_name'] . ($loan['last_name'] ? " {$loan['last_name']}" : ''), 0, 12) . '_' . substr($loan['title'], 0, 12);
             $qrCode = $qrGenerator->generateQRCode(
@@ -138,6 +138,10 @@ class LoansController extends ResourceController
                 ->orWhere('uid', $param)
                 ->findAll();
 
+            $members = array_filter($members, function ($member) {
+                return $member['deleted_at'] == null;
+            });
+
             if (empty($members)) {
                 return view('loans/member', ['msg' => 'Member not found']);
             }
@@ -171,6 +175,10 @@ class LoansController extends ResourceController
                 ->orLike('publisher', $param, insensitiveSearch: true)
                 ->orWhere('isbn', $param)
                 ->findAll();
+
+            $books = array_filter($books, function ($book) {
+                return $book['deleted_at'] == null;
+            });
 
             if (empty($books)) {
                 return view('loans/book', ['msg' => 'Book not found']);
