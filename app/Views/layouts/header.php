@@ -21,7 +21,7 @@
           <a href=" <?= base_url('admin/loans/new/members/search'); ?>" target="_blank" class="btn btn-primary">Ajukan peminjaman</a>
         </li>
         <li class="nav-item" id="navBtn">
-          <a href="<?= base_url('admin/returns/new'); ?>" target="_blank" class="btn btn-outline-primary">Pengembalian buku</a>
+          <a href="<?= base_url('admin/returns/new/search'); ?>" target="_blank" class="btn btn-outline-primary">Pengembalian buku</a>
         </li>
         <li class="nav-item" id="navBtn">
           <a href="<?= base_url('admin/fines/new'); ?>" target="_blank" class="btn btn-outline-warning">Bayar denda</a>

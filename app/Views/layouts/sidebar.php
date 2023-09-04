@@ -17,6 +17,11 @@ $sidebarNavs =
       'link' => '/admin/loans',
       'icon' => 'ti ti-arrows-exchange'
     ],
+    [
+      'name' => 'Pengembalian',
+      'link' => '/admin/returns',
+      'icon' => 'ti ti-check'
+    ],
     'Master',
     [
       'name' => 'Anggota',

@@ -48,6 +48,9 @@ $routes->group('admin', function (RouteCollection $routes) {
     $routes->get('loans/new/books/search', 'Loans\LoansController::searchBook');
     $routes->post('loans/new', 'Loans\LoansController::new');
     $routes->resource('loans', ['controller' => 'Loans\LoansController']);
+
+    $routes->get('returns/new/search', 'Loans\ReturnsController::searchLoan');
+    $routes->resource('returns', ['controller' => 'Loans\ReturnsController']);
 });
 
 /*
