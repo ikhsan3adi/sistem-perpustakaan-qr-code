@@ -72,8 +72,7 @@
                   </div>
                 </button>
               <?php else : ?>
-                <button class="d-block btn w-100 mb-2" disabled>
-                  <i class="ti ti-x"></i>
+                <button class="d-block btn btn-dark w-100 mb-2" disabled>
                   Stok habis
                 </button>
               <?php endif; ?>

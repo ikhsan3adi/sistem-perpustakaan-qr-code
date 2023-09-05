@@ -29,7 +29,7 @@ if (session()->getFlashdata('msg')) : ?>
           <div>
             <form action="" method="get">
               <div class="input-group mb-3">
-                <input type="text" class="form-control" name="search" value="<?= $search ?? ''; ?>" placeholder="Cari data pengembalian" aria-label="Cari peminjaman" aria-describedby="searchButton">
+                <input type="text" class="form-control" name="search" value="<?= $search ?? ''; ?>" placeholder="Cari data pengembalian" aria-label="Cari data pengembalian" aria-describedby="searchButton">
                 <button class="btn btn-outline-secondary" type="submit" id="searchButton">Cari</button>
               </div>
             </form>
@@ -96,13 +96,15 @@ if (session()->getFlashdata('msg')) : ?>
             </td>
             <td class="text-center"><?= $loan['quantity']; ?></td>
             <td>
-              <b><?= $loanCreateDate->toLocalizedString('dd/MM/y HH:mm:ss'); ?></b>
+              <b><?= $loanCreateDate->toLocalizedString('dd/MM/y'); ?></b><br>
+              <b><?= $loanCreateDate->toLocalizedString('HH:mm:ss'); ?></b>
             </td>
             <td>
               <b><?= $loanDueDate->toLocalizedString('dd/MM/y'); ?></b>
             </td>
             <td class="<?= $isLate ? 'text-danger-emphasis' : ''; ?>">
-              <b><?= $loanReturnDate->toLocalizedString('dd/MM/y HH:mm:ss'); ?></b>
+              <b><?= $loanReturnDate->toLocalizedString('dd/MM/y'); ?></b><br>
+              <b><?= $loanReturnDate->toLocalizedString('HH:mm:ss'); ?></b>
             </td>
             <td class="text-center">
               <div class="p-1 bg-<?= $isFinePaid ? 'success' : 'danger' ?>-subtle text-<?= $isFinePaid ? 'success' : 'danger' ?>-emphasis border border-<?= $isFinePaid ? 'success' : 'danger' ?>-subtle rounded-1">

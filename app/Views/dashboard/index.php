@@ -179,7 +179,7 @@
 
               $percentage = (($thisMonth - $lastMonth == 0 || $lastMonth == 0)
                 ? 0
-                : ($thisMonth - $lastMonth) / $lastMonth * 100);
+                : round(($thisMonth - $lastMonth) / $lastMonth * 100));
               ?>
               <div class="d-flex align-items-center mt-3">
                 <span class="me-1 rounded-circle <?= $percentage >= 0 ? 'bg-light-success' : 'bg-light-danger'; ?> round-20 d-flex align-items-center justify-content-center">

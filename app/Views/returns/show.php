@@ -5,6 +5,16 @@
 <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
+<style>
+  #qr-code {
+    background-image: url(<?= base_url(LOANS_QR_CODE_URI . $loan['loan_qr_code']); ?>);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    max-width: 500px;
+    height: 300px;
+  }
+</style>
 <?php
 
 use CodeIgniter\I18n\Time;
@@ -26,7 +36,7 @@ if (session()->getFlashdata('msg')) : ?>
   <div class="card-body">
     <div class="d-flex justify-content-between mb-4">
       <div>
-        <a href="<?= base_url('admin/returns'); ?>" class="btn btn-outline-primary">
+        <a href="<?= previous_url() ?>" class="btn btn-outline-primary">
           <i class="ti ti-arrow-left"></i>
           Kembali
         </a>
@@ -194,6 +204,7 @@ if (session()->getFlashdata('msg')) : ?>
       </div>
     </div>
   </div>
+  <!-- fines -->
   <div class="col-12 col-lg-4">
     <div class="card">
       <div class="card-body">
@@ -212,11 +223,20 @@ if (session()->getFlashdata('msg')) : ?>
           </span>
         </h5>
         <?php if ($isFined && !$isFinePaid) : ?>
-          <a href="<?= base_url('admin/fines/new'); ?>" class="btn btn-warning mt-3 w-100">
+          <a href="<?= base_url("admin/fines/pay/{$loan['uid']}"); ?>" class="btn btn-warning mt-3 w-100">
             Bayar denda
           </a>
         <?php endif; ?>
         <p class="mt-5" style="line-break: anywhere;">UID : <?= $loan['uid']; ?></p>
+        <div id="qr-code" class="m-auto d-flex">
+          <?php if (!file_exists(LOANS_QR_CODE_PATH . $loan['qr_code']) || empty($loan['qr_code'])) : ?>
+            <div class="m-auto">
+              <a href="<?= base_url("admin/returns/{$loan['uid']}?update-qr-code=true"); ?>" class="btn btn-outline-primary">
+                Generate QR Code
+              </a>
+            </div>
+          <?php endif; ?>
+        </div>
       </div>
     </div>
   </div>
