@@ -40,7 +40,7 @@ class ReturnsController extends ResourceController
         if ($this->request->getGet('search')) {
             $keyword = $this->request->getGet('search');
             $loans = $this->loanModel
-                ->select('members.*, members.uid as member_uid, books.*, fines.*, fines.id as fine_id, loans.*')
+                ->select('members.*, members.uid as member_uid, books.*, fines.*, fines.id as fine_id, fines.deleted_at as fine_deleted, loans.*')
                 ->join('members', 'loans.member_id = members.id', 'LEFT')
                 ->join('books', 'loans.book_id = books.id', 'LEFT')
                 ->join('fines', 'fines.loan_id = loans.id', 'LEFT')
@@ -52,7 +52,7 @@ class ReturnsController extends ResourceController
                 ->paginate($itemPerPage, 'returns');
         } else {
             $loans = $this->loanModel
-                ->select('members.*, members.uid as member_uid, books.*, fines.*, fines.id as fine_id, loans.*')
+                ->select('members.*, members.uid as member_uid, books.*, fines.*, fines.id as fine_id, fines.deleted_at as fine_deleted, loans.*')
                 ->join('members', 'loans.member_id = members.id', 'LEFT')
                 ->join('books', 'loans.book_id = books.id', 'LEFT')
                 ->join('fines', 'fines.loan_id = loans.id', 'LEFT')
@@ -60,7 +60,7 @@ class ReturnsController extends ResourceController
         }
 
         $loans = array_filter($loans, function ($loan) {
-            return $loan['deleted_at'] == null && $loan['return_date'] != null;
+            return $loan['deleted_at'] == null && $loan['return_date'] != null && $loan['fine_deleted'] == null;
         });
 
         $data = [
@@ -94,6 +94,34 @@ class ReturnsController extends ResourceController
 
         if (empty($loan)) {
             throw new PageNotFoundException('Loan not found');
+        }
+
+        if ($this->request->getGet('update-qr-code')) {
+            $qrGenerator = new QRGenerator();
+            $qrCodeLabel = substr($loan['first_name'] . ($loan['last_name'] ? " {$loan['last_name']}" : ''), 0, 12) . '_' . substr($loan['title'], 0, 12);
+            $qrCode = $qrGenerator->generateQRCode(
+                $loan['uid'],
+                labelText: $qrCodeLabel,
+                dir: LOANS_QR_CODE_PATH,
+                filename: $qrCodeLabel
+            );
+
+            // delete former qr code
+            deleteLoansQRCode($loan['qr_code']);
+
+            $this->loanModel->update($loan['id'], ['qr_code' => $qrCode]);
+
+            $loan = $this->loanModel
+                ->select('members.*, members.uid as member_uid, books.*, loans.*, loans.qr_code as loan_qr_code, book_stock.quantity as book_stock, racks.name as rack, categories.name as category')
+                ->join('members', 'loans.member_id = members.id', 'LEFT')
+                ->join('books', 'loans.book_id = books.id', 'LEFT')
+                ->join('book_stock', 'books.id = book_stock.book_id', 'LEFT')
+                ->join('racks', 'books.rack_id = racks.id', 'LEFT')
+                ->join('categories', 'books.category_id = categories.id', 'LEFT')
+                ->where('loans.uid', $uid)
+                ->first();
+
+            return redirect()->to("admin/returns/{$loan['uid']}");
         }
 
         $data = [
@@ -169,7 +197,7 @@ class ReturnsController extends ResourceController
         }
 
         $data = [
-            'loan'       => $loan[0],
+            'loan'       => $loan[array_key_first($loan)],
             'validation' => $validation ?? \Config\Services::validation()
         ];
 
@@ -192,19 +220,18 @@ class ReturnsController extends ResourceController
             throw new PageNotFoundException('Loan not found');
         }
 
-        if (!$this->loanModel->update($loan['id'], [
-            'return_date' => $date->toDateTimeString(),
-            'qr_code' => null
-        ])) {
-            session()->setFlashdata(['msg' => 'Update failed', 'error' => true]);
-            return redirect()->to('admin/returns/new?loan-uid=' . $loan['uid']);
-        }
-
         $loanDueDate = Time::parse($loan['due_date'], locale: 'id');
 
         $isLate = $date->isAfter($loanDueDate);
 
         if ($isLate) {
+            if (!$this->loanModel->update($loan['id'], [
+                'return_date' => $date->toDateTimeString()
+            ])) {
+                session()->setFlashdata(['msg' => 'Update failed', 'error' => true]);
+                return redirect()->to('admin/returns/new?loan-uid=' . $loan['uid']);
+            }
+
             $finePerDay = intval(getenv('amountFinesPerDay'));
             $daysLate = $date->today()->difference($loanDueDate)->getDays();
             $totalFine = abs($daysLate) * $loan['quantity'] * $finePerDay;
@@ -216,9 +243,16 @@ class ReturnsController extends ResourceController
                 session()->setFlashdata(['msg' => 'Update failed', 'error' => true]);
                 return redirect()->to('admin/returns/new?loan-uid=' . $loan['uid']);
             }
+        } else {
+            deleteLoansQRCode($loan['qr_code']);
+            if (!$this->loanModel->update($loan['id'], [
+                'return_date' => $date->toDateTimeString(),
+                'qr_code' => null
+            ])) {
+                session()->setFlashdata(['msg' => 'Update failed', 'error' => true]);
+                return redirect()->to('admin/returns/new?loan-uid=' . $loan['uid']);
+            }
         }
-
-        deleteLoansQRCode($loan['qr_code']);
 
         session()->setFlashdata(['msg' => 'Success', 'error' => false]);
         return redirect()->to('admin/returns');
@@ -231,7 +265,7 @@ class ReturnsController extends ResourceController
      */
     // public function edit($uid = null)
     // {
-    //     // Not implemented
+    //! Not implemented
     // }
 
     /**
@@ -241,7 +275,7 @@ class ReturnsController extends ResourceController
      */
     // public function update($uid = null)
     // {
-    //     // Not implemented
+    //! Not implemented
     // }
 
     /**
@@ -292,7 +326,7 @@ class ReturnsController extends ResourceController
 
         if ($isLate) {
             $fine = $this->fineModel->where('loan_id', $loan['id'])->first();
-            $this->fineModel->delete($fine['id']);
+            if (!empty($fine)) $this->fineModel->delete($fine['id']);
         }
 
         session()->setFlashdata(['msg' => 'Success', 'error' => false]);

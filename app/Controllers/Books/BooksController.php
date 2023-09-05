@@ -152,7 +152,7 @@ class BooksController extends ResourceController
             'year'      => 'required|numeric|min_length[4]|max_length[4]|less_than_equal_to[2100]',
             'rack'      => 'required|numeric',
             'category'  => 'required|numeric',
-            'stock'     => 'required|numeric',
+            'stock'     => 'required|numeric|greater_than_equal_to[1]',
         ])) {
             $categories = $this->categoryModel->findAll();
             $racks = $this->rackModel->findAll();
@@ -258,7 +258,7 @@ class BooksController extends ResourceController
             'year'      => 'required|numeric|min_length[4]|max_length[4]|less_than_equal_to[2100]',
             'rack'      => 'required|numeric',
             'category'  => 'required|numeric',
-            'stock'     => 'required|numeric',
+            'stock'     => 'required|numeric|greater_than_equal_to[1]',
         ])) {
             $categories = $this->categoryModel->findAll();
             $racks = $this->rackModel->findAll();

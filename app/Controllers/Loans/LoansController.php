@@ -63,6 +63,7 @@ class LoansController extends ResourceController
             'pager'         => $this->loanModel->pager,
             'currentPage'   => $this->request->getVar('page_loans') ?? 1,
             'itemPerPage'   => $itemPerPage,
+            'search'        => $this->request->getGet('search')
         ];
 
         return view('loans/index', $data);
@@ -363,7 +364,7 @@ class LoansController extends ResourceController
      */
     // public function edit($uid = null)
     // {
-    //     // Not implemented
+    //! Not implemented
     // }
 
     /**
@@ -373,7 +374,7 @@ class LoansController extends ResourceController
      */
     // public function update($uid = null)
     // {
-    //     // Not implemented
+    //! Not implemented
     // }
 
     /**

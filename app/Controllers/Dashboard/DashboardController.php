@@ -208,6 +208,9 @@ class DashboardController extends ResourceController
 
         $totalFinesPaid = array_reduce(
             array_map(function ($fine) {
+                if (($fine['amount_paid'] ?? 0) > $fine['fine_amount']) {
+                    return $fine['fine_amount'];
+                }
                 return $fine['amount_paid'];
             }, $fines),
             function ($carry, $item) {
@@ -221,7 +224,12 @@ class DashboardController extends ResourceController
         $arrears = [];
 
         foreach ($fines as $fine) {
-            $arrear = $carry + ($fine['fine_amount'] - $fine['amount_paid']);
+            $arrear = $carry;
+
+            if (($fine['amount_paid'] ?? 0) <= $fine['fine_amount']) {
+                $arrear = $carry + ($fine['fine_amount'] - $fine['amount_paid']);
+            }
+
             array_push($arrears, [
                 'arrear' => $arrear,
                 'date' => Time::parse($fine['created_at'], locale: 'id')->toLocalizedString('d MMMM Y')
