@@ -24,7 +24,7 @@
           <a href="<?= base_url('admin/returns/new/search'); ?>" target="_blank" class="btn btn-outline-primary">Pengembalian buku</a>
         </li>
         <li class="nav-item" id="navBtn">
-          <a href="<?= base_url('admin/fines/new'); ?>" target="_blank" class="btn btn-outline-warning">Bayar denda</a>
+          <a href="<?= base_url('admin/fines/returns/search'); ?>" target="_blank" class="btn btn-outline-warning">Bayar denda</a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link nav-icon-hover position-relative" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown" aria-expanded="false">

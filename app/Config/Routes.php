@@ -51,6 +51,10 @@ $routes->group('admin', function (RouteCollection $routes) {
 
     $routes->get('returns/new/search', 'Loans\ReturnsController::searchLoan');
     $routes->resource('returns', ['controller' => 'Loans\ReturnsController']);
+
+    $routes->get('fines/returns/search', 'Loans\FinesController::searchReturn');
+    $routes->get('fines/pay/(:any)', 'Loans\FinesController::pay/$1');
+    $routes->resource('fines', ['controller' => 'Loans\FinesController']);
 });
 
 /*

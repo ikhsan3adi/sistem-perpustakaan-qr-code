@@ -22,6 +22,11 @@ $sidebarNavs =
       'link' => '/admin/returns',
       'icon' => 'ti ti-check'
     ],
+    [
+      'name' => 'Denda',
+      'link' => '/admin/fines',
+      'icon' => 'ti ti-report-money'
+    ],
     'Master',
     [
       'name' => 'Anggota',
