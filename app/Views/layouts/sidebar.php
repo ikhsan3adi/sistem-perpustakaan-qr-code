@@ -57,9 +57,11 @@ $sidebarNavs =
   <div>
     <!-- Brand -->
     <div class="brand-logo d-flex align-items-center justify-content-between">
-      <a href="./index.html" class="text-nowrap logo-img">
-        <img src="../assets/images/logos/dark-logo.svg" width="180" alt="" />
-      </a>
+      <div class="pt-4 mx-auto">
+        <a href="<?= base_url(); ?>">
+          <h2>Buku<span class="text-primary">Hub</span></h2>
+        </a>
+      </div>
       <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
         <i class="ti ti-x fs-8"></i>
       </div>
