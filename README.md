@@ -1,6 +1,6 @@
 # BukuHub - Sistem Perpustakaan QR Code
 
-![Preview](https://github.com/ikhsan3adi/sistem-perpustakaan-qr-code/raw/master/screenshots/home.png)
+![Preview](https://github.com/ikhsan3adi/sistem-perpustakaan-qr-code/raw/main/screenshots/home.png)
 
 ## Fitur
 
@@ -53,6 +53,15 @@ composer install
 php spark migrate --all
 ```
 
+- (Opsional) Isi database dengan data dummy / seeder.
+
+```shell
+php spark db:seed Seeder # semua seeder
+php spark db:seed BookSeeder # buku
+php spark db:seed MemberSeeder # anggota
+php spark db:seed LoanSeeder # peminjaman, pengembalian & denda
+```
+
 ## Contributing
 
 Kami menerima kontribusi dari komunitas terbuka untuk meningkatkan aplikasi ini. Jika Anda menemukan masalah, bug, atau memiliki saran untuk peningkatan, silakan buat issue baru dalam repositori ini atau ajukan pull request.
@@ -64,7 +73,7 @@ Kami menerima kontribusi dari komunitas terbuka untuk meningkatkan aplikasi ini.
 
 ## Lisensi
 
-[![GitHub license](https://img.shields.io/github/license/ikhsan3adi/sistem-perpustakaan-qr-code?style=for-the-badge)](https://github.com/ikhsan3adi/sistem-perpustakaan-qr-code/raw/master/LICENSE)
+[![GitHub license](https://img.shields.io/github/license/ikhsan3adi/sistem-perpustakaan-qr-code?style=for-the-badge)](https://github.com/ikhsan3adi/sistem-perpustakaan-qr-code/raw/main/LICENSE)
 
 ## Authors
 
