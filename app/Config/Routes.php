@@ -36,7 +36,7 @@ $routes->get('/book', 'Home::book');
 
 service('auth')->routes($routes);
 
-$routes->group('admin', function (RouteCollection $routes) {
+$routes->group('admin', ['filter' => 'session'], static function (RouteCollection $routes) {
     $routes->get('/', 'Dashboard\DashboardController');
     $routes->get('dashboard', 'Dashboard\DashboardController');
 
