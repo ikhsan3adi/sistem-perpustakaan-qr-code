@@ -1,5 +1,7 @@
 # BukuHub - Sistem Perpustakaan QR Code
 
+[![PHP Composer](https://github.com/ikhsan3adi/sistem-perpustakaan-qr-code/actions/workflows/php.yml/badge.svg)](https://github.com/ikhsan3adi/sistem-perpustakaan-qr-code/actions/workflows/php.yml)
+
 ![Preview](https://github.com/ikhsan3adi/sistem-perpustakaan-qr-code/raw/main/screenshots/home.png)
 
 ## Fitur
@@ -61,6 +63,14 @@ php spark db:seed BookSeeder # buku
 php spark db:seed MemberSeeder # anggota
 php spark db:seed LoanSeeder # peminjaman, pengembalian & denda
 ```
+
+- Jalankan website
+
+```shell
+php spark serve
+```
+
+- Buka http://localhost:8080
 
 ## Contributing
 
