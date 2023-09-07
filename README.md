@@ -1,2 +1,71 @@
-# sistem-perpustakaan-qr-code
- Sistem informasi perpustakaan menggunakan teknologi qr code berbasis website
+# BukuHub - Sistem Perpustakaan QR Code
+
+![Preview](https://github.com/ikhsan3adi/sistem-perpustakaan-qr-code/raw/master/screenshots/home.png)
+
+## Fitur
+
+- Login, Register & Magic login link (via Email)
+- Dahsboard admin
+- QR Code anggota
+- QR Code peminjaman
+- Sistem denda
+- Dan lainnya.
+
+## Framework dan Library Yang Digunakan
+
+- [CodeIgniter 4](https://codeigniter.com/)
+- [CodeIgniter Shield](https://codeigniter4.github.io/shield/)
+- [Bootstrap 5](https://getbootstrap.com/)
+- [Modernize Free Bootstrap 5 Admin Template](https://adminmart.com/product/modernize-free-bootstrap-5-admin-template/)
+- [Endroid QR Code Generator](https://github.com/endroid/qr-code)
+- [Mebjas Html5-QRCode Scanner](https://github.com/mebjas/html5-qrcode)
+
+## Cara Penggunaan
+
+### Persyaratan
+
+- [Composer](https://getcomposer.org/).
+- PHP dan MySQL atau [XAMPP](https://www.apachefriends.org/download.html) versi 8.1+ dengan mengaktifkan extension `-intl` dan `-gd`.
+- Pastikan perangkat memiliki kamera/webcam untuk menjalankan qr scanner. Bisa juga menggunakan kamera HP dengan bantuan software DroidCam.
+
+### Instalasi
+
+- Unduh dan impor kode proyek ini ke dalam direktori proyek anda (htdocs).
+- Penting ⚠️. Ubah nama file `.env.example` menjadi `.env`
+- (Opsional) Konfigurasi file `.env` untuk mengatur parameter seperti koneksi database dan pengaturan lainnya sesuai dengan lingkungan pengembangan Anda.
+- Ubah denda per hari di file `.env`
+
+```
+# in rupiah
+amountFinesPerDay = 1000
+```
+
+- Penting ⚠️. Install dependencies yang diperlukan dengan cara menjalankan perintah berikut di terminal:
+
+```shell
+composer install
+```
+
+- Buat database `db_book_library` di phpMyAdmin / mysql
+- Penting ⚠️. Jalankan migrasi database untuk membuat struktur tabel yang diperlukan. Ketikkan perintah berikut di terminal:
+
+```shell
+php spark migrate --all
+```
+
+## Contributing
+
+Kami menerima kontribusi dari komunitas terbuka untuk meningkatkan aplikasi ini. Jika Anda menemukan masalah, bug, atau memiliki saran untuk peningkatan, silakan buat issue baru dalam repositori ini atau ajukan pull request.
+
+## Donasi
+
+[![Donate paypal](https://img.shields.io/badge/Donate-PayPal-green.svg?style=for-the-badge)](https://paypal.me/xannxett?country.x=ID&locale.x=en_US)
+[![Donate saweria](https://img.shields.io/badge/Donate-Saweria-red?style=for-the-badge&link=https%3A%2F%2Fsaweria.co%2Fxiboxann)](https://saweria.co/xiboxann)
+
+## Lisensi
+
+[![GitHub license](https://img.shields.io/github/license/ikhsan3adi/sistem-perpustakaan-qr-code?style=for-the-badge)](https://github.com/ikhsan3adi/sistem-perpustakaan-qr-code/raw/master/LICENSE)
+
+## Authors
+
+- [@ikhsan3adi](https://www.github.com/ikhsan3adi)
