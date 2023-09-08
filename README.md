@@ -7,7 +7,7 @@
 ## Fitur
 
 - Login, Register & Magic login link (via Email)
-- Dahsboard admin
+- Dashboard admin
 - QR Code anggota
 - QR Code peminjaman
 - Sistem denda
@@ -19,6 +19,8 @@
 - [CodeIgniter Shield](https://codeigniter4.github.io/shield/)
 - [Bootstrap 5](https://getbootstrap.com/)
 - [Modernize Free Bootstrap 5 Admin Template](https://adminmart.com/product/modernize-free-bootstrap-5-admin-template/)
+- [Tabler Icons](https://tabler-icons.io/)
+- [Apex Charts](https://apexcharts.com/)
 - [Endroid QR Code Generator](https://github.com/endroid/qr-code)
 - [Mebjas Html5-QRCode Scanner](https://github.com/mebjas/html5-qrcode)
 
