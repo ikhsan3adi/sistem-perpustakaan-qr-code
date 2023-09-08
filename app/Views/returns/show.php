@@ -218,10 +218,16 @@ if (session()->getFlashdata('msg')) : ?>
         <h5>Total denda : Rp<?= $loan['fine_amount'] ?? 0; ?></h5>
         <h5>Telah dibayar : Rp<?= $loan['amount_paid'] ?? 0; ?></h5>
         <h5>Sisa bayar : Rp<?= $loan['fine_amount'] - $loan['amount_paid']; ?></h5>
-        <h5 class="my-3">Status : <span class="p-1 bg-<?= $isFinePaid ? 'success' : 'danger' ?>-subtle text-<?= $isFinePaid ? 'success' : 'danger' ?>-emphasis border border-<?= $isFinePaid ? 'success' : 'danger' ?>-subtle rounded-1">
-            <?= $isFined ? ($isFinePaid ? 'Lunas' : 'Menunggak') : 'Selesai'; ?>
+        <h5 class="d-inline">Status : </h5>
+        <?php if ($isFinePaid) : ?>
+          <span class="badge bg-success rounded-3">
+            <h5 class="fw-semibold mb-0"><?= $isFined ? 'Lunas' : 'Selesai'; ?></h5>
           </span>
-        </h5>
+        <?php else : ?>
+          <span class="badge bg-danger rounded-3">
+            <h5 class="fw-semibold mb-0">Menunggak</h5>
+          </span>
+        <?php endif; ?>
         <?php if ($isFined && !$isFinePaid) : ?>
           <a href="<?= base_url("admin/fines/pay/{$loan['uid']}"); ?>" class="btn btn-warning mt-3 w-100">
             Bayar denda

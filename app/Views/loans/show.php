@@ -170,18 +170,28 @@ if (session()->getFlashdata('msg')) : ?>
         <div class="card" style="height: 180px;">
           <div class="card-body">
             <h2>
-              <?php if ($now->isBefore($dueDate)) : $status = 'Normal'; ?>
+              <?php if ($now->isBefore($dueDate)) : ?>
                 <i class="ti ti-clock-check"></i>
-              <?php elseif ($now->today()->equals($dueDate)) : $status = 'Jatuh tempo'; ?>
+              <?php elseif ($now->today()->equals($dueDate)) : ?>
                 <i class="ti ti-clock-exclamation"></i>
-              <?php else : $status = 'Terlambat'; ?>
+              <?php else : ?>
                 <i class="ti ti-clock-exclamation"></i>
               <?php endif; ?>
             </h2>
             <h5>Status: </h5>
-            <h4>
-              <span class="p-1 bg-<?= $isDueDate ? 'warning' : (!$isLate ? 'success' : 'danger') ?>-subtle text-<?= $isDueDate ? 'warning' : (!$isLate ? 'success' : 'danger') ?>-emphasis border border-<?= $isDueDate ? 'warning' : (!$isLate ? 'success' : 'danger') ?>-subtle rounded-1"><?= $status; ?></span>
-            </h4>
+            <?php if ($now->isBefore($dueDate)) : ?>
+              <span class="badge bg-success rounded-3">
+                <h5 class="fw-semibold mb-0">Normal</h5>
+              </span>
+            <?php elseif ($now->today()->equals($dueDate)) : ?>
+              <span class="badge bg-warning rounded-3">
+                <h5 class="fw-semibold mb-0">Jatuh tempo</h5>
+              </span>
+            <?php else : ?>
+              <span class="badge bg-danger rounded-3">
+                <h5 class="fw-semibold mb-0">Terlambat</h5>
+              </span>
+            <?php endif; ?>
           </div>
         </div>
       </div>

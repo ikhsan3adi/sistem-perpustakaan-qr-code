@@ -119,7 +119,7 @@ class FinesController extends ResourceController
             return view('fines/return', ['returns' => $returns]);
         }
 
-        return view('fines/search_loan');
+        return view('fines/search_return');
     }
 
     public function pay($uid = null, $validation = null, $oldInput = null)

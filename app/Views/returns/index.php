@@ -107,9 +107,11 @@ if (session()->getFlashdata('msg')) : ?>
               <b><?= $loanReturnDate->toLocalizedString('HH:mm:ss'); ?></b>
             </td>
             <td class="text-center">
-              <div class="p-1 bg-<?= $isFinePaid ? 'success' : 'danger' ?>-subtle text-<?= $isFinePaid ? 'success' : 'danger' ?>-emphasis border border-<?= $isFinePaid ? 'success' : 'danger' ?>-subtle rounded-1">
-                <b><?= $isFined ? ($isFinePaid ? 'Lunas' : 'Menunggak') : 'Selesai'; ?></b>
-              </div>
+              <?php if ($isFinePaid) : ?>
+                <span class="badge bg-success rounded-3 fw-semibold"><?= $isFined ? 'Lunas' : 'Selesai'; ?></span>
+              <?php else : ?>
+                <span class="badge bg-danger rounded-3 fw-semibold">Menunggak</span>
+              <?php endif; ?>
             </td>
             <td>
               <a href="<?= base_url("admin/returns/{$loan['uid']}"); ?>" class="d-block btn btn-primary w-100 mb-2">

@@ -58,9 +58,13 @@ if (empty($loans)) : ?>
               <b><?= $loanDueDate->toLocalizedString('dd/MM/y'); ?></b>
             </td>
             <td class="text-center">
-              <div class="p-1 bg-<?= $isDueDate ? 'warning' : (!$isLate ? 'success' : 'danger') ?>-subtle text-<?= $isDueDate ? 'warning' : (!$isLate ? 'success' : 'danger') ?>-emphasis border border-<?= $isDueDate ? 'warning' : (!$isLate ? 'success' : 'danger') ?>-subtle rounded-1">
-                <b><?= $status; ?></b>
-              </div>
+              <?php if ($now->isBefore($loanDueDate)) : ?>
+                <span class="badge bg-success rounded-3 fw-semibold">Normal</span>
+              <?php elseif ($now->today()->equals($loanDueDate)) : ?>
+                <span class="badge bg-warning rounded-3 fw-semibold">Jatuh tempo</span>
+              <?php else : ?>
+                <span class="badge bg-danger rounded-3 fw-semibold">Terlambat</span>
+              <?php endif; ?>
             </td>
             <td style="width: 120px;" class="text-center">
               <a href="<?= base_url("admin/returns/new?loan-uid={$loan['uid']}"); ?>" class="btn btn-primary mb-2">

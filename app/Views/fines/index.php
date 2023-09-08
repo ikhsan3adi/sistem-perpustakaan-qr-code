@@ -107,9 +107,7 @@ if (session()->getFlashdata('msg')) : ?>
             <td>
               <h5>Rp<?= $fine['amount_paid'] ?? 0; ?></h5>
               <?php if ($paidOffFilter || $fine['amount_paid'] >= $fine['fine_amount']) : ?>
-                <div class="text-center mt-4 p-1 bg-success-subtle text-success-emphasis border border-success-subtle rounded-1">
-                  <b>Lunas</b>
-                </div>
+                <span class="badge bg-success rounded-3 fw-semibold">Lunas</span>
               <?php endif; ?>
             </td>
             <td>

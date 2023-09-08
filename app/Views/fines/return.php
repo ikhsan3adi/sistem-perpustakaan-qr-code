@@ -42,9 +42,7 @@ if (empty($returns)) : ?>
           <td>
             <h5>Rp<?= $return['amount_paid'] ?? 0; ?></h5>
             <?php if ($return['amount_paid'] >= $return['fine_amount']) : ?>
-              <div class="text-center mt-4 p-1 bg-success-subtle text-success-emphasis border border-success-subtle rounded-1">
-                <b>Lunas</b>
-              </div>
+              <span class="badge bg-success rounded-3 fw-semibold">Lunas</span>
             <?php endif; ?>
           </td>
           <td>
