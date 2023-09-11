@@ -13,8 +13,6 @@
 <body class="position-relative">
   <!--  Body Wrapper -->
   <div class="background">
-    <div></div>
-    <div></div>
   </div>
 
   <div class="page-wrapper" id="main-wrapper">
