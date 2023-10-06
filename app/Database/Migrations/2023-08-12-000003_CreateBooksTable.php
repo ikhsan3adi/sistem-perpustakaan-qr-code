@@ -23,36 +23,64 @@ class CreateBooksTable extends Migration
                 'type'           => 'VARCHAR',
                 'constraint'     => 127
             ],
-            'author' => [
+            'edition' => [
                 'type'           => 'VARCHAR',
-                'constraint'     => 64
-            ],
-            'publisher' => [
-                'type'           => 'VARCHAR',
-                'constraint'     => 64
+                'constraint'     => 127,
+                'null'           => true,
             ],
             'isbn' => [
                 'type'           => 'VARCHAR',
-                'constraint'     => 13
+                'constraint'     => 20,
+                'null'           => true,
             ],
             'year' => [
-                'type'           => 'YEAR',
-                'constraint'     => 4
+                'type'           => 'VARCHAR',
+                'constraint'     => 20
             ],
-            'rack_id' => [
-                'type'           => 'INT',
-                'constraint'     => 11,
-                'unsigned'       => true,
+            'collation' => [
+                'type'           => 'VARCHAR',
+                'constraint'     => '50',
+                'null'           => true,
             ],
-            'category_id' => [
-                'type'           => 'INT',
-                'constraint'     => 11,
-                'unsigned'       => true,
+            'call_number' => [
+                'type'           => 'VARCHAR',
+                'constraint'     => '50',
+                'null'           => true,
+            ],
+            'language_id' => [
+                'type'           => 'VARCHAR',
+                'constraint'     => '5',
+                'default'        => 'en'
+            ],
+            'source' => [
+                'type'           => 'VARCHAR',
+                'constraint'     => '3',
+                'null'           => true,
             ],
             'book_cover' => [
                 'type'           => 'VARCHAR',
                 'constraint'     => 255,
                 'null'           => true,
+            ],
+            'file_att' => [
+                'type'           => 'VARCHAR',
+                'constraint'     => 255,
+                'null'           => true,
+            ],
+            'author_id' => [
+                'type'           => 'INT',
+                'constraint'     => 11,
+                'unsigned'       => true,
+            ],
+            'publisher_id' => [
+                'type'           => 'INT',
+                'constraint'     => 11,
+                'unsigned'       => true,
+            ],
+            'place_id' => [
+                'type'           => 'INT',
+                'constraint'     => 11,
+                'unsigned'       => true,
             ],
             'created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NULL',
             'updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NULL',
@@ -62,12 +90,6 @@ class CreateBooksTable extends Migration
         $this->forge->addPrimaryKey('id');
 
         $this->forge->addUniqueKey('slug');
-
-        // rack id foreign key
-        $this->forge->addForeignKey('rack_id', 'racks', 'id', 'CASCADE', 'NO ACTION');
-
-        // category id foreign key
-        $this->forge->addForeignKey('category_id', 'categories', 'id', 'CASCADE', 'NO ACTION');
 
         $this->forge->createTable('books', TRUE);
     }

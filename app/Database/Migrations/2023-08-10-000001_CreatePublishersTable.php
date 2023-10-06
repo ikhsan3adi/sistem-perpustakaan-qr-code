@@ -4,7 +4,7 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class CreateRacksTable extends Migration
+class CreatePublishersTable extends Migration
 {
     public function up()
     {
@@ -17,12 +17,7 @@ class CreateRacksTable extends Migration
             ],
             'name' => [
                 'type'           => 'VARCHAR',
-                'constraint'     => 8,
-            ],
-            'floor' => [
-                'type'           => 'VARCHAR',
-                'constraint'     => 16,
-                'default'        => 1
+                'constraint'     => 255,
             ],
             'created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NULL',
             'updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NULL',
@@ -31,11 +26,11 @@ class CreateRacksTable extends Migration
 
         $this->forge->addPrimaryKey('id');
 
-        $this->forge->createTable('racks', TRUE);
+        $this->forge->createTable('publishers', TRUE);
     }
 
     public function down()
     {
-        $this->forge->dropTable('racks');
+        $this->forge->dropTable('publishers');
     }
 }

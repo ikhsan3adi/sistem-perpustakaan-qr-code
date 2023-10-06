@@ -4,7 +4,7 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class CreateCategoriesTable extends Migration
+class CreatePlacesTable extends Migration
 {
     public function up()
     {
@@ -17,7 +17,7 @@ class CreateCategoriesTable extends Migration
             ],
             'name' => [
                 'type'           => 'VARCHAR',
-                'constraint'     => 64,
+                'constraint'     => 255,
             ],
             'created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NULL',
             'updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NULL',
@@ -26,11 +26,11 @@ class CreateCategoriesTable extends Migration
 
         $this->forge->addPrimaryKey('id');
 
-        $this->forge->createTable('categories', TRUE);
+        $this->forge->createTable('places', TRUE);
     }
 
     public function down()
     {
-        $this->forge->dropTable('categories');
+        $this->forge->dropTable('places');
     }
 }
