@@ -71,9 +71,9 @@ if (session()->getFlashdata('msg')) : ?>
 
     $bookData = [
       'Judul buku'    => [$loan['title']],
-      'Pengarang'     => $loan['author'],
+      'Penulis'       => $loan['author'],
       'Penerbit'      => $loan['publisher'],
-      'Rak'           => $loan['rack']
+      'Tempat Terbit' => $loan['place']
     ];
     ?>
     <div class="row mb-3">

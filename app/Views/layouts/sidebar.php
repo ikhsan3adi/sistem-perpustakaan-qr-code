@@ -39,14 +39,19 @@ $sidebarNavs =
       'icon' => 'ti ti-book'
     ],
     [
-      'name' => 'Kategori',
-      'link' => '/admin/categories',
-      'icon' => 'ti ti-category-2'
+      'name' => 'Penulis',
+      'link' => '/admin/authors',
+      'icon' => 'ti ti-pencil'
     ],
     [
-      'name' => 'Rak',
-      'link' => '/admin/racks',
-      'icon' => 'ti ti-columns'
+      'name' => 'Penerbit',
+      'link' => '/admin/publishers',
+      'icon' => 'ti ti-building-warehouse'
+    ],
+    [
+      'name' => 'Tempat Terbit',
+      'link' => '/admin/places',
+      'icon' => 'ti ti-home-edit'
     ],
   ];
 ?>

@@ -63,12 +63,15 @@ $coverImageFilePath = BOOK_COVER_URI . $book['book_cover'];
       </div>
       <div class="col-12 col-lg-8 d-flex flex-wrap">
         <div class="w-100 mb-2">
-          <h2 class="mb-2"><?= $book['title']; ?></h2>
+          <h2 class="mb-4"><?= $book['title']; ?></h2>
+          <?php if ($book['edition']) : ?>
+            <h5>Edisi: <?= $book['edition']; ?></h5>
+          <?php endif; ?>
+          <h5>Bahasa: <?= $book['language_id']; ?></h5>
           <h5>Tahun: <?= $book['year']; ?></h5>
-          <h5>Pengarang: <?= $book['author']; ?></h5>
+          <h5>Penulis: <?= $book['author']; ?></h5>
           <h5>Penerbit: <?= $book['publisher']; ?></h5>
-          <h5>Kategori: <?= $book['category']; ?></h5>
-          <h5>Rak: <?= $book['rack']; ?>, Lantai <?= $book['floor']; ?></h5>
+          <h5>Tempat Terbit: <?= $book['place']; ?></h5>
         </div>
       </div>
     </div>

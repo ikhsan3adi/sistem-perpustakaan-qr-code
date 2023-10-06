@@ -1,7 +1,7 @@
 <?= $this->extend('layouts/admin_layout') ?>
 
 <?= $this->section('head') ?>
-<title>Rak Buku</title>
+<title>Penerbit Buku</title>
 <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
@@ -17,11 +17,11 @@
 <div class="card">
   <div class="card-body">
     <div class="d-flex justify-content-between mb-2">
-      <h5 class="card-title fw-semibold mb-4">Data Rak</h5>
+      <h5 class="card-title fw-semibold mb-4">Data Penerbit</h5>
       <div>
-        <a href="<?= base_url('admin/racks/new'); ?>" class="btn btn-primary">
+        <a href="<?= base_url('admin/publishers/new'); ?>" class="btn btn-primary">
           <i class="ti ti-plus"></i>
-          Tambah Rak
+          Tambah Penerbit
         </a>
       </div>
     </div>
@@ -29,35 +29,31 @@
       <thead class="table-light">
         <tr>
           <th scope="col">#</th>
-          <th scope="col">Rak</th>
-          <th scope="col" class="text-center">Lantai</th>
-          <th scope="col" class="text-center">Jumlah buku</th>
+          <th scope="col">Nama Penerbit</th>
+          <th scope="col" class="text-center">Jumlah Buku</th>
           <th scope="col" class="text-center">Aksi</th>
         </tr>
       </thead>
       <tbody class="table-group-divider">
         <?php $i = 1 + ($itemPerPage * ($currentPage - 1)) ?>
-        <?php foreach ($racks as $key => $rack) : ?>
+        <?php foreach ($publishers as $key => $publisher) : ?>
           <tr>
             <th scope="row"><?= $i++; ?></th>
             <td>
-              <a href="<?= base_url("admin/racks/{$rack['id']}"); ?>" class="text-primary-emphasis text-decoration-underline">
-                <b><?= $rack['name']; ?></b>
+              <a href="<?= base_url("admin/publishers/{$publisher['id']}"); ?>" class="text-primary-emphasis text-decoration-underline">
+                <b><?= $publisher['name']; ?></b>
               </a>
             </td>
             <td class="text-center">
-              <?= $rack['floor']; ?>
-            </td>
-            <td class="text-center">
-              <?= $bookCountInRacks[$key]; ?>
+              <?= $bookCountInPublishers[$key]; ?>
             </td>
             <td>
               <div class="d-flex justify-content-center gap-2">
-                <a href="<?= base_url("admin/racks/{$rack['id']}/edit"); ?>" class="btn btn-primary mb-2">
+                <a href="<?= base_url("admin/publishers/{$publisher['id']}/edit"); ?>" class="btn btn-primary mb-2">
                   <i class="ti ti-edit"></i>
                   Edit
                 </a>
-                <form action="<?= base_url("admin/racks/{$rack['id']}"); ?>" method="post">
+                <form action="<?= base_url("admin/publishers/{$publisher['id']}"); ?>" method="post">
                   <?= csrf_field(); ?>
                   <input type="hidden" name="_method" value="DELETE">
                   <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?');">
@@ -71,7 +67,7 @@
         <?php endforeach; ?>
       </tbody>
     </table>
-    <?= $pager->links('racks', 'my_pager'); ?>
+    <?= $pager->links('publishers', 'my_pager'); ?>
   </div>
 </div>
 <?= $this->endSection() ?>

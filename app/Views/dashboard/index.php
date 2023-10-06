@@ -36,31 +36,31 @@
       </div>
     </a>
   </div>
-  <!-- RACKS -->
+  <!-- AUTHORS -->
   <div class="col-lg-3 col-6">
-    <a href="<?= base_url('admin/racks'); ?>">
+    <a href="<?= base_url('admin/authors'); ?>">
       <div class="card">
         <div class="card-body">
           <h2>
-            <i class="ti ti-columns"></i>
+            <i class="ti ti-pencil"></i>
           </h2>
           <h3>
-            <?= count($racks); ?> Rak Buku
+            <?= count($authors); ?> Penulis Buku
           </h3>
         </div>
       </div>
     </a>
   </div>
-  <!-- CATEGORIES -->
+  <!-- PUBLISHERS -->
   <div class="col-lg-3 col-6">
-    <a href="<?= base_url('admin/categories'); ?>">
+    <a href="<?= base_url('admin/publishers'); ?>">
       <div class="card">
         <div class="card-body">
           <h2>
-            <i class="ti ti-category-2"></i>
+            <i class="ti ti-building-warehouse"></i>
           </h2>
           <h3>
-            <?= count($categories); ?> Kategori
+            <?= count($publishers); ?> Penerbit
           </h3>
         </div>
       </div>

@@ -1,7 +1,7 @@
 <?= $this->extend('layouts/admin_layout') ?>
 
 <?= $this->section('head') ?>
-<title>Edit Kategori</title>
+<title>Ubah Penerbit Buku</title>
 <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
@@ -21,15 +21,19 @@
 
 <div class="card">
   <div class="card-body">
-    <h5 class="card-title fw-semibold">Edit Kategori</h5>
-    <form action="<?= base_url('admin/categories/' . $category['id']); ?>" method="post">
+    <h5 class="card-title fw-semibold">Edit Penerbit</h5>
+    <form action="<?= base_url('admin/publishers/' . $publisher['id']); ?>" method="post">
       <?= csrf_field(); ?>
       <input type="hidden" name="_method" value="PUT">
-      <div class="my-3">
-        <label for="category" class="form-label">Nama kategori</label>
-        <input type="text" class="form-control <?php if ($validation->hasError('category')) : ?>is-invalid<?php endif ?>" id="category" name="category" value="<?= $oldInput['category'] ?? $category['name']; ?>" required>
-        <div class="invalid-feedback">
-          <?= $validation->getError('category'); ?>
+      <div class="row">
+        <div class="col-12">
+          <div class="my-3">
+            <label for="publisher" class="form-label">Nama penerbit</label>
+            <input type="text" class="form-control <?php if ($validation->hasError('publisher')) : ?>is-invalid<?php endif ?>" id="publisher" name="publisher" value="<?= $oldInput['publisher'] ?? $publisher['name']; ?>" placeholder="Penerbit" required>
+            <div class="invalid-feedback">
+              <?= $validation->getError('publisher'); ?>
+            </div>
+          </div>
         </div>
       </div>
       <button type="submit" class="btn btn-primary">Simpan</button>

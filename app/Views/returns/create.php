@@ -69,12 +69,12 @@ $daysLate = $now->today()->difference($loanDueDate)->getDays();
               <input type="text" class="form-control" id="book_title" name="book_title" value="<?= "{$loan['title']} ({$loan['year']})"; ?>" disabled>
             </div>
             <div class="col-12 mb-3">
-              <label for="book_author" class="form-label">Pengarang & Penerbit</label>
-              <input type="text" class="form-control" id="book_author" name="book_author" value="<?= "{$loan['author']}; {$loan['publisher']}"; ?>" disabled>
+              <label for="book_author" class="form-label">Pengarang</label>
+              <input type="text" class="form-control" id="book_author" name="book_author" value="<?= $loan['author']; ?>" disabled>
             </div>
             <div class="col-12 mb-3">
-              <label for="book_category" class="form-label">Kategori</label>
-              <input type="text" class="form-control" id="book_category" name="book_category" value="<?= $loan['category']; ?>" disabled>
+              <label for="book_publisher" class="form-label">Penerbit</label>
+              <input type="text" class="form-control" id="book_publisher" name="book_publisher" value="<?= $loan['publisher']; ?>" disabled>
             </div>
             <div class="col-12 mb-3">
               <label for="quantity" class="form-label">Jumlah</label>

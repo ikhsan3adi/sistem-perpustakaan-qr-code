@@ -88,7 +88,7 @@ if (session()->getFlashdata('msg')) : ?>
             <td>
               <a href="<?= base_url("admin/books/{$loan['slug']}"); ?>">
                 <p class="text-primary-emphasis text-decoration-underline"><b><?= "{$loan['title']} ({$loan['year']})"; ?></b></p>
-                <p class="text-body"><?= "Author: {$loan['author']}"; ?></p>
+                <p class="text-body"><?= "Penulis: {$loan['author']}"; ?></p>
               </a>
             </td>
             <td class="text-center"><?= $loan['quantity']; ?></td>

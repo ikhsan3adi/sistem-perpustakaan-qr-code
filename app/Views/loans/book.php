@@ -10,8 +10,6 @@
         <th scope="col">Sampul</th>
         <th scope="col">Judul</th>
         <th scope="col">Penerbit</th>
-        <th scope="col">Kategori</th>
-        <th scope="col">Rak</th>
         <th scope="col">Stok tersisa</th>
         <th scope="col" class="text-center">Aksi</th>
       </tr>
@@ -36,11 +34,12 @@
             </td>
             <td>
               <p><b><?= "{$book['title']} ({$book['year']})"; ?></b></p>
-              <p class="text-body"><?= "Author: {$book['author']}"; ?></p>
+              <p class="text-body"><?= "Penulis: {$book['author']}"; ?></p>
             </td>
-            <td><?= $book['publisher']; ?></td>
-            <td><?= $book['category']; ?></td>
-            <td><?= $book['rack']; ?></td>
+            <td>
+              <p><?= $book['publisher']; ?></p>
+              Tempat terbit: <?= $book['place']; ?>
+            </td>
             <td><?= $book['stock']; ?></td>
             <td style="width: 120px;" class="text-center">
               <?php if (intval($book['stock'] ?? 0) > 0) :

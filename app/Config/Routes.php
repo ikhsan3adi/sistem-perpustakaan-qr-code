@@ -42,8 +42,9 @@ $routes->group('admin', ['filter' => 'session'], static function (RouteCollectio
 
     $routes->resource('members', ['controller' => 'Members\MembersController']);
     $routes->resource('books', ['controller' => 'Books\BooksController']);
-    $routes->resource('categories', ['controller' => 'Books\CategoriesController']);
-    $routes->resource('racks', ['controller' => 'Books\RacksController']);
+    $routes->resource('authors', ['controller' => 'Books\AuthorsController']);
+    $routes->resource('publishers', ['controller' => 'Books\PublishersController']);
+    $routes->resource('places', ['controller' => 'Books\PlacesController']);
 
     $routes->get('loans/new/members/search', 'Loans\LoansController::searchMember');
     $routes->get('loans/new/books/search', 'Loans\LoansController::searchBook');

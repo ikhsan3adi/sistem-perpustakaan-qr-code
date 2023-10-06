@@ -19,10 +19,12 @@
     <div class="row mb-2">
       <div class="col-12 col-lg-5">
         <h5 class="card-title fw-semibold mb-4">
-          <?php if (isset($category)) : ?>
-            <?= 'Data Buku Kategori ' . $category; ?>
-          <?php elseif (isset($rack)) : ?>
-            <?= 'Data Buku Rak ' . $rack; ?>
+          <?php if (isset($author)) : ?>
+            <?= 'Data Buku Penulis ' . $author; ?>
+          <?php elseif (isset($publisher)) : ?>
+            <?= 'Data Buku Penerbit ' . $publisher; ?>
+          <?php elseif (isset($place)) : ?>
+            <?= 'Data Buku Tempat Terbit ' . $place; ?>
           <?php else : ?>
             Data Buku
           <?php endif; ?>
@@ -53,8 +55,9 @@
           <th scope="col">#</th>
           <th scope="col">Sampul</th>
           <th scope="col">Judul</th>
-          <th scope="col">Kategori</th>
-          <th scope="col">Rak</th>
+          <th scope="col">Penulis</th>
+          <th scope="col">Bahasa</th>
+          <th scope="col">Penerbit</th>
           <th scope="col">Jumlah</th>
           <th scope="col" class="text-center">Aksi</th>
         </tr>
@@ -63,7 +66,7 @@
         <?php $i = 1 + ($itemPerPage * ($currentPage - 1)) ?>
         <?php if (empty($books)) : ?>
           <tr>
-            <td class="text-center" colspan="7"><b>Tidak ada data</b></td>
+            <td class="text-center" colspan="8"><b>Tidak ada data</b></td>
           </tr>
         <?php endif; ?>
         <?php foreach ($books as $book) : ?>
@@ -82,11 +85,15 @@
             <td>
               <a href="<?= base_url("admin/books/{$book['slug']}"); ?>">
                 <p class="text-primary-emphasis text-decoration-underline"><b><?= "{$book['title']} ({$book['year']})"; ?></b></p>
-                <p class="text-body"><?= "Author: {$book['author']}"; ?></p>
+                <p><b><?= $book['edition'] ? "Edisi: " . $book['edition'] : ''; ?></b></p>
               </a>
             </td>
-            <td><?= $book['category']; ?></td>
-            <td><?= $book['rack']; ?></td>
+            <td><?= $book['author']; ?></td>
+            <td><?= $book['language_id']; ?></td>
+            <td>
+              <p><b><?= $book['publisher']; ?></b></p>
+              <p>Tempat Terbit: <b><?= $book['place']; ?></b></p>
+            </td>
             <td><?= $book['quantity']; ?></td>
             <td>
               <a href="<?= base_url("admin/books/{$book['slug']}/edit"); ?>" class="d-block btn btn-primary w-100 mb-2">

@@ -1,7 +1,7 @@
 <?= $this->extend('layouts/admin_layout') ?>
 
 <?= $this->section('head') ?>
-<title>Ubah Rak Buku</title>
+<title>Ubah Penulis Buku</title>
 <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
@@ -21,26 +21,26 @@
 
 <div class="card">
   <div class="card-body">
-    <h5 class="card-title fw-semibold">Edit Rak</h5>
-    <form action="<?= base_url('admin/racks/' . $rack['id']); ?>" method="post">
+    <h5 class="card-title fw-semibold">Edit Penulis</h5>
+    <form action="<?= base_url('admin/authors/' . $author['id']); ?>" method="post">
       <?= csrf_field(); ?>
       <input type="hidden" name="_method" value="PUT">
       <div class="row">
         <div class="col-12 col-md-6">
           <div class="my-3">
-            <label for="rack" class="form-label">Nama rak</label>
-            <input type="text" class="form-control <?php if ($validation->hasError('rack')) : ?>is-invalid<?php endif ?>" id="rack" name="rack" value="<?= $oldInput['rack'] ?? $rack['name']; ?>" placeholder="'1A', 'A1'" required>
+            <label for="author" class="form-label">Nama penulis</label>
+            <input type="text" class="form-control <?php if ($validation->hasError('author')) : ?>is-invalid<?php endif ?>" id="author" name="author" value="<?= $oldInput['author'] ?? $author['name']; ?>" placeholder="Penulis" required>
             <div class="invalid-feedback">
-              <?= $validation->getError('rack'); ?>
+              <?= $validation->getError('author'); ?>
             </div>
           </div>
         </div>
         <div class="col-12 col-md-6">
           <div class="my-3">
-            <label for="floor" class="form-label">Lantai</label>
-            <input type="text" class="form-control <?php if ($validation->hasError('floor')) : ?>is-invalid<?php endif ?>" id="floor" name="floor" value="<?= $oldInput['floor'] ?? $rack['floor']; ?>" placeholder="Floor: 1">
+            <label for="year" class="form-label">Tahun</label>
+            <input type="number" class="form-control <?php if ($validation->hasError('year')) : ?>is-invalid<?php endif ?>" id="year" name="year" minlength="4" maxlength="4" value="<?= $oldInput['year'] ?? $author['year']; ?>" placeholder="1999">
             <div class="invalid-feedback">
-              <?= $validation->getError('floor'); ?>
+              <?= $validation->getError('year'); ?>
             </div>
           </div>
         </div>

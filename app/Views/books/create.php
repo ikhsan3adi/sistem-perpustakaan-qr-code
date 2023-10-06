@@ -49,33 +49,52 @@
             </div>
           </div>
           <div class="mb-3">
-            <label for="author" class="form-label">Pengarang</label>
-            <input type="text" class="form-control <?php if ($validation->hasError('author')) : ?>is-invalid<?php endif ?>" id="author" name="author" value="<?= $oldInput['author'] ?? ''; ?>" required>
+            <label for="edition" class="form-label">Edisi</label>
+            <input type="text" class="form-control <?php if ($validation->hasError('edition')) : ?>is-invalid<?php endif ?>" id="edition" name="edition" value="<?= $oldInput['edition'] ?? ''; ?>">
             <div class="invalid-feedback">
-              <?= $validation->getError('author'); ?>
+              <?= $validation->getError('edition'); ?>
             </div>
           </div>
           <div class="mb-3">
-            <label for="publisher" class="form-label">Penerbit</label>
-            <input type="text" class="form-control <?php if ($validation->hasError('publisher')) : ?>is-invalid<?php endif ?>" id="publisher" name="publisher" value="<?= $oldInput['publisher'] ?? ''; ?>" required>
+            <label for="author" class="form-label">Penulis</label>
+            <select class="form-select <?php if ($validation->hasError('author')) : ?>is-invalid<?php endif ?>" aria-label="Select author" id="author" name="author" value="<?= $oldInput['author'] ?? ''; ?>" required>
+              <option>--Pilih penulis--</option>
+              <?php foreach ($authors as $author) : ?>
+                <option value="<?= $author['id']; ?>" <?= ($oldInput['author'] ?? '') == $author['id'] ? 'selected' : ''; ?>><?= $author['name']; ?></option>
+              <?php endforeach; ?>
+            </select>
             <div class="invalid-feedback">
-              <?= $validation->getError('publisher'); ?>
+              <?= $validation->getError('author'); ?>
             </div>
           </div>
         </div>
       </div>
       <div class="row">
-        <div class="col-12 col-md-6 mb-3">
-          <label for="isbn" class="form-label">ISBN</label>
-          <input type="number" class="form-control <?php if ($validation->hasError('isbn')) : ?>is-invalid<?php endif ?>" id="isbn" name="isbn" minlength="10" maxlength="13" aria-describedby="isbnHelp" value="<?= $oldInput['isbn'] ?? ''; ?>" required>
-          <div id="isbnHelp" class="form-text">
-            ISBN must be 10-13 characters long, contain only numbers.
-          </div>
+        <div class="col-12 col-md-6 col-lg-4 mb-3">
+          <label for="publisher" class="form-label">Penerbit</label>
+          <select class="form-select <?php if ($validation->hasError('publisher')) : ?>is-invalid<?php endif ?>" aria-label="Select publisher" id="publisher" name="publisher" value="<?= $oldInput['publisher'] ?? ''; ?>" required>
+            <option>--Pilih penerbit--</option>
+            <?php foreach ($publishers as $publisher) : ?>
+              <option value="<?= $publisher['id']; ?>" <?= ($oldInput['publisher'] ?? '') == $publisher['id'] ? 'selected' : ''; ?>><?= $publisher['name']; ?></option>
+            <?php endforeach; ?>
+          </select>
           <div class="invalid-feedback">
-            <?= $validation->getError('isbn'); ?>
+            <?= $validation->getError('publisher'); ?>
           </div>
         </div>
-        <div class="col-12 col-md-6 mb-3">
+        <div class="col-12 col-md-6 col-lg-4 mb-3">
+          <label for="place" class="form-label">Tempat Terbit</label>
+          <select class="form-select <?php if ($validation->hasError('place')) : ?>is-invalid<?php endif ?>" aria-label="Select place" id="place" name="place" value="<?= $oldInput['place'] ?? ''; ?>" required>
+            <option>--Pilih tempat--</option>
+            <?php foreach ($places as $place) : ?>
+              <option value="<?= $place['id']; ?>" <?= ($oldInput['place'] ?? '') == $place['id'] ? 'selected' : ''; ?>><?= $place['name']; ?></option>
+            <?php endforeach; ?>
+          </select>
+          <div class="invalid-feedback">
+            <?= $validation->getError('place'); ?>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4 mb-3">
           <label for="year" class="form-label">Tahun terbit</label>
           <input type="number" class="form-control <?php if ($validation->hasError('year')) : ?>is-invalid<?php endif ?>" id="year" name="year" minlength="4" maxlength="4" value="<?= $oldInput['year'] ?? ''; ?>" required>
           <div class="invalid-feedback">
@@ -85,30 +104,33 @@
       </div>
       <div class="row">
         <div class="col-12 col-md-6 col-lg-4 mb-3">
-          <label for="rack" class="form-label">Rak</label>
-          <select class="form-select <?php if ($validation->hasError('rack')) : ?>is-invalid<?php endif ?>" aria-label="Select rack" id="rack" name="rack" value="<?= $oldInput['rack'] ?? ''; ?>" required>
-            <option>--Pilih rak--</option>
-            <?php foreach ($racks as $rack) : ?>
-              <option value="<?= $rack['id']; ?>" <?= ($oldInput['rack'] ?? '') == $rack['id'] ? 'selected' : ''; ?>><?= $rack['name']; ?></option>
+          <label for="language" class="form-label">Bahasa</label>
+          <select class="form-select <?php if ($validation->hasError('language')) : ?>is-invalid<?php endif ?>" aria-label="Select language" id="language" name="language" value="<?= $oldInput['language'] ?? ''; ?>">
+            <?php
+            $languages = [
+              ['id' => 'en', 'name' => 'en: English'],
+              ['id' => 'id', 'name' => 'id: Bahasa Indonesia']
+            ];
+            ?>
+            <?php foreach ($languages as $language) : ?>
+              <option value="<?= $language['id']; ?>" <?= ($oldInput['language'] ?? '') == $language['id'] ? 'selected' : ''; ?>><?= $language['name']; ?></option>
             <?php endforeach; ?>
           </select>
           <div class="invalid-feedback">
-            <?= $validation->getError('rack'); ?>
+            <?= $validation->getError('language'); ?>
           </div>
         </div>
         <div class="col-12 col-md-6 col-lg-4 mb-3">
-          <label for="category" class="form-label">Kategori</label>
-          <select class="form-select <?php if ($validation->hasError('category')) : ?>is-invalid<?php endif ?>" aria-label="Select category" id="category" name="category" value="<?= $oldInput['category'] ?? ''; ?>" required>
-            <option>--Pilih category--</option>
-            <?php foreach ($categories as $category) : ?>
-              <option value="<?= $category['id']; ?>" <?= ($oldInput['category'] ?? '') == $category['id'] ? 'selected' : ''; ?>><?= $category['name']; ?></option>
-            <?php endforeach; ?>
-          </select>
+          <label for="isbn" class="form-label">ISBN</label>
+          <input type="number" class="form-control <?php if ($validation->hasError('isbn')) : ?>is-invalid<?php endif ?>" id="isbn" name="isbn" minlength="10" maxlength="13" aria-describedby="isbnHelp" value="<?= $oldInput['isbn'] ?? ''; ?>" required>
+          <div id="isbnHelp" class="form-text">
+            ISBN must be 10-13 characters long, contain only numbers.
+          </div>
           <div class="invalid-feedback">
-            <?= $validation->getError('category'); ?>
+            <?= $validation->getError('isbn'); ?>
           </div>
         </div>
-        <div class="col-12 col-lg-4 mb-3">
+        <div class="col-12 col-md-6 col-lg-4 mb-3">
           <label for="stock" class="form-label">Jumlah stok buku</label>
           <input type="number" class="form-control <?php if ($validation->hasError('stock')) : ?>is-invalid<?php endif ?>" id="stock" name="stock" value="<?= $oldInput['stock'] ?? ''; ?>" required>
           <div class="invalid-feedback">
