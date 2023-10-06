@@ -4,31 +4,16 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class BookModel extends Model
+class PublisherModel extends Model
 {
     protected $DBGroup          = 'default';
-    protected $table            = 'books';
+    protected $table            = 'publishers';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
-    protected $useSoftDeletes   = true;
+    protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = [
-        'slug',
-        'title',
-        'edition',
-        'isbn',
-        'year',
-        'collation',
-        'call_number',
-        'language_id',
-        'source',
-        'book_cover',
-        'file_att',
-        'author_id',
-        'publisher_id',
-        'place_id',
-    ];
+    protected $allowedFields    = ['name'];
 
     // Dates
     protected $useTimestamps = true;

@@ -4,16 +4,21 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class RackModel extends Model
+class AuthorModel extends Model
 {
     protected $DBGroup          = 'default';
-    protected $table            = 'racks';
+    protected $table            = 'authors';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
-    protected $useSoftDeletes   = true;
+    protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['name', 'floor'];
+    protected $allowedFields    = [
+        'name',
+        'year',
+        'authority_type',
+        'auth_list'
+    ];
 
     // Dates
     protected $useTimestamps = true;
