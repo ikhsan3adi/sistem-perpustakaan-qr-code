@@ -94,16 +94,16 @@ class FinesController extends ResourceController
             if (empty($param)) return;
 
             $returns = $this->loanModel
-                ->select('members.*, books.*, fines.*, fines.id as fine_id, fines.deleted_at as fine_deleted, loans.*')
+                ->select('members.*, books.*, fines.*, fines.id as fine_id, fines.deleted_at as fine_deleted, loans.*, authors.name as author, publishers.name as publisher')
                 ->join('members', 'loans.member_id = members.id', 'LEFT')
                 ->join('books', 'loans.book_id = books.id', 'LEFT')
+                ->join('authors', 'books.author_id = authors.id', 'LEFT')
+                ->join('publishers', 'books.publisher_id = publishers.id', 'LEFT')
                 ->join('fines', 'fines.loan_id = loans.id', 'INNER')
                 ->like('first_name', $param, insensitiveSearch: true)
                 ->orLike('last_name', $param, insensitiveSearch: true)
                 ->orLike('email', $param, insensitiveSearch: true)
                 ->orLike('title', $param, insensitiveSearch: true)
-                ->orLike('author', $param, insensitiveSearch: true)
-                ->orLike('publisher', $param, insensitiveSearch: true)
                 ->orWhere('loans.uid', $param)
                 ->orWhere('members.uid', $param)
                 ->findAll();
@@ -125,10 +125,11 @@ class FinesController extends ResourceController
     public function pay($uid = null, $validation = null, $oldInput = null)
     {
         $returns = $this->loanModel
-            ->select('members.*, books.*, fines.*, fines.id as fine_id, fines.deleted_at as fine_deleted, racks.name as rack, loans.*')
+            ->select('members.*, books.*, fines.*, fines.id as fine_id, fines.deleted_at as fine_deleted,  loans.*, authors.name as author, publishers.name as publisher')
             ->join('members', 'loans.member_id = members.id', 'LEFT')
             ->join('books', 'loans.book_id = books.id', 'LEFT')
-            ->join('racks', 'books.rack_id = racks.id', 'LEFT')
+            ->join('authors', 'books.author_id = authors.id', 'LEFT')
+            ->join('publishers', 'books.publisher_id = publishers.id', 'LEFT')
             ->join('fines', 'fines.loan_id = loans.id', 'INNER')
             ->where('loans.uid', $uid)
             ->findAll();

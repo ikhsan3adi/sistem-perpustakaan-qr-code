@@ -3,19 +3,21 @@
 namespace App\Controllers\Dashboard;
 
 use App\Models\BookModel;
-use App\Models\CategoryModel;
+use App\Models\PublisherModel;
 use App\Models\FineModel;
 use App\Models\LoanModel;
 use App\Models\MemberModel;
-use App\Models\RackModel;
+use App\Models\AuthorModel;
+use App\Models\PlaceModel;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\RESTful\ResourceController;
 
 class DashboardController extends ResourceController
 {
     protected BookModel $bookModel;
-    protected RackModel $rackModel;
-    protected CategoryModel $categoryModel;
+    protected AuthorModel $authorModel;
+    protected PublisherModel $publisherModel;
+    protected PlaceModel $placeModel;
     protected MemberModel $memberModel;
     protected LoanModel $loanModel;
     protected FineModel $fineModel;
@@ -23,8 +25,9 @@ class DashboardController extends ResourceController
     public function __construct()
     {
         $this->bookModel = new BookModel;
-        $this->rackModel = new RackModel;
-        $this->categoryModel = new CategoryModel;
+        $this->authorModel = new AuthorModel;
+        $this->publisherModel = new PublisherModel;
+        $this->placeModel = new PlaceModel;
         $this->memberModel = new MemberModel;
         $this->loanModel = new LoanModel;
         $this->fineModel = new FineModel;
@@ -61,8 +64,9 @@ class DashboardController extends ResourceController
         return [
             'books'                 => $books,
             'totalBookStock'        => $totalBookStocks,
-            'racks'                 => $this->rackModel->findAll(),
-            'categories'            => $this->categoryModel->findAll(),
+            'authors'               => $this->authorModel->findAll(),
+            'publishers'            => $this->publisherModel->findAll(),
+            'places'                => $this->placeModel->findAll(),
             'members'               => $this->memberModel->findAll(),
             'loans'                 => $this->loanModel->findAll(),
         ];

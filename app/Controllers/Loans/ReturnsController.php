@@ -40,10 +40,11 @@ class ReturnsController extends ResourceController
         if ($this->request->getGet('search')) {
             $keyword = $this->request->getGet('search');
             $loans = $this->loanModel
-                ->select('members.*, members.uid as member_uid, books.*, fines.*, fines.id as fine_id, fines.deleted_at as fine_deleted, loans.*')
+                ->select('members.*, members.uid as member_uid, books.*, fines.*, fines.id as fine_id, fines.deleted_at as fine_deleted, loans.*, authors.name as author')
                 ->join('members', 'loans.member_id = members.id', 'LEFT')
                 ->join('books', 'loans.book_id = books.id', 'LEFT')
                 ->join('fines', 'fines.loan_id = loans.id', 'LEFT')
+                ->join('authors', 'books.author_id = authors.id', 'LEFT')
                 ->like('first_name', $keyword, insensitiveSearch: true)
                 ->orLike('last_name', $keyword, insensitiveSearch: true)
                 ->orLike('email', $keyword, insensitiveSearch: true)
@@ -52,10 +53,11 @@ class ReturnsController extends ResourceController
                 ->paginate($itemPerPage, 'returns');
         } else {
             $loans = $this->loanModel
-                ->select('members.*, members.uid as member_uid, books.*, fines.*, fines.id as fine_id, fines.deleted_at as fine_deleted, loans.*')
+                ->select('members.*, members.uid as member_uid, books.*, fines.*, fines.id as fine_id, fines.deleted_at as fine_deleted, loans.*, authors.name as author')
                 ->join('members', 'loans.member_id = members.id', 'LEFT')
                 ->join('books', 'loans.book_id = books.id', 'LEFT')
                 ->join('fines', 'fines.loan_id = loans.id', 'LEFT')
+                ->join('authors', 'books.author_id = authors.id', 'LEFT')
                 ->paginate($itemPerPage, 'returns');
         }
 
@@ -81,12 +83,13 @@ class ReturnsController extends ResourceController
     public function show($uid = null)
     {
         $loan = $this->loanModel
-            ->select('members.*, members.uid as member_uid, books.*, fines.*, fines.id as fine_id, loans.*, loans.qr_code as loan_qr_code, book_stock.quantity as book_stock, racks.name as rack, categories.name as category')
+            ->select('members.*, members.uid as member_uid, books.*, fines.*, fines.id as fine_id, loans.*, loans.qr_code as loan_qr_code, book_stock.quantity as book_stock, authors.name as author, authors.year as author_year, publishers.name as publisher, places.name as place')
             ->join('members', 'loans.member_id = members.id', 'LEFT')
             ->join('books', 'loans.book_id = books.id', 'LEFT')
             ->join('book_stock', 'books.id = book_stock.book_id', 'LEFT')
-            ->join('racks', 'books.rack_id = racks.id', 'LEFT')
-            ->join('categories', 'books.category_id = categories.id', 'LEFT')
+            ->join('authors', 'books.author_id = authors.id', 'LEFT')
+            ->join('publishers', 'books.publisher_id = publishers.id', 'LEFT')
+            ->join('places', 'books.place_id = places.id', 'LEFT')
             ->join('fines', 'fines.loan_id = loans.id', 'LEFT')
             ->where('loans.uid', $uid)
             ->where("return_date IS NOT NULL")
@@ -112,12 +115,13 @@ class ReturnsController extends ResourceController
             $this->loanModel->update($loan['id'], ['qr_code' => $qrCode]);
 
             $loan = $this->loanModel
-                ->select('members.*, members.uid as member_uid, books.*, loans.*, loans.qr_code as loan_qr_code, book_stock.quantity as book_stock, racks.name as rack, categories.name as category')
+                ->select('members.*, members.uid as member_uid, books.*, loans.*, loans.qr_code as loan_qr_code, book_stock.quantity as book_stock, authors.name as author, authors.year as author_year, publishers.name as publisher, places.name as place')
                 ->join('members', 'loans.member_id = members.id', 'LEFT')
                 ->join('books', 'loans.book_id = books.id', 'LEFT')
                 ->join('book_stock', 'books.id = book_stock.book_id', 'LEFT')
-                ->join('racks', 'books.rack_id = racks.id', 'LEFT')
-                ->join('categories', 'books.category_id = categories.id', 'LEFT')
+                ->join('authors', 'books.author_id = authors.id', 'LEFT')
+                ->join('publishers', 'books.publisher_id = publishers.id', 'LEFT')
+                ->join('places', 'books.place_id = places.id', 'LEFT')
                 ->where('loans.uid', $uid)
                 ->first();
 
@@ -139,15 +143,15 @@ class ReturnsController extends ResourceController
             if (empty($param)) return;
 
             $loans = $this->loanModel
-                ->select('members.*, books.*, loans.*')
+                ->select('members.*, books.*, loans.*, authors.name as author, publishers.name as publisher')
                 ->join('members', 'loans.member_id = members.id', 'LEFT')
                 ->join('books', 'loans.book_id = books.id', 'LEFT')
+                ->join('authors', 'books.author_id = authors.id', 'LEFT')
+                ->join('publishers', 'books.publisher_id = publishers.id', 'LEFT')
                 ->like('first_name', $param, insensitiveSearch: true)
                 ->orLike('last_name', $param, insensitiveSearch: true)
                 ->orLike('email', $param, insensitiveSearch: true)
                 ->orLike('title', $param, insensitiveSearch: true)
-                ->orLike('author', $param, insensitiveSearch: true)
-                ->orLike('publisher', $param, insensitiveSearch: true)
                 ->orWhere('loans.uid', $param)
                 ->orWhere('members.uid', $param)
                 ->findAll();
@@ -181,10 +185,11 @@ class ReturnsController extends ResourceController
         }
 
         $loans = $this->loanModel
-            ->select('members.*, books.*, categories.name as category, loans.*')
+            ->select('members.*, books.*, loans.*, authors.name as author, publishers.name as publisher')
             ->join('members', 'loans.member_id = members.id', 'LEFT')
             ->join('books', 'loans.book_id = books.id', 'LEFT')
-            ->join('categories', 'books.category_id = categories.id', 'LEFT')
+            ->join('authors', 'books.author_id = authors.id', 'LEFT')
+            ->join('publishers', 'books.publisher_id = publishers.id', 'LEFT')
             ->where('loans.uid', $loanUid)
             ->findAll();
 

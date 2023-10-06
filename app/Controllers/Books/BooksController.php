@@ -2,28 +2,31 @@
 
 namespace App\Controllers\Books;
 
+use App\Models\AuthorModel;
 use App\Models\BookModel;
 use App\Models\BookStockModel;
-use App\Models\CategoryModel;
 use App\Models\LoanModel;
-use App\Models\RackModel;
+use App\Models\PlaceModel;
+use App\Models\PublisherModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\RESTful\ResourceController;
 
 class BooksController extends ResourceController
 {
     protected BookModel $bookModel;
-    protected CategoryModel $categoryModel;
-    protected RackModel $rackModel;
     protected BookStockModel $bookStockModel;
+    protected AuthorModel $authorModel;
+    protected PublisherModel $publisherModel;
+    protected PlaceModel $placeModel;
     protected LoanModel $loanModel;
 
     public function __construct()
     {
         $this->bookModel = new BookModel;
-        $this->categoryModel = new CategoryModel;
-        $this->rackModel = new RackModel;
         $this->bookStockModel = new BookStockModel;
+        $this->authorModel = new AuthorModel;
+        $this->publisherModel = new PublisherModel;
+        $this->placeModel = new PlaceModel;
         $this->loanModel = new LoanModel;
 
         helper('upload');
@@ -41,14 +44,13 @@ class BooksController extends ResourceController
         if ($this->request->getGet('search')) {
             $keyword = $this->request->getGet('search');
             $books = $this->bookModel
-                ->select('books.*, book_stock.quantity, categories.name as category, racks.name as rack, racks.floor')
+                ->select('books.*, book_stock.quantity, authors.name as author, authors.year as author_year, publishers.name as publisher, places.name as place')
                 ->join('book_stock', 'books.id = book_stock.book_id', 'LEFT')
-                ->join('categories', 'books.category_id = categories.id', 'LEFT')
-                ->join('racks', 'books.rack_id = racks.id', 'LEFT')
+                ->join('authors', 'books.author_id = authors.id', 'LEFT')
+                ->join('publishers', 'books.publisher_id = publishers.id', 'LEFT')
+                ->join('places', 'books.place_id = places.id', 'LEFT')
                 ->like('title', $keyword, insensitiveSearch: true)
                 ->orLike('slug', $keyword, insensitiveSearch: true)
-                ->orLike('author', $keyword, insensitiveSearch: true)
-                ->orLike('publisher', $keyword, insensitiveSearch: true)
                 ->paginate($itemPerPage, 'books');
 
             $books = array_filter($books, function ($book) {
@@ -56,10 +58,11 @@ class BooksController extends ResourceController
             });
         } else {
             $books = $this->bookModel
-                ->select('books.*, book_stock.quantity, categories.name as category, racks.name as rack, racks.floor')
+                ->select('books.*, book_stock.quantity, authors.name as author, authors.year as author_year, publishers.name as publisher, places.name as place')
                 ->join('book_stock', 'books.id = book_stock.book_id', 'LEFT')
-                ->join('categories', 'books.category_id = categories.id', 'LEFT')
-                ->join('racks', 'books.rack_id = racks.id', 'LEFT')
+                ->join('authors', 'books.author_id = authors.id', 'LEFT')
+                ->join('publishers', 'books.publisher_id = publishers.id', 'LEFT')
+                ->join('places', 'books.place_id = places.id', 'LEFT')
                 ->paginate($itemPerPage, 'books');
         }
 
@@ -82,10 +85,11 @@ class BooksController extends ResourceController
     public function show($slug = null)
     {
         $book = $this->bookModel
-            ->select('books.*, book_stock.quantity, categories.name as category, racks.name as rack, racks.floor')
+            ->select('books.*, book_stock.quantity, authors.name as author, authors.year as author_year, publishers.name as publisher, places.name as place')
             ->join('book_stock', 'books.id = book_stock.book_id', 'LEFT')
-            ->join('categories', 'books.category_id = categories.id', 'LEFT')
-            ->join('racks', 'books.rack_id = racks.id', 'LEFT')
+            ->join('authors', 'books.author_id = authors.id', 'LEFT')
+            ->join('publishers', 'books.publisher_id = publishers.id', 'LEFT')
+            ->join('places', 'books.place_id = places.id', 'LEFT')
             ->where('slug', $slug)->first();
 
         if (empty($book)) {
@@ -124,12 +128,14 @@ class BooksController extends ResourceController
      */
     public function new()
     {
-        $categories = $this->categoryModel->findAll();
-        $racks = $this->rackModel->findAll();
+        $authors = $this->authorModel->findAll();
+        $publishers = $this->publisherModel->findAll();
+        $places = $this->placeModel->findAll();
 
         $data = [
-            'categories' => $categories,
-            'racks'      => $racks,
+            'authors' => $authors,
+            'publishers' => $publishers,
+            'places' => $places,
             'validation' => \Config\Services::validation(),
         ];
 
@@ -146,20 +152,27 @@ class BooksController extends ResourceController
         if (!$this->validate([
             'cover'     => 'is_image[cover]|mime_in[cover,image/jpg,image/jpeg,image/gif,image/png,image/webp]|max_size[cover,5120]',
             'title'     => 'required|string|max_length[127]',
-            'author'    => 'required|alpha_numeric_punct|max_length[64]',
-            'publisher' => 'required|string|max_length[64]',
+            'edition'   => 'permit_empty|string|max_length[127]',
             'isbn'      => 'required|numeric|min_length[10]|max_length[13]',
             'year'      => 'required|numeric|min_length[4]|max_length[4]|less_than_equal_to[2100]',
-            'rack'      => 'required|numeric',
-            'category'  => 'required|numeric',
+            'collation' => 'permit_empty|string|max_length[50]',
+            'call_number' => 'permit_empty|string|max_length[50]',
+            'language' => 'required|string|max_length[5]',
+            'source'    => 'permit_empty|string|max_length[3]',
+            'file_att'  => 'permit_empty|string|max_length[3]',
+            'author'    => 'required|alpha_numeric_punct|max_length[64]',
+            'publisher' => 'required|string|max_length[64]',
+            'place'     => 'required|string|max_length[64]',
             'stock'     => 'required|numeric|greater_than_equal_to[1]',
         ])) {
-            $categories = $this->categoryModel->findAll();
-            $racks = $this->rackModel->findAll();
+            $authors = $this->authorModel->findAll();
+            $publishers = $this->publisherModel->findAll();
+            $places = $this->placeModel->findAll();
 
             $data = [
-                'categories' => $categories,
-                'racks'      => $racks,
+                'authors' => $authors,
+                'publishers' => $publishers,
+                'places' => $places,
                 'validation' => \Config\Services::validation(),
                 'oldInput'   => $this->request->getVar(),
             ];
@@ -168,7 +181,6 @@ class BooksController extends ResourceController
         }
 
         $coverImage = $this->request->getFile('cover');
-
         if ($coverImage->getError() != 4) {
             $coverImageFileName = uploadBookCover($coverImage);
         }
@@ -178,23 +190,30 @@ class BooksController extends ResourceController
         if (!$this->bookModel->save([
             'slug' => $slug,
             'title' => $this->request->getVar('title'),
-            'author' => $this->request->getVar('author'),
-            'publisher' => $this->request->getVar('publisher'),
+            'edition' => $this->request->getVar('edition'),
             'isbn' => $this->request->getVar('isbn'),
             'year' => $this->request->getVar('year'),
-            'rack_id' => $this->request->getVar('rack'),
-            'category_id' => $this->request->getVar('category'),
+            'collation' => $this->request->getVar('collation'),
+            'call_number' => $this->request->getVar('call_number'),
+            'language_id' => $this->request->getVar('language'),
+            'source' => $this->request->getVar('source'),
+            'file_att' => $this->request->getVar('file_att'),
+            'author_id' => $this->request->getVar('author'),
+            'publisher_id' => $this->request->getVar('publisher'),
+            'place_id' => $this->request->getVar('place'),
             'book_cover' => $coverImageFileName ?? null,
         ]) || !$this->bookStockModel->save([
             'book_id' => $this->bookModel->getInsertID(),
             'quantity' => $this->request->getVar('stock')
         ])) {
-            $categories = $this->categoryModel->findAll();
-            $racks = $this->rackModel->findAll();
+            $authors = $this->authorModel->findAll();
+            $publishers = $this->publisherModel->findAll();
+            $places = $this->placeModel->findAll();
 
             $data = [
-                'categories' => $categories,
-                'racks'      => $racks,
+                'authors' => $authors,
+                'publishers' => $publishers,
+                'places' => $places,
                 'validation' => \Config\Services::validation(),
                 'oldInput'   => $this->request->getVar(),
             ];
@@ -223,13 +242,15 @@ class BooksController extends ResourceController
             throw new PageNotFoundException('Book with slug \'' . $slug . '\' not found');
         }
 
-        $categories = $this->categoryModel->findAll();
-        $racks = $this->rackModel->findAll();
+        $authors = $this->authorModel->findAll();
+        $publishers = $this->publisherModel->findAll();
+        $places = $this->placeModel->findAll();
 
         $data = [
             'book'       => $book,
-            'categories' => $categories,
-            'racks'      => $racks,
+            'authors'    => $authors,
+            'publishers' => $publishers,
+            'places'     => $places,
             'validation' => \Config\Services::validation(),
         ];
 
@@ -252,23 +273,29 @@ class BooksController extends ResourceController
         if (!$this->validate([
             'cover'     => 'is_image[cover]|mime_in[cover,image/jpg,image/jpeg,image/gif,image/png,image/webp]|max_size[cover,5120]',
             'title'     => 'required|string|max_length[127]',
-            'author'    => 'required|alpha_numeric_punct|max_length[64]',
-            'publisher' => 'required|string|max_length[64]',
+            'edition'   => 'permit_empty|string|max_length[127]',
             'isbn'      => 'required|numeric|min_length[10]|max_length[13]',
             'year'      => 'required|numeric|min_length[4]|max_length[4]|less_than_equal_to[2100]',
-            'rack'      => 'required|numeric',
-            'category'  => 'required|numeric',
+            'collation' => 'permit_empty|string|max_length[50]',
+            'call_number' => 'permit_empty|string|max_length[50]',
+            'language'  => 'required|string|max_length[5]',
+            'source'    => 'permit_empty|string|max_length[3]',
+            'file_att'  => 'permit_empty|string|max_length[3]',
+            'author'    => 'required|alpha_numeric_punct|max_length[64]',
+            'publisher' => 'required|string|max_length[64]',
+            'place'     => 'required|alpha_numeric_punct|max_length[64]',
             'stock'     => 'required|numeric|greater_than_equal_to[1]',
         ])) {
-            $categories = $this->categoryModel->findAll();
-            $racks = $this->rackModel->findAll();
+            $authors = $this->authorModel->findAll();
+            $publishers = $this->publisherModel->findAll();
+            $places = $this->placeModel->findAll();
 
             $data = [
                 'book'       => $book,
-                'categories' => $categories,
-                'racks'      => $racks,
+                'authors'    => $authors,
+                'publishers' => $publishers,
+                'places'     => $places,
                 'validation' => \Config\Services::validation(),
-                'oldInput'   => $this->request->getVar(),
             ];
 
             return view('books/edit', $data);
@@ -295,27 +322,33 @@ class BooksController extends ResourceController
             'id'  => $book['id'],
             'slug' => $slug,
             'title' => $this->request->getVar('title'),
-            'author' => $this->request->getVar('author'),
-            'publisher' => $this->request->getVar('publisher'),
+            'edition' => $this->request->getVar('edition'),
             'isbn' => $this->request->getVar('isbn'),
             'year' => $this->request->getVar('year'),
-            'rack_id' => $this->request->getVar('rack'),
-            'category_id' => $this->request->getVar('category'),
+            'collation' => $this->request->getVar('collation'),
+            'call_number' => $this->request->getVar('call_number'),
+            'language_id' => $this->request->getVar('language'),
+            'source' => $this->request->getVar('source'),
+            'file_att' => $this->request->getVar('file_att'),
+            'author_id' => $this->request->getVar('author'),
+            'publisher_id' => $this->request->getVar('publisher'),
+            'place_id' => $this->request->getVar('place'),
             'book_cover' => $coverImageFileName ?? null,
         ]) || !$this->bookStockModel->save([
             'id' => $bookStock['id'],
             'book_id' => $book['id'],
             'quantity' => $this->request->getVar('stock')
         ])) {
-            $categories = $this->categoryModel->findAll();
-            $racks = $this->rackModel->findAll();
+            $authors = $this->authorModel->findAll();
+            $publishers = $this->publisherModel->findAll();
+            $places = $this->placeModel->findAll();
 
             $data = [
                 'book'       => $book,
-                'categories' => $categories,
-                'racks'      => $racks,
+                'authors'    => $authors,
+                'publishers' => $publishers,
+                'places'     => $places,
                 'validation' => \Config\Services::validation(),
-                'oldInput'   => $this->request->getVar(),
             ];
 
             session()->setFlashdata(['msg' => 'Update failed']);
