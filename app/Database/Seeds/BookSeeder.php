@@ -10,10 +10,11 @@ class BookSeeder extends Seeder
 {
     public function run()
     {
-        // populate racks & categories table first, avoid foreign key constraint fail
-        // isi data tabel rak dan kategori dahulu, menghindari kegagalan fk contstraint
-        $this->call('RackSeeder');
-        $this->call('CategorySeeder');
+        // populate other table first, avoid foreign key constraint fail
+        // isi data tabel lainnya dahulu, menghindari kegagalan fk contstraint
+        $this->call('AuthorSeeder');
+        $this->call('PublisherSeeder');
+        $this->call('PlaceSeeder');
 
         $fabricator = new Fabricator(BookFabricator::class, locale: 'id_ID');
         // insert book data
