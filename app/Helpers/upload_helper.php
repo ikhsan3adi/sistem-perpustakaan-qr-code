@@ -63,3 +63,43 @@ function deleteLoansQRCode(string|null $filename): bool
         return false;
     }
 }
+
+/**
+ * save ebook and returns string value filename
+ * */
+function uploadEbook(\CodeIgniter\HTTP\Files\UploadedFile|null $ebook): string|null
+{
+    $ebookFileName = substr($ebook->getRandomName(), 0, 8)  . "-{$ebook->getClientName()}";
+    // save ebook file
+    $save = $ebook->move(EBOOK_PATH, $ebookFileName);
+
+    return $save ? $ebookFileName : null;
+}
+
+/**
+ * delete former ebook file if it's not empty
+ * */
+function deleteEbook(string|null $ebookFileName)
+{
+    $filePath = EBOOK_PATH . DIRECTORY_SEPARATOR . $ebookFileName;
+
+    if (
+        !empty($ebookFileName)
+        && file_exists($filePath)
+    ) {
+        return unlink($filePath);
+    } else {
+        return false;
+    }
+}
+
+/**
+ * upload new ebook, delete the old one, then returns new filename
+ * */
+function updateEbook(\CodeIgniter\HTTP\Files\UploadedFile|null $newEbook, string|null $formerEbookFileName)
+{
+    $newEbookFileName = uploadEbook($newEbook);
+    deleteEbook($formerEbookFileName);
+
+    return $newEbookFileName;
+}

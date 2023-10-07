@@ -7,6 +7,7 @@
 <?= $this->section('content') ?>
 <?php
 $coverImageFilePath = BOOK_COVER_URI . $book['book_cover'];
+$ebookFilePath = EBOOK_URI . $book['file_att'];
 ?>
 <style>
   #book-cover {
@@ -72,6 +73,14 @@ $coverImageFilePath = BOOK_COVER_URI . $book['book_cover'];
           <h5>Penulis: <?= $book['author']; ?></h5>
           <h5>Penerbit: <?= $book['publisher']; ?></h5>
           <h5>Tempat Terbit: <?= $book['place']; ?></h5>
+          <?php if ((!empty($book['file_att']) && file_exists($ebookFilePath))) : ?>
+            <h5 class="mb-3">E-book: Ya</h5>
+            <a href="<?= base_url($ebookFilePath); ?>" target="_blank" class="btn btn-primary mt-4">
+              Lihat/Download file E-book
+            </a>
+          <?php else : ?>
+            <h5>E-book: Tidak</h5>
+          <?php endif; ?>
         </div>
       </div>
     </div>

@@ -149,3 +149,16 @@ defined('LOANS_QR_CODE_PATH') || define('LOANS_QR_CODE_PATH', QR_CODES_PATH . 'l
  * `uploads/qr_codes/loans/`
  */
 defined('LOANS_QR_CODE_URI') || define('LOANS_QR_CODE_URI', 'uploads' . DIRECTORY_SEPARATOR . 'qr_codes' . DIRECTORY_SEPARATOR . 'loans' . DIRECTORY_SEPARATOR);
+
+/**
+ * ebook path
+ * `public/uploads/ebook/`
+ */
+defined('EBOOK_PATH') || define('EBOOK_PATH', UPLOADS_PATH . 'ebook' . DIRECTORY_SEPARATOR);
+
+/**
+ * ebook uri
+ * 
+ * `uploads/ebook/`
+ */
+defined('EBOOK_URI') || define('EBOOK_URI', 'uploads' . DIRECTORY_SEPARATOR . 'ebook' . DIRECTORY_SEPARATOR);

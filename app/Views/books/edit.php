@@ -141,6 +141,16 @@
           </div>
         </div>
       </div>
+      <div class="col-12 col-md-6 mb-4">
+        <label for="file_att" class="form-label">File E-book atau PDF baru (opsional)</label>
+        <input class="form-control <?php if ($validation->hasError('file_att')) : ?>is-invalid<?php endif ?>" type="file" id="file_att" name="file_att" aria-describedby="pdf">
+        <div id="pdf" class="form-text">
+          PDF, DOCX, TXT format.
+        </div>
+        <div class="invalid-feedback">
+          <?= $validation->getError('file_att'); ?>
+        </div>
+      </div>
       <button type="submit" class="btn btn-primary">Simpan</button>
     </form>
   </div>

@@ -159,7 +159,7 @@ class BooksController extends ResourceController
             'call_number' => 'permit_empty|string|max_length[50]',
             'language' => 'required|string|max_length[5]',
             'source'    => 'permit_empty|string|max_length[3]',
-            'file_att'  => 'permit_empty|string|max_length[3]',
+            'file_att'  => 'permit_empty|ext_in[file_att,pdf,docx,txt,doc,odf,md,html]',
             'author'    => 'required|alpha_numeric_punct|max_length[64]',
             'publisher' => 'required|string|max_length[64]',
             'place'     => 'required|string|max_length[64]',
@@ -185,6 +185,12 @@ class BooksController extends ResourceController
             $coverImageFileName = uploadBookCover($coverImage);
         }
 
+        $ebookFile = $this->request->getFile('file_att');
+        if ($ebookFile->getError() != 4) {
+            dd($ebookFile);
+            $ebookFileName = uploadEbook($ebookFile);
+        }
+
         $slug = url_title($this->request->getVar('title') . ' ' . rand(0, 1000), '-', true);
 
         if (!$this->bookModel->save([
@@ -197,7 +203,7 @@ class BooksController extends ResourceController
             'call_number' => $this->request->getVar('call_number'),
             'language_id' => $this->request->getVar('language'),
             'source' => $this->request->getVar('source'),
-            'file_att' => $this->request->getVar('file_att'),
+            'file_att' => $ebookFileName ?? null,
             'author_id' => $this->request->getVar('author'),
             'publisher_id' => $this->request->getVar('publisher'),
             'place_id' => $this->request->getVar('place'),
@@ -280,7 +286,7 @@ class BooksController extends ResourceController
             'call_number' => 'permit_empty|string|max_length[50]',
             'language'  => 'required|string|max_length[5]',
             'source'    => 'permit_empty|string|max_length[3]',
-            'file_att'  => 'permit_empty|string|max_length[3]',
+            'file_att'  => 'permit_empty|ext_in[file_att,pdf,docx,txt,doc,odf,md,html]',
             'author'    => 'required|alpha_numeric_punct|max_length[64]',
             'publisher' => 'required|string|max_length[64]',
             'place'     => 'required|alpha_numeric_punct|max_length[64]',
@@ -303,6 +309,7 @@ class BooksController extends ResourceController
 
         $bookStock = $this->bookStockModel->where('book_id', $book['id'])->first();
 
+        // SAVE COVER IMAGE
         $coverImage = $this->request->getFile('cover');
 
         if ($coverImage->getError() == 4) {
@@ -311,6 +318,18 @@ class BooksController extends ResourceController
             $coverImageFileName = updateBookCover(
                 newCoverImage: $coverImage,
                 formerCoverImageFileName: $book['book_cover']
+            );
+        }
+
+        // SAVE EBOOK
+        $ebook = $this->request->getFile('file_att');
+
+        if ($ebook->getError() == 4) {
+            $ebookFileName = $book['file_att'];
+        } else {
+            $ebookFileName = updateEbook(
+                newEbook: $ebook,
+                formerEbookFileName: $book['file_att']
             );
         }
 
@@ -329,11 +348,11 @@ class BooksController extends ResourceController
             'call_number' => $this->request->getVar('call_number'),
             'language_id' => $this->request->getVar('language'),
             'source' => $this->request->getVar('source'),
-            'file_att' => $this->request->getVar('file_att'),
             'author_id' => $this->request->getVar('author'),
             'publisher_id' => $this->request->getVar('publisher'),
             'place_id' => $this->request->getVar('place'),
             'book_cover' => $coverImageFileName ?? null,
+            'file_att' => $ebookFileName ?? null,
         ]) || !$this->bookStockModel->save([
             'id' => $bookStock['id'],
             'book_id' => $book['id'],
