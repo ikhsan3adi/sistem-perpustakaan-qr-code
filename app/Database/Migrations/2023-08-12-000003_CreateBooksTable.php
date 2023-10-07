@@ -35,7 +35,8 @@ class CreateBooksTable extends Migration
             ],
             'year' => [
                 'type'           => 'VARCHAR',
-                'constraint'     => 20
+                'constraint'     => 20,
+                'null'           => true,
             ],
             'collation' => [
                 'type'           => 'VARCHAR',
@@ -71,16 +72,19 @@ class CreateBooksTable extends Migration
                 'type'           => 'INT',
                 'constraint'     => 11,
                 'unsigned'       => true,
+                'null'           => true
             ],
             'publisher_id' => [
                 'type'           => 'INT',
                 'constraint'     => 11,
                 'unsigned'       => true,
+                'null'           => true
             ],
             'place_id' => [
                 'type'           => 'INT',
                 'constraint'     => 11,
                 'unsigned'       => true,
+                'null'           => true
             ],
             'created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NULL',
             'updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NULL',
