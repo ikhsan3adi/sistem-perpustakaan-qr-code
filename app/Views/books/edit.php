@@ -60,12 +60,14 @@
           </div>
           <div class="mb-3">
             <label for="author" class="form-label">Penulis</label>
-            <select class="form-select <?php if ($validation->hasError('author')) : ?>is-invalid<?php endif ?>" aria-label="Select author" id="author" name="author" value="<?= $oldInput['author'] ?? $book['author_id']; ?>" required>
-              <option>--Pilih penulis--</option>
-              <?php foreach ($authors as $author) : ?>
-                <option value="<?= $author['id']; ?>" <?= ($oldInput['author'] ?? $book['author_id']) == $author['id'] ? 'selected' : ''; ?>><?= $author['name']; ?></option>
-              <?php endforeach; ?>
-            </select>
+            <div class="row">
+              <div class="col-4">
+                <input list="authorList" type="text" class="form-control <?php if ($validation->hasError('author')) : ?>is-invalid<?php endif ?>" id="author" name="author" value="<?= $oldInput['author'] ?? $book['author_id']; ?>" placeholder="Pilih penulis" onchange="setAuthorName(this.value)" required>
+              </div>
+              <div class="col-8">
+                <input type="text" class="form-control" id="authorName" name="authorName" value="<?= $oldInput['authorName'] ?? ''; ?>" readonly>
+              </div>
+            </div>
             <div class="invalid-feedback">
               <?= $validation->getError('author'); ?>
             </div>
@@ -75,24 +77,28 @@
       <div class="row">
         <div class="col-12 col-md-6 col-lg-4 mb-3">
           <label for="publisher" class="form-label">Penerbit</label>
-          <select class="form-select <?php if ($validation->hasError('publisher')) : ?>is-invalid<?php endif ?>" aria-label="Select publisher" id="publisher" name="publisher" value="<?= $oldInput['publisher'] ?? ''; ?>" required>
-            <option>--Pilih penerbit--</option>
-            <?php foreach ($publishers as $publisher) : ?>
-              <option value="<?= $publisher['id']; ?>" <?= ($oldInput['publisher'] ?? $book['publisher_id']) == $publisher['id'] ? 'selected' : ''; ?>><?= $publisher['name']; ?></option>
-            <?php endforeach; ?>
-          </select>
+          <div class="row">
+            <div class="col-4">
+              <input list="publisherList" type="text" class="form-control <?php if ($validation->hasError('publisher')) : ?>is-invalid<?php endif ?>" id="publisher" name="publisher" value="<?= $oldInput['publisher'] ?? $book['publisher_id']; ?>" placeholder="Pilih penerbit" onchange="setPublisherName(this.value)" required>
+            </div>
+            <div class="col-8">
+              <input type="text" class="form-control" id="publisherName" name="publisherName" value="<?= $oldInput['authorName'] ?? ''; ?>" readonly>
+            </div>
+          </div>
           <div class="invalid-feedback">
             <?= $validation->getError('publisher'); ?>
           </div>
         </div>
         <div class="col-12 col-md-6 col-lg-4 mb-3">
           <label for="place" class="form-label">Tempat Terbit</label>
-          <select class="form-select <?php if ($validation->hasError('place')) : ?>is-invalid<?php endif ?>" aria-label="Select place" id="place" name="place" value="<?= $oldInput['place'] ?? ''; ?>" required>
-            <option>--Pilih tempat--</option>
-            <?php foreach ($places as $place) : ?>
-              <option value="<?= $place['id']; ?>" <?= ($oldInput['place'] ?? $book['place_id']) == $place['id'] ? 'selected' : ''; ?>><?= $place['name']; ?></option>
-            <?php endforeach; ?>
-          </select>
+          <div class="row">
+            <div class="col-4">
+              <input list="placeList" type="text" class="form-control <?php if ($validation->hasError('place')) : ?>is-invalid<?php endif ?>" id="place" name="place" value="<?= $oldInput['place'] ?? $book['place_id']; ?>" placeholder="Pilih tempat terbit" onchange="setPlaceName(this.value)" required>
+            </div>
+            <div class="col-8">
+              <input type="text" class="form-control" id="placeName" name="placeName" value="<?= $oldInput['placeName'] ?? ''; ?>" readonly>
+            </div>
+          </div>
           <div class="invalid-feedback">
             <?= $validation->getError('place'); ?>
           </div>
@@ -152,6 +158,24 @@
         </div>
       </div>
       <button type="submit" class="btn btn-primary">Simpan</button>
+      <datalist id="authorList">
+        <option>--Pilih penulis--</option>
+        <?php foreach ($authors as $author) : ?>
+          <option value="<?= $author['id']; ?>" <?= ($oldInput['author'] ?? '') == $author['id'] ? 'selected' : ''; ?>><?= $author['name']; ?></option>
+        <?php endforeach; ?>
+      </datalist>
+      <datalist id="publisherList">
+        <option>--Pilih penerbit--</option>
+        <?php foreach ($publishers as $publisher) : ?>
+          <option value="<?= $publisher['id']; ?>" <?= ($oldInput['publisher'] ?? '') == $publisher['id'] ? 'selected' : ''; ?>><?= $publisher['name']; ?></option>
+        <?php endforeach; ?>
+      </datalist>
+      <datalist id="placeList">
+        <option>--Pilih tempat terbit--</option>
+        <?php foreach ($places as $place) : ?>
+          <option value="<?= $place['id']; ?>" <?= ($oldInput['place'] ?? '') == $place['id'] ? 'selected' : ''; ?>><?= $place['name']; ?></option>
+        <?php endforeach; ?>
+      </datalist>
     </form>
   </div>
 </div>
@@ -170,5 +194,39 @@
       imagePreview.src = e.target.result;
     };
   }
+
+  const authorList = {
+    <?php foreach ($authors as $author) : ?>
+      <?= "\"{$author['id']}\""; ?>: <?= "\"{$author['name']}\","; ?>
+    <?php endforeach; ?>
+  };
+
+  const publisherList = {
+    <?php foreach ($publishers as $publisher) : ?>
+      <?= "\"{$publisher['id']}\""; ?>: <?= "\"{$publisher['name']}\","; ?>
+    <?php endforeach; ?>
+  };
+
+  const placeList = {
+    <?php foreach ($places as $place) : ?>
+      <?= "\"{$place['id']}\""; ?>: <?= "\"{$place['name']}\","; ?>
+    <?php endforeach; ?>
+  };
+
+  function setAuthorName(text) {
+    document.querySelector('#authorName').value = authorList[text];
+  }
+
+  function setPublisherName(text) {
+    document.querySelector('#publisherName').value = publisherList[text];
+  }
+
+  function setPlaceName(text) {
+    document.querySelector('#placeName').value = placeList[text];
+  }
+
+  setAuthorName(<?= $book['author_id']; ?>);
+  setPublisherName(<?= $book['publisher_id']; ?>);
+  setPlaceName(<?= $book['place_id']; ?>);
 </script>
 <?= $this->endSection() ?>
