@@ -13,7 +13,7 @@ class BookStockSeeder extends Seeder
         foreach ($books as $book) {
             $this->db->table('book_stock')->insert([
                 'book_id' => $book['id'],
-                'quantity' => 100
+                'quantity' => 1
             ]);
         }
     }
