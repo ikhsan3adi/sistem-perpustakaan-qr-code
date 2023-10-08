@@ -49,6 +49,20 @@ $sidebarNavs =
       'icon' => 'ti ti-columns'
     ],
   ];
+
+if (auth()->user()->inGroup('superadmin') ?? false) {
+  $sidebarNavs = array_merge(
+    $sidebarNavs,
+    [
+      'Manajemen Akun',
+      [
+        'name' => 'Admin',
+        'link' => '/admin/users',
+        'icon' => 'ti ti-user-cog'
+      ]
+    ]
+  );
+}
 ?>
 
 <!-- Sidebar Start -->

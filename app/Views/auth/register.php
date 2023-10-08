@@ -26,7 +26,7 @@
         </div>
       <?php endif ?>
 
-      <form action="<?= url_to('register') ?>" method="post">
+      <form action="<?= base_url('admin/users') ?>" method="post">
         <?= csrf_field() ?>
 
         <!-- Email -->
@@ -52,8 +52,8 @@
         <div class="d-grid col-12 mx-auto m-3">
           <button type="submit" class="btn btn-primary btn-block"><?= lang('Auth.register') ?></button>
         </div>
-
-        <p class="text-center"><?= lang('Auth.haveAccount') ?> <a href="<?= url_to('login') ?>"><?= lang('Auth.login') ?></a></p>
+        <!-- 
+        <p class="text-center"><?= lang('Auth.haveAccount') ?> <a href="<?= url_to('login') ?>"><?= lang('Auth.login') ?></a></p> -->
 
       </form>
     </div>
