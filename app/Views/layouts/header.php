@@ -31,8 +31,24 @@
             <img alt="" width="35" height="35" class="rounded-circle border border-primary" style="background-color: white;">
             <i class="ti ti-user position-absolute top-50 start-50 translate-middle text-primary"></i>
           </a>
-          <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
+          <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" style="min-width: 300px;" aria-labelledby="drop2">
             <div class="message-body">
+              <div class="mx-3 mt-2">
+                <h5>Profil</h5>
+                <span>username: <b><?= auth()->user()->username; ?></b></span><br>
+                <span>email: <b><?= auth()->user()->email; ?></b></span><br>
+                <span>level: </span>
+                <?php
+                $userGroup = auth()->user()->getGroups()[0];
+                ?>
+                <?php if ($userGroup === 'superadmin') : ?>
+                  <span class="badge bg-success rounded-3 fw-semibold text-black"><?= $userGroup; ?></span>
+                <?php elseif ($userGroup === 'admin') : ?>
+                  <span class="badge bg-primary rounded-3 fw-semibold"><?= $userGroup; ?></span>
+                <?php else : ?>
+                  <span class="badge bg-black rounded-3 fw-semibold"><?= $userGroup; ?></span>
+                <?php endif; ?>
+              </div>
               <a href="<?= base_url('logout'); ?>" class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>
             </div>
           </div>

@@ -52,8 +52,22 @@ $sidebarNavs =
       'name' => 'Tempat Terbit',
       'link' => '/admin/places',
       'icon' => 'ti ti-home-edit'
-    ],
+    ]
   ];
+
+if (auth()->user()->inGroup('superadmin') ?? false) {
+  $sidebarNavs = array_merge(
+    $sidebarNavs,
+    [
+      'Manajemen Akun',
+      [
+        'name' => 'Admin',
+        'link' => '/admin/users',
+        'icon' => 'ti ti-user-cog'
+      ]
+    ]
+  );
+}
 ?>
 
 <!-- Sidebar Start -->

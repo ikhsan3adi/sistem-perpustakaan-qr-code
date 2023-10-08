@@ -57,6 +57,12 @@ $routes->group('admin', ['filter' => 'session'], static function (RouteCollectio
     $routes->get('fines/returns/search', 'Loans\FinesController::searchReturn');
     $routes->get('fines/pay/(:any)', 'Loans\FinesController::pay/$1');
     $routes->resource('fines', ['controller' => 'Loans\FinesController']);
+
+    $routes->group('users', ['filter' => 'group:superadmin'], static function (RouteCollection $routes) {
+        $routes->get('new', 'Users\RegisterController::index');
+        $routes->post('', 'Users\RegisterController::registerAction');
+    });
+    $routes->resource('users', ['controller' => 'Users\UsersController', 'filter' => 'group:superadmin']);
 });
 
 /*
