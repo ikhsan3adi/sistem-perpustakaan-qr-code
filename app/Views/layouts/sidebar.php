@@ -54,7 +54,7 @@ if (auth()->user()->inGroup('superadmin') ?? false) {
   $sidebarNavs = array_merge(
     $sidebarNavs,
     [
-      'Pengguna',
+      'Manajemen Akun',
       [
         'name' => 'Admin',
         'link' => '/admin/users',
