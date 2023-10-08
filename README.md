@@ -57,6 +57,12 @@ composer install
 php spark migrate --all
 ```
 
+- Penting ⚠️. Karena belum memiliki akun admin, untuk mengakses halaman admin, anda memerlukan user/akun dengan level `superadmin`. Jalankan perintah berikut untuk membuat akun `superadmin`:
+
+```shell
+php spark db:seed SuperAdminSeeder
+```
+
 - (Opsional) Isi database dengan data dummy / seeder.
 
 ```shell
@@ -73,6 +79,14 @@ php spark serve
 ```
 
 - Buka http://localhost:8080
+
+- Login dengan kredensial `superadmin` berikut:
+
+```
+username : superadmin
+email    : superadmin@admin.com
+password : superadmin
+```
 
 ## Contributing
 
