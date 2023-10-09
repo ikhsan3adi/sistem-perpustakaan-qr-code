@@ -25,14 +25,10 @@ class Home extends BaseController
         if ($this->request->getGet('search')) {
             $keyword = $this->request->getGet('search');
             $books = $this->bookModel
-                ->select('books.*, book_stock.quantity, categories.name as category, racks.name as rack, racks.floor')
+                ->select('books.*, book_stock.quantity')
                 ->join('book_stock', 'books.id = book_stock.book_id', 'LEFT')
-                ->join('categories', 'books.category_id = categories.id', 'LEFT')
-                ->join('racks', 'books.rack_id = racks.id', 'LEFT')
                 ->like('title', $keyword, insensitiveSearch: true)
                 ->orLike('slug', $keyword, insensitiveSearch: true)
-                ->orLike('author', $keyword, insensitiveSearch: true)
-                ->orLike('publisher', $keyword, insensitiveSearch: true)
                 ->paginate($itemPerPage, 'books');
 
             $books = array_filter($books, function ($book) {
@@ -40,10 +36,8 @@ class Home extends BaseController
             });
         } else {
             $books = $this->bookModel
-                ->select('books.*, book_stock.quantity, categories.name as category, racks.name as rack, racks.floor')
+                ->select('books.*, book_stock.quantity')
                 ->join('book_stock', 'books.id = book_stock.book_id', 'LEFT')
-                ->join('categories', 'books.category_id = categories.id', 'LEFT')
-                ->join('racks', 'books.rack_id = racks.id', 'LEFT')
                 ->paginate($itemPerPage, 'books');
         }
 
