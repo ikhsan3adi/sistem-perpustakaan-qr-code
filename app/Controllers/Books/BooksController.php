@@ -153,17 +153,17 @@ class BooksController extends ResourceController
             'cover'     => 'is_image[cover]|mime_in[cover,image/jpg,image/jpeg,image/gif,image/png,image/webp]|max_size[cover,5120]',
             'title'     => 'required|string|max_length[127]',
             'edition'   => 'permit_empty|string|max_length[127]',
-            'isbn'      => 'required|numeric|min_length[10]|max_length[13]',
-            'year'      => 'required|numeric|min_length[4]|max_length[4]|less_than_equal_to[2100]',
+            'isbn'      => 'permit_empty|numeric|min_length[10]|max_length[13]',
+            'year'      => 'permit_empty|numeric|min_length[4]|max_length[4]|less_than_equal_to[2100]',
             'collation' => 'permit_empty|string|max_length[50]',
             'call_number' => 'permit_empty|string|max_length[50]',
-            'language' => 'required|string|max_length[5]',
+            'language' => 'permit_empty|string|max_length[5]',
             'source'    => 'permit_empty|string|max_length[3]',
             'file_att'  => 'permit_empty|ext_in[file_att,pdf,docx,txt,doc,odf,md,html]',
-            'author'    => 'required|alpha_numeric_punct|max_length[64]',
-            'publisher' => 'required|string|max_length[64]',
-            'place'     => 'required|string|max_length[64]',
-            'stock'     => 'required|numeric|greater_than_equal_to[1]',
+            'author'    => 'permit_empty|alpha_numeric_punct|max_length[64]',
+            'publisher' => 'permit_empty|string|max_length[64]',
+            'place'     => 'permit_empty|string|max_length[64]',
+            'stock'     => 'permit_empty|numeric|greater_than_equal_to[1]',
         ])) {
             $authors = $this->authorModel->findAll();
             $publishers = $this->publisherModel->findAll();
@@ -210,7 +210,7 @@ class BooksController extends ResourceController
             'book_cover' => $coverImageFileName ?? null,
         ]) || !$this->bookStockModel->save([
             'book_id' => $this->bookModel->getInsertID(),
-            'quantity' => $this->request->getVar('stock')
+            'quantity' => $this->request->getVar('stock') ?? 1
         ])) {
             $authors = $this->authorModel->findAll();
             $publishers = $this->publisherModel->findAll();
@@ -280,17 +280,17 @@ class BooksController extends ResourceController
             'cover'     => 'is_image[cover]|mime_in[cover,image/jpg,image/jpeg,image/gif,image/png,image/webp]|max_size[cover,5120]',
             'title'     => 'required|string|max_length[127]',
             'edition'   => 'permit_empty|string|max_length[127]',
-            'isbn'      => 'required|numeric|min_length[10]|max_length[13]',
-            'year'      => 'required|numeric|min_length[4]|max_length[4]|less_than_equal_to[2100]',
+            'isbn'      => 'permit_empty|numeric|min_length[10]|max_length[13]',
+            'year'      => 'permit_empty|numeric|min_length[4]|max_length[4]|less_than_equal_to[2100]',
             'collation' => 'permit_empty|string|max_length[50]',
             'call_number' => 'permit_empty|string|max_length[50]',
-            'language'  => 'required|string|max_length[5]',
+            'language'  => 'permit_empty|string|max_length[5]',
             'source'    => 'permit_empty|string|max_length[3]',
             'file_att'  => 'permit_empty|ext_in[file_att,pdf,docx,txt,doc,odf,md,html]',
-            'author'    => 'required|alpha_numeric_punct|max_length[64]',
-            'publisher' => 'required|string|max_length[64]',
-            'place'     => 'required|alpha_numeric_punct|max_length[64]',
-            'stock'     => 'required|numeric|greater_than_equal_to[1]',
+            'author'    => 'permit_empty|alpha_numeric_punct|max_length[64]',
+            'publisher' => 'permit_empty|string|max_length[64]',
+            'place'     => 'permit_empty|alpha_numeric_punct|max_length[64]',
+            'stock'     => 'permit_empty|numeric|greater_than_equal_to[1]',
         ])) {
             $authors = $this->authorModel->findAll();
             $publishers = $this->publisherModel->findAll();
@@ -356,7 +356,7 @@ class BooksController extends ResourceController
         ]) || !$this->bookStockModel->save([
             'id' => $bookStock['id'],
             'book_id' => $book['id'],
-            'quantity' => $this->request->getVar('stock')
+            'quantity' => $this->request->getVar('stock') ?? 1
         ])) {
             $authors = $this->authorModel->findAll();
             $publishers = $this->publisherModel->findAll();

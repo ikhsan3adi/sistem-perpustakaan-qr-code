@@ -106,7 +106,7 @@ class AuthorsController extends ResourceController
     {
         if (!$this->validate([
             'author'    => 'required|string|min_length[2]',
-            'year'    => 'required|string|min_length[2]',
+            'year'    => 'permit_empty|string|min_length[2]',
             'authority_type' => 'permit_empty|string',
         ])) {
             $data = [
@@ -171,7 +171,7 @@ class AuthorsController extends ResourceController
 
         if (!$this->validate([
             'author'    => 'required|string|min_length[2]',
-            'year'    => 'required|string|min_length[2]',
+            'year'    => 'permit_empty|string|min_length[2]',
             'authority_type' => 'permit_empty|string',
         ])) {
             $data = [

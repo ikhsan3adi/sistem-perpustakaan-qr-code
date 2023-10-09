@@ -68,11 +68,13 @@ $ebookFilePath = EBOOK_URI . $book['file_att'];
           <?php if ($book['edition']) : ?>
             <h5>Edisi: <?= $book['edition']; ?></h5>
           <?php endif; ?>
-          <h5>Bahasa: <?= $book['language_id']; ?></h5>
-          <h5>Tahun: <?= $book['year']; ?></h5>
-          <h5>Penulis: <?= $book['author']; ?></h5>
-          <h5>Penerbit: <?= $book['publisher']; ?></h5>
-          <h5>Tempat Terbit: <?= $book['place']; ?></h5>
+          <h5>Bahasa: <?= $book['language_id'] ?? '-'; ?></h5>
+          <h5>Jumlah Halaman: <?= $book['collation'] ?? '-'; ?></h5>
+          <h5>Call Number: <?= $book['call_number'] ?? '-'; ?></h5>
+          <h5>Tahun: <?= $book['year'] ?? '-'; ?></h5>
+          <h5>Penulis: <?= $book['author'] ?? '-'; ?></h5>
+          <h5>Penerbit: <?= $book['publisher'] ?? '-'; ?></h5>
+          <h5>Tempat Terbit: <?= $book['place'] ?? '-'; ?></h5>
           <?php if ((!empty($book['file_att']) && file_exists($ebookFilePath))) : ?>
             <h5 class="mb-3">E-book: Ya</h5>
             <a href="<?= base_url($ebookFilePath); ?>" target="_blank" class="btn btn-primary mt-4">

@@ -84,7 +84,13 @@
             </td>
             <td>
               <a href="<?= base_url("admin/books/{$book['slug']}"); ?>">
-                <p class="text-primary-emphasis text-decoration-underline"><b><?= "{$book['title']} ({$book['year']})"; ?></b></p>
+                <p class="text-primary-emphasis text-decoration-underline">
+                  <?php if ($book['year']) : ?>
+                    <b><?= "{$book['title']} ({$book['year']})"; ?></b>
+                  <?php else : ?>
+                    <b><?= $book['title']; ?></b>
+                  <?php endif; ?>
+                </p>
                 <p><b><?= $book['edition'] ? "Edisi: " . $book['edition'] : ''; ?></b></p>
               </a>
             </td>

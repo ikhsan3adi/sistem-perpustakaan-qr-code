@@ -62,7 +62,7 @@
             <label for="author" class="form-label">Penulis</label>
             <div class="row">
               <div class="col-4">
-                <input list="authorList" type="text" class="form-control <?php if ($validation->hasError('author')) : ?>is-invalid<?php endif ?>" id="author" name="author" value="<?= $oldInput['author'] ?? $book['author_id']; ?>" placeholder="Pilih penulis" onchange="setAuthorName(this.value)" required>
+                <input list="authorList" type="text" class="form-control <?php if ($validation->hasError('author')) : ?>is-invalid<?php endif ?>" id="author" name="author" value="<?= $oldInput['author'] ?? $book['author_id']; ?>" placeholder="Pilih penulis" onchange="setAuthorName(this.value)">
               </div>
               <div class="col-8">
                 <input type="text" class="form-control" id="authorName" name="authorName" value="<?= $oldInput['authorName'] ?? ''; ?>" readonly>
@@ -79,7 +79,7 @@
           <label for="publisher" class="form-label">Penerbit</label>
           <div class="row">
             <div class="col-4">
-              <input list="publisherList" type="text" class="form-control <?php if ($validation->hasError('publisher')) : ?>is-invalid<?php endif ?>" id="publisher" name="publisher" value="<?= $oldInput['publisher'] ?? $book['publisher_id']; ?>" placeholder="Pilih penerbit" onchange="setPublisherName(this.value)" required>
+              <input list="publisherList" type="text" class="form-control <?php if ($validation->hasError('publisher')) : ?>is-invalid<?php endif ?>" id="publisher" name="publisher" value="<?= $oldInput['publisher'] ?? $book['publisher_id']; ?>" placeholder="Pilih penerbit" onchange="setPublisherName(this.value)">
             </div>
             <div class="col-8">
               <input type="text" class="form-control" id="publisherName" name="publisherName" value="<?= $oldInput['authorName'] ?? ''; ?>" readonly>
@@ -93,7 +93,7 @@
           <label for="place" class="form-label">Tempat Terbit</label>
           <div class="row">
             <div class="col-4">
-              <input list="placeList" type="text" class="form-control <?php if ($validation->hasError('place')) : ?>is-invalid<?php endif ?>" id="place" name="place" value="<?= $oldInput['place'] ?? $book['place_id']; ?>" placeholder="Pilih tempat terbit" onchange="setPlaceName(this.value)" required>
+              <input list="placeList" type="text" class="form-control <?php if ($validation->hasError('place')) : ?>is-invalid<?php endif ?>" id="place" name="place" value="<?= $oldInput['place'] ?? $book['place_id']; ?>" placeholder="Pilih tempat terbit" onchange="setPlaceName(this.value)">
             </div>
             <div class="col-8">
               <input type="text" class="form-control" id="placeName" name="placeName" value="<?= $oldInput['placeName'] ?? ''; ?>" readonly>
@@ -105,7 +105,7 @@
         </div>
         <div class="col-12 col-md-6 col-lg-4  mb-3">
           <label for="year" class="form-label">Tahun terbit</label>
-          <input type="number" class="form-control <?php if ($validation->hasError('year')) : ?>is-invalid<?php endif ?>" id="year" name="year" minlength="4" maxlength="4" value="<?= $oldInput['year'] ?? $book['year']; ?>" required>
+          <input type="number" class="form-control <?php if ($validation->hasError('year')) : ?>is-invalid<?php endif ?>" id="year" name="year" minlength="4" maxlength="4" value="<?= $oldInput['year'] ?? $book['year']; ?>">
           <div class="invalid-feedback">
             <?= $validation->getError('year'); ?>
           </div>
@@ -113,8 +113,22 @@
       </div>
       <div class="row">
         <div class="col-12 col-md-6 col-lg-4 mb-3">
+          <label for="collation" class="form-label">Jumlah Halaman</label>
+          <input type="text" class="form-control <?php if ($validation->hasError('collation')) : ?>is-invalid<?php endif ?>" id="collation" name="collation" value="<?= $oldInput['collation'] ?? $book['collation']; ?>">
+          <div class="invalid-feedback">
+            <?= $validation->getError('collation'); ?>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4 mb-3">
+          <label for="call_number" class="form-label">call number</label>
+          <input type="text" class="form-control <?php if ($validation->hasError('call_number')) : ?>is-invalid<?php endif ?>" id="call_number" name="call_number" value="<?= $oldInput['call_number'] ?? $book['call_number']; ?>">
+          <div class="invalid-feedback">
+            <?= $validation->getError('call_number'); ?>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4 mb-3">
           <label for="language" class="form-label">Bahasa</label>
-          <select class="form-select <?php if ($validation->hasError('language')) : ?>is-invalid<?php endif ?>" aria-label="Select language" id="language" name="language" value="<?= $oldInput['language'] ?? $book['language_id']; ?>" required>
+          <select class="form-select <?php if ($validation->hasError('language')) : ?>is-invalid<?php endif ?>" aria-label="Select language" id="language" name="language" value="<?= $oldInput['language'] ?? $book['language_id']; ?>">
             <?php
             $languages = [
               ['id' => 'en', 'name' => 'en: English'],
@@ -129,9 +143,11 @@
             <?= $validation->getError('language'); ?>
           </div>
         </div>
+      </div>
+      <div class="row">
         <div class="col-12 col-md-6 col-lg-4  mb-3">
           <label for="isbn" class="form-label">ISBN</label>
-          <input type="number" class="form-control <?php if ($validation->hasError('isbn')) : ?>is-invalid<?php endif ?>" id="isbn" name="isbn" minlength="10" maxlength="13" aria-describedby="isbnHelp" value="<?= $oldInput['isbn'] ?? $book['isbn']; ?>" required>
+          <input type="number" class="form-control <?php if ($validation->hasError('isbn')) : ?>is-invalid<?php endif ?>" id="isbn" name="isbn" minlength="10" maxlength="13" aria-describedby="isbnHelp" value="<?= $oldInput['isbn'] ?? $book['isbn']; ?>">
           <div id="isbnHelp" class="form-text">
             ISBN must be 10-13 characters long, contain only numbers.
           </div>
@@ -141,7 +157,7 @@
         </div>
         <div class="col-12 col-lg-4 col-lg-4  mb-3">
           <label for="stock" class="form-label">Jumlah stok buku</label>
-          <input type="number" class="form-control <?php if ($validation->hasError('stock')) : ?>is-invalid<?php endif ?>" id="stock" name="stock" value="<?= $oldInput['stock'] ?? $book['quantity']; ?>" required>
+          <input type="number" class="form-control <?php if ($validation->hasError('stock')) : ?>is-invalid<?php endif ?>" id="stock" name="stock" value="<?= $oldInput['stock'] ?? $book['quantity']; ?>">
           <div class="invalid-feedback">
             <?= $validation->getError('stock'); ?>
           </div>
@@ -214,15 +230,15 @@
   };
 
   function setAuthorName(text) {
-    document.querySelector('#authorName').value = authorList[text];
+    document.querySelector('#authorName').value = authorList[text] ?? '';
   }
 
   function setPublisherName(text) {
-    document.querySelector('#publisherName').value = publisherList[text];
+    document.querySelector('#publisherName').value = publisherList[text] ?? '';
   }
 
   function setPlaceName(text) {
-    document.querySelector('#placeName').value = placeList[text];
+    document.querySelector('#placeName').value = placeList[text] ?? '';
   }
 
   setAuthorName(<?= $book['author_id']; ?>);
