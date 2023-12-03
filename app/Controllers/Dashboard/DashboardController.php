@@ -32,6 +32,11 @@ class DashboardController extends ResourceController
 
     public function index()
     {
+        return redirect('admin/dashboard');
+    }
+
+    public function dashboard()
+    {
         $data = array_merge(
             $this->getDataSummaries(),
             $this->getReports(),

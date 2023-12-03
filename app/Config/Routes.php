@@ -38,7 +38,7 @@ service('auth')->routes($routes);
 
 $routes->group('admin', ['filter' => 'session'], static function (RouteCollection $routes) {
     $routes->get('/', 'Dashboard\DashboardController');
-    $routes->get('dashboard', 'Dashboard\DashboardController');
+    $routes->get('dashboard', 'Dashboard\DashboardController::dashboard');
 
     $routes->resource('members', ['controller' => 'Members\MembersController']);
     $routes->resource('books', ['controller' => 'Books\BooksController']);
