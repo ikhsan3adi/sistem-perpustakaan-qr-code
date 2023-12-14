@@ -82,7 +82,7 @@ class UsersController extends ResourceController
             'email'         => 'required|valid_email|max_length[255]',
             'password' => [
                 'label'  => 'Auth.password',
-                'rules'  => 'permit_empty|' . Passwords::getMaxLenghtRule() . '|strong_password',
+                'rules'  => 'permit_empty|' . Passwords::getMaxLengthRule() . '|strong_password',
                 'errors' => [
                     'max_byte' => 'Auth.errorPasswordTooLongBytes',
                 ],
