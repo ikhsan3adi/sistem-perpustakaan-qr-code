@@ -41,7 +41,7 @@
         <?php foreach ($users as $user) : ?>
           <?php
           $userAttributes = $user->toArray();
-          $userIdentities = $userAttributes['identities'][0]->toArray();
+          $userIdentities = $user->identities[0]->toArray();
           $userGroup = $user->getGroups()[0];
           ?>
           <tr>

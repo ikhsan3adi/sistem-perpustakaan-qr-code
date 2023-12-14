@@ -22,7 +22,7 @@
 <?php
 $userId = $user->toArray()['id'];
 $username = $user->toArray()['username'];
-$email = $user->toArray()['identities'][0]->toArray()['secret'];
+$email = $user->identities[0]->toArray()['secret'];
 ?>
 
 <div class="card">
