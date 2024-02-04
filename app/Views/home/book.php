@@ -5,10 +5,10 @@
 <?= $this->endSection() ?>
 
 <?= $this->section('back'); ?>
-<a href="<?= base_url(); ?>" class="btn btn-outline-primary m-3 position-absolute">
+<!-- <a href="<?= base_url(); ?>" class="btn btn-outline-primary m-3 position-absolute">
   <i class="ti ti-home"></i>
   Home
-</a>
+</a> -->
 <?= $this->endSection(); ?>
 
 <?= $this->section('content') ?>
@@ -51,7 +51,7 @@
         <div class="col-sm-6 col-xl-3">
           <div class="card overflow-hidden rounded-2" style="height: 375px;">
             <div class="position-relative">
-              <a href="<?= base_url("admin/books/{$book['slug']}"); ?>">
+              <a href="<?= base_url("books/{$book['slug']}"); ?>">
                 <div class="card-img-top rounded-0" id="coverBook<?= $book['id']; ?>">
                 </div>
               </a>
