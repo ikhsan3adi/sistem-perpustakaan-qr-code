@@ -22,6 +22,7 @@ class MemberModel extends Model
         'address',
         'date_of_birth',
         'gender',
+        'profile_picture',
         'qr_code'
     ];
 

@@ -181,6 +181,7 @@ class MembersController extends ResourceController
             'address'       => 'required|string|min_length[5]|max_length[511]',
             'date_of_birth' => 'required|valid_date',
             'gender'        => 'required|alpha_numeric_punct',
+            'profile_picture' => 'uploaded[profile_picture]|max_size[profile_picture,1024]|is_image[profile_picture]',
         ])) {
             $data = [
                 'validation' => \Config\Services::validation(),
@@ -218,6 +219,7 @@ class MembersController extends ResourceController
             'address'       => $this->request->getVar('address'),
             'date_of_birth' => $this->request->getVar('date_of_birth'),
             'gender'        => $this->request->getVar('gender'),
+            'profile_picture'        => $this->request->getVar('profile_picture'),
             'qr_code'       => $qrCode
         ])) {
             $data = [

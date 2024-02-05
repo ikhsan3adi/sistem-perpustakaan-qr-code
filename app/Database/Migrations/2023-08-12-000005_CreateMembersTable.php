@@ -48,6 +48,11 @@ class CreateMembersTable extends Migration
                 'type'          => 'ENUM',
                 'constraint'    => ['Male', 'Female'],
             ],
+            'profile_picture' => [
+                'type'           => 'VARCHAR',
+                'constraint'     => 255,
+                'null'           => true,
+            ],
             'qr_code' => [
                 'type'          => 'VARCHAR',
                 'constraint'    => 255,

@@ -56,22 +56,39 @@
           </div>
         </div>
       </div>
-      <div class="mb-3">
-        <label for="address" class="form-label">Alamat</label>
+      <div class="row">
+        <div class="col-12 col-md-6 col-lg-4 col-xl-3 mb-3 p-3">
+          <label for="cover" class="d-block" style="cursor: pointer;">
+            <div class="d-flex justify-content-center bg-light overflow-hidden h-100 position-relative">
+              <img id="bookCoverPreview" src="<?= base_url(BOOK_COVER_URI . DEFAULT_BOOK_COVER); ?>" alt="" height="300" class="z-1">
+              <p class="position-absolute top-50 start-50 translate-middle z-0">Pilih sampul</p>
+            </div>
+          </label>
+        </div>
+        <div class="col-12 col-md-6 col-lg-8 col-xl-9">
+          <div class="mb-3">
+            <label for="profile_picture" class="form-label">Foto Member</label>
+            <input class="form-control <?php if ($validation->hasError('profile_picture')) : ?>is-invalid<?php endif ?>" type="file" id="profile_picture" name="profile_picture" onchange="previewImage()">
+
+            <div class="invalid-feedback">
+              <?= $validation->getError('profile_picture'); ?>
+            </div>
+          </div>
+          <div class="mb-3">
+          <label for="address" class="form-label">Alamat</label>
         <textarea class="form-control <?php if ($validation->hasError('address')) : ?>is-invalid<?php endif ?>" id="address" name="address" required><?= $oldInput['address'] ?? ''; ?></textarea>
         <div class="invalid-feedback">
           <?= $validation->getError('address'); ?>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-12 col-md-6 mb-3">
+          </div>
+          <div class="mb-3">
           <label for="date_of_birth" class="form-label">Tanggal lahir</label>
           <input type="date" class="form-control <?php if ($validation->hasError('date_of_birth')) : ?>is-invalid<?php endif ?>" id="date_of_birth" name="date_of_birth" value="<?= $oldInput['date_of_birth'] ?? ''; ?>" required>
           <div class="invalid-feedback">
             <?= $validation->getError('date_of_birth'); ?>
           </div>
-        </div>
-        <div class="col-12 col-md-6 mb-3">
+          </div>
+          <div class="mb-3">
           <label class="form-label">Jenis kelamin</label>
           <div class="my-2 <?php if ($validation->hasError('gender')) : ?>is-invalid<?php endif ?>">
             <div class="form-check form-check-inline">
@@ -90,10 +107,25 @@
           <div class="invalid-feedback">
             <?= $validation->getError('gender'); ?>
           </div>
+          </div>
         </div>
       </div>
       <button type="submit" class="btn btn-primary mt-2">Simpan</button>
     </form>
   </div>
 </div>
+<script>
+  function previewImage() {
+    const fileInput = document.querySelector('#cover');
+    const imagePreview = document.querySelector('#bookCoverPreview');
+
+    const reader = new FileReader();
+    reader.readAsDataURL(fileInput.files[0]);
+
+    reader.onload = function(e) {
+      imagePreview.src = e.target.result;
+    };
+  }
+</script>
+
 <?= $this->endSection() ?>
