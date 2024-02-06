@@ -195,6 +195,14 @@ if (session()->getFlashdata('msg')) : ?>
   <div class="col-12 col-lg-5">
     <div class="card">
       <div class="card-body">
+        <p class="text-center mb-4" style="line-break: anywhere;">Profile Path : <?= $member['profile_picture']; ?></p>
+        <div class="d-flex justify-content-center overflow-hidden mx-5 position-relative">
+          <img style="width: 400px; height: 300px; object-fit: cover;" src="<?= base_url(BOOK_COVER_URI . $member['profile_picture']) ?>" alt="">
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-body ">
         <p class="text-center mb-4" style="line-break: anywhere;">UID : <?= $member['uid']; ?></p>
         <div id="qr-code" class="m-auto"></div>
       </div>

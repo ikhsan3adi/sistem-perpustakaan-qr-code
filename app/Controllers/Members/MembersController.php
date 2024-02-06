@@ -181,7 +181,7 @@ class MembersController extends ResourceController
             'address'       => 'required|string|min_length[5]|max_length[511]',
             'date_of_birth' => 'required|valid_date',
             'gender'        => 'required|alpha_numeric_punct',
-            'profile_picture' => 'uploaded[profile_picture]|max_size[profile_picture,1024]|is_image[profile_picture]',
+            'profile_picture'     => 'is_image[profile_picture]|mime_in[profile_picture,image/jpg,image/jpeg,image/gif,image/png,image/webp]|max_size[profile_picture,5120]'
         ])) {
             $data = [
                 'validation' => \Config\Services::validation(),
@@ -209,6 +209,11 @@ class MembersController extends ResourceController
             dir: MEMBERS_QR_CODE_PATH,
             filename: $qrCodeLabel
         );
+        $coverImage = $this->request->getFile('profile_picture');
+
+        if ($coverImage->getError() != 4) {
+            $coverImageFileName = uploadBookCover($coverImage);
+        }
 
         if (!$this->memberModel->save([
             'uid'           => $uid,
@@ -219,7 +224,7 @@ class MembersController extends ResourceController
             'address'       => $this->request->getVar('address'),
             'date_of_birth' => $this->request->getVar('date_of_birth'),
             'gender'        => $this->request->getVar('gender'),
-            'profile_picture'        => $this->request->getVar('profile_picture'),
+            'profile_picture'        => $coverImageFileName ?? null,
             'qr_code'       => $qrCode
         ])) {
             $data = [

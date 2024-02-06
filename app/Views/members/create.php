@@ -22,7 +22,7 @@
 <div class="card">
   <div class="card-body">
     <h5 class="card-title fw-semibold">Form Anggota Baru</h5>
-    <form action="<?= base_url('admin/members'); ?>" method="post">
+    <form action="<?= base_url('admin/members'); ?>" method="post" enctype="multipart/form-data">
       <?= csrf_field(); ?>
       <div class="row mt-3">
         <div class="col-12 col-md-6 mb-3">
@@ -60,8 +60,8 @@
         <div class="col-12 col-md-6 col-lg-4 col-xl-3 mb-3 p-3">
           <label for="profile_picture" class="d-block" style="cursor: pointer;">
             <div class="d-flex justify-content-center bg-light overflow-hidden h-100 position-relative">
-              <img id="userCoverPreview" src="<?= base_url(BOOK_COVER_URI . DEFAULT_BOOK_COVER); ?>" alt="" height="300" class="z-1">
-              <p class="position-absolute top-50 start-50 translate-middle z-0">Pilih sampul</p>
+              <img id="userCoverPreview" src="<?= base_url(USER_PROFILE_URI . DEFAULT_USER_COVER); ?>" alt="" height="300" class="z-1">
+              <p class="position-absolute top-50 start-50 translate-middle z-0">Pilih Profile</p>
             </div>
           </label>
         </div>
@@ -116,7 +116,7 @@
 </div>
 <script>
   function previewImage() {
-    const fileInput = document.querySelector('#cover');
+    const fileInput = document.querySelector('#profile_picture');
     const imagePreview = document.querySelector('#userCoverPreview');
 
     const reader = new FileReader();
