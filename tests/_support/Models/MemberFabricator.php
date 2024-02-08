@@ -24,6 +24,7 @@ class MemberFabricator extends MemberModel
             'phone'         => $faker->phoneNumber,
             'address'       => $faker->address,
             'date_of_birth' => $faker->date,
+            'profile_picture' => "smea.jpg",
             'gender'        => $gender,
         ];
     }

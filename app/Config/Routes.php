@@ -42,7 +42,7 @@ service('auth')->routes($routes);
 $routes->group('admin', ['filter' => 'session'], static function (RouteCollection $routes) {
     $routes->get('/', 'Dashboard\DashboardController');
     $routes->get('dashboard', 'Dashboard\DashboardController::dashboard');
-
+    $routes->get('members/(:any)/print', 'Members\MembersController::print/$1');
     $routes->resource('members', ['controller' => 'Members\MembersController']);
     $routes->resource('books', ['controller' => 'Books\BooksController']);
     $routes->resource('categories', ['controller' => 'Books\CategoriesController']);

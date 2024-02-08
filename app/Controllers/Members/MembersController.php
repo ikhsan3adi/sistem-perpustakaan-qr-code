@@ -212,7 +212,7 @@ class MembersController extends ResourceController
         $coverImage = $this->request->getFile('profile_picture');
 
         if ($coverImage->getError() != 4) {
-            $coverImageFileName = uploadBookCover($coverImage);
+            $coverImageFileName = uploadUSerProfile($coverImage);
         }
 
         if (!$this->memberModel->save([
@@ -364,9 +364,31 @@ class MembersController extends ResourceController
             return redirect()->back();
         }
 
+        deleteUSerProfile($member['profile_picture']);
+
         deleteMembersQRCode($member['qr_code']);
 
         session()->setFlashdata(['msg' => 'Member deleted successfully']);
         return redirect()->to('admin/members');
+    }
+    /**
+     * print user the designated resource object from the model
+     *
+     * @return mixed
+     */
+    public function print($uid = null)
+    {
+
+        $member = $this->memberModel->where('uid', $uid)->first();
+
+        if (empty($member)) {
+            throw new PageNotFoundException('Member not found');
+        }
+
+        $data = [
+            'member'            => $member,
+        ];
+
+        return view('members/print' ,$data);
     }
 }

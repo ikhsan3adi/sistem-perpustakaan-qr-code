@@ -3,8 +3,20 @@
 <?= $this->section('head') ?>
 <title>Detail Anggota</title>
 <?= $this->endSection() ?>
-
 <?= $this->section('content') ?>
+<?php
+$coverImageFilePath = USER_PROFILE_URI . $member['profile_picture'];
+?>
+<style>
+  #book-cover {
+    background-image: url(<?= base_url((!empty($member['profile_picture']) && file_exists($coverImageFilePath)) ? $coverImageFilePath : USER_PROFILE_URI . DEFAULT_USER_COVER); ?>);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    max-width: 400px;
+    height: 380px;
+  }
+</style>
 <style>
   #qr-code {
     background-image: url(<?= base_url(MEMBERS_QR_CODE_URI . $member['qr_code']); ?>);
@@ -41,6 +53,12 @@ if (session()->getFlashdata('msg')) : ?>
                 </a>
               </div>
               <div class="d-flex gap-2 justify-content-end gap-2">
+                <div>
+                  <a href="<?= base_url("admin/members/{$member['uid']}/print"); ?>" class="btn btn-success w-100">
+                    <i class="ti ti-printer"></i>
+                    Print
+                  </a>
+                </div>
                 <div>
                   <a href="<?= base_url("admin/members/{$member['uid']}/edit"); ?>" class="btn btn-primary w-100">
                     <i class="ti ti-edit"></i>
@@ -197,7 +215,7 @@ if (session()->getFlashdata('msg')) : ?>
       <div class="card-body">
         <p class="text-center mb-4" style="line-break: anywhere;">Profile Path : <?= $member['profile_picture']; ?></p>
         <div class="d-flex justify-content-center overflow-hidden mx-5 position-relative">
-          <img style="width: 400px; height: 300px; object-fit: cover;" src="<?= base_url(BOOK_COVER_URI . $member['profile_picture']) ?>" alt="">
+          <img style="width: 400px; height: 300px; object-fit: cover;" src="<?= base_url(USER_PROFILE_URI . $member['profile_picture']) ?>" alt="">
         </div>
       </div>
     </div>
