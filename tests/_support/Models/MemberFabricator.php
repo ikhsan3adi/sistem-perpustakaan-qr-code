@@ -12,6 +12,7 @@ class MemberFabricator extends MemberModel
     {
         // 1: Male, 2: Female
         $gender = $faker->numberBetween(1, 2);
+        $type = $faker->numberBetween(1, 2, 3);
 
         $firstName = $faker->firstName($gender == 1 ? Person::GENDER_MALE : Person::GENDER_FEMALE);
         $lastName = $faker->lastName($gender == 1 ? Person::GENDER_MALE : Person::GENDER_FEMALE);
@@ -24,6 +25,7 @@ class MemberFabricator extends MemberModel
             'phone'         => $faker->phoneNumber,
             'address'       => $faker->address,
             'date_of_birth' => $faker->date,
+            'type'          => $type,
             'profile_picture' => "smea.jpg",
             'gender'        => $gender,
         ];

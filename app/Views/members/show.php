@@ -83,6 +83,7 @@ if (session()->getFlashdata('msg')) : ?>
                     <?php
                     $tableData = [
                       'Nama Lengkap'  => [$member['first_name'] . ' ' . $member['last_name']],
+                      'Jenis'         => $member['type'],
                       'Email'         => $member['email'],
                       'Nomor telepon' => $member['phone'],
                       'Alamat'        => $member['address'],

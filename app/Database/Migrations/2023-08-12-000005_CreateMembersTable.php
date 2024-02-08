@@ -44,6 +44,10 @@ class CreateMembersTable extends Migration
                 'type'          => 'DATE',
                 'null'          => true,
             ],
+            'type' => [
+                'type'          => 'ENUM',
+                'constraint'    => ['Pelajar', 'Mahasiswa' ,'Umum'],
+            ],
             'gender' => [
                 'type'          => 'ENUM',
                 'constraint'    => ['Male', 'Female'],

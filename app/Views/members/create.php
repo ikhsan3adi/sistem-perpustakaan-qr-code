@@ -89,6 +89,20 @@
             </div>
           </div>
           <div class="mb-3">
+            <label class="form-label">Type</label>
+            <div class="my-2 <?php if ($validation->hasError('type')) : ?>is-invalid<?php endif ?>">
+              <select class="form-select" id="type" name="type" required>
+                <option value="" <?php echo ($oldInput['type'] ?? '') == '' ? 'selected' : ''; ?>>Pilih Type Member</option>
+                <option value="1" <?php echo ($oldInput['type'] ?? '') == '1' ? 'selected' : ''; ?>>Pelajar</option>
+                <option value="2" <?php echo ($oldInput['type'] ?? '') == '2' ? 'selected' : ''; ?>>Mahasiswa</option>
+                <option value="3" <?php echo ($oldInput['type'] ?? '') == '3' ? 'selected' : ''; ?>>Umum</option>
+              </select>
+            </div>
+            <div class="invalid-feedback">
+              <?= $validation->getError('type'); ?>
+            </div>
+          </div>
+          <div class="mb-3">
             <label class="form-label">Jenis kelamin</label>
             <div class="my-2 <?php if ($validation->hasError('gender')) : ?>is-invalid<?php endif ?>">
               <div class="form-check form-check-inline">
