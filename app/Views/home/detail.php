@@ -28,6 +28,28 @@ $coverImageFilePath = BOOK_COVER_URI . $book['book_cover'];
     </div>
 <?php endif; ?>
 <div class="card">
+    <div class="d-flex justify-content-between m-4 mb-4">
+        <div>
+            <a href="<?= base_url('/'); ?>" class="btn btn-outline-primary">
+                <i class="ti ti-arrow-left"></i>
+                Kembali
+            </a>
+        </div>
+        <div class="d-flex gap-2 justify-content-end">
+            <div>
+                <a href="<?= base_url("/loans"); ?>" class="btn btn-primary w-100">
+                    <i class="ti ti-plus"></i>
+                    Pinjam
+                </a>
+            </div>
+            <div>
+                <a href="<?= base_url("/"); ?>" class="btn btn-success w-100">
+                    <i class="ti ti-star"></i>
+                    Ulasan
+                </a>
+            </div>
+        </div>
+    </div>
     <div class="card-body">
         <h5 class="card-title fw-semibold mb-4">Detail Buku</h5>
         <div class="row">
@@ -43,6 +65,7 @@ $coverImageFilePath = BOOK_COVER_URI . $book['book_cover'];
                     <h5>Penerbit: <?= $book['publisher']; ?></h5>
                     <h5>Kategori: <?= $book['category']; ?></h5>
                     <h5>Rak: <?= $book['rack']; ?>, Lantai <?= $book['floor']; ?></h5>
+                    <h5>Tentang Buku: <?= $book['category']; ?></h5>
                 </div>
             </div>
         </div>
@@ -85,7 +108,6 @@ $coverImageFilePath = BOOK_COVER_URI . $book['book_cover'];
             </div>
         </div>
     </div>
-    <a href="<?= base_url('/'); ?>" class="btn btn-outline-primary">Kembali ke Daftar Buku</a>
 </div>
-</div>
+
 <?= $this->endSection() ?>

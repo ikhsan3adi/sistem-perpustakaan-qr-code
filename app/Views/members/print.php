@@ -6,6 +6,8 @@
 
     <!-- Extra head e.g title -->
     <?= $this->renderSection('head') ?>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800&display=swap">
+
 
     <link rel="stylesheet" href="<?= base_url('assets/css/home.css'); ?>">
     <meta charset="UTF-8">
@@ -15,6 +17,10 @@
 
 <body>
     <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
         #img {
             background-image: url(<?= base_url('assets/images/image.png') ?>);
         }

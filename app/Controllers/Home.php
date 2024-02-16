@@ -5,14 +5,18 @@ namespace App\Controllers;
 use App\Models\BookModel;
 use App\Models\LoanModel;
 use App\Models\RackModel;
+use App\Models\FineModel;
+use App\Models\MemberModel;
 use App\Models\CategoryModel;
 use App\Models\BookStockModel;
 use App\Controllers\BaseController;
+use CodeIgniter\RESTful\ResourceController;
 use CodeIgniter\Exceptions\PageNotFoundException;
 
-class Home extends BaseController
+class Home extends ResourceController
 {
-
+    protected FineModel $fineModel;
+    protected MemberModel $memberModel;
     protected BookModel $bookModel;
     protected CategoryModel $categoryModel;
     protected RackModel $rackModel;
@@ -33,7 +37,7 @@ class Home extends BaseController
 
     public function index(): string
     {
-        return view('home/home');
+        return view('home/register');
     }
 
     public function book(): string

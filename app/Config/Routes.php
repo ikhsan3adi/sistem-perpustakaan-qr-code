@@ -67,6 +67,9 @@ $routes->group('admin', ['filter' => 'session'], static function (RouteCollectio
     $routes->resource('users', ['controller' => 'Users\UsersController', 'filter' => 'group:superadmin']);
 });
 
+$routes->get('/loans', 'MembersLoansController::loans');
+
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing

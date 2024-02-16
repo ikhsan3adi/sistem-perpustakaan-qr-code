@@ -11,6 +11,7 @@
 </head>
 
 <body class="position-relative">
+  <?= $this->include('layouts/sidebar_user') ?>
   <!--  Body Wrapper -->
   <div class="background">
   </div>
@@ -19,7 +20,7 @@
     <!--  Main wrapper -->
     <div class="body-wrapper position-relative">
       <?= $this->renderSection('back') ?>
-      <div class="container col-xxl-8 px-4 py-5" style="min-height: 100vh;">
+      <div class="container col-xxl-8 px-4 " style="min-height: 100vh;">
         <!-- Main content -->
         <div class="w-100">
           <?= $this->renderSection('content') ?>

@@ -4,13 +4,6 @@
 <title>Buku</title>
 <?= $this->endSection() ?>
 
-<?= $this->section('back'); ?>
-<!-- <a href="<?= base_url(); ?>" class="btn btn-outline-primary m-3 position-absolute">
-  <i class="ti ti-home"></i>
-  Home
-</a> -->
-<?= $this->endSection(); ?>
-
 <?= $this->section('content') ?>
 <div class="card">
   <div class="card-body">
