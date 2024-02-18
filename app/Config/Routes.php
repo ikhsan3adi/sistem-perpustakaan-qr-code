@@ -67,7 +67,13 @@ $routes->group('admin', ['filter' => 'session'], static function (RouteCollectio
     $routes->resource('users', ['controller' => 'Users\UsersController', 'filter' => 'group:superadmin']);
 });
 
-$routes->get('/loans', 'MembersLoansController::loans');
+$routes->get('loans/member/search', 'MembersLoansController::loans');
+$routes->get('loans/books/search', 'MembersLoansController::searchBook');
+$routes->post('loans/books/new', 'MembersLoansController::new');
+$routes->resource('loans', ['controller' => 'MembersLoansController']);
+
+$routes->get('returns/new/search', 'MembersReturnsController::searchLoan');
+$routes->resource('returns', ['controller' => 'MembersReturnsController']);
 
 
 /*

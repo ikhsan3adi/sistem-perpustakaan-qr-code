@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers\Loans;
+namespace App\Controllers;
 
 use App\Libraries\QRGenerator;
 use App\Models\BookModel;
@@ -11,7 +11,7 @@ use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\RESTful\ResourceController;
 
-class ReturnsController extends ResourceController
+class MembersReturnsController extends ResourceController
 {
     protected LoanModel $loanModel;
     protected FineModel $fineModel;
@@ -77,14 +77,14 @@ class ReturnsController extends ResourceController
                 ->where('loans.uid', $uid)
                 ->first();
 
-            return redirect()->to("admin/returns/{$loan['uid']}");
+            return redirect()->to("returns/{$loan['uid']}");
         }
 
         $data = [
             'loan'         => $loan,
         ];
 
-        return view('returns/show', $data);
+        return view('home/return_loans_member/show', $data);
     }
 
     public function searchLoan()
@@ -113,10 +113,10 @@ class ReturnsController extends ResourceController
             });
 
             if (empty($loans)) {
-                return view('returns/loan', ['msg' => 'Loan not found']);
+                return view('home/return_loans_member/loan', ['msg' => 'Loan not found']);
             }
 
-            return view('returns/loan', ['loans' => $loans]);
+            return view('home/return_loans_member/loan', ['loans' => $loans]);
         }
 
         return view('home/return_loans_member/search_loan');
@@ -133,7 +133,7 @@ class ReturnsController extends ResourceController
 
         if (empty($loanUid)) {
             session()->setFlashdata(['msg' => 'Select loan first', 'error' => true]);
-            return redirect()->to('admin/returns/new/search');
+            return redirect()->to('returns/new/search');
         }
 
         $loans = $this->loanModel
@@ -157,7 +157,7 @@ class ReturnsController extends ResourceController
             'validation' => $validation ?? \Config\Services::validation()
         ];
 
-        return view('returns/create', $data);
+        return view('home/return_loans_member/create', $data);
     }
 
     /**
@@ -185,7 +185,7 @@ class ReturnsController extends ResourceController
                 'return_date' => $date->toDateTimeString()
             ])) {
                 session()->setFlashdata(['msg' => 'Update failed', 'error' => true]);
-                return redirect()->to('admin/returns/new?loan-uid=' . $loan['uid']);
+                return redirect()->to('returns/new?loan-uid=' . $loan['uid']);
             }
 
             $finePerDay = intval(getenv('amountFinesPerDay'));
@@ -197,7 +197,7 @@ class ReturnsController extends ResourceController
                 'fine_amount' => $totalFine,
             ])) {
                 session()->setFlashdata(['msg' => 'Update failed', 'error' => true]);
-                return redirect()->to('admin/returns/new?loan-uid=' . $loan['uid']);
+                return redirect()->to('returns/new?loan-uid=' . $loan['uid']);
             }
         } else {
             deleteLoansQRCode($loan['qr_code']);
@@ -206,12 +206,12 @@ class ReturnsController extends ResourceController
                 'qr_code' => null
             ])) {
                 session()->setFlashdata(['msg' => 'Update failed', 'error' => true]);
-                return redirect()->to('admin/returns/new?loan-uid=' . $loan['uid']);
+                return redirect()->to('returns/new?loan-uid=' . $loan['uid']);
             }
         }
 
         session()->setFlashdata(['msg' => 'Success', 'error' => false]);
-        return redirect()->to('admin/returns');
+        return redirect()->to('returns/new/search');
     }
 
     /**

@@ -26,9 +26,9 @@
           <?= $this->renderSection('content') ?>
         </div>
 
-        <!-- <div class="align-self-end w-100">
+        <div class="align-self-end  w-100">
           <?= $this->include('layouts/footer') ?>
-        </div> -->
+        </div>
       </div>
     </div>
   </div>

@@ -19,12 +19,12 @@ $sidebarNavs =
     'Transaksi',
     [
       'name' => 'Peminjaman',
-      'link' => '/loans',
+      'link' => '/loans/member/search',
       'icon' => 'ti ti-arrows-exchange'
     ],
     [
       'name' => 'Pengembalian',
-      'link' => '/returns',
+      'link' => '/returns/new/search',
       'icon' => 'ti ti-check'
     ],
     [

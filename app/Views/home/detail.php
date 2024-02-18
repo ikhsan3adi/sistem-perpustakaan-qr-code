@@ -37,7 +37,7 @@ $coverImageFilePath = BOOK_COVER_URI . $book['book_cover'];
         </div>
         <div class="d-flex gap-2 justify-content-end">
             <div>
-                <a href="<?= base_url("/loans"); ?>" class="btn btn-primary w-100">
+                <a href="<?= base_url("/loans/member/search"); ?>" class="btn btn-primary w-100">
                     <i class="ti ti-plus"></i>
                     Pinjam
                 </a>
