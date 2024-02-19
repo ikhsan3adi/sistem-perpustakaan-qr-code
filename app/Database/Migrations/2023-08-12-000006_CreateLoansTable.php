@@ -45,6 +45,10 @@ class CreateLoansTable extends Migration
                 'type'          => 'DATETIME',
                 'null'          => true
             ],
+            'attributes' => [
+                'type'          => 'JSON',
+                'null'          => true
+            ],
             'qr_code' => [
                 'type'          => 'VARCHAR',
                 'constraint'    => 255,

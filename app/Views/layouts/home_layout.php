@@ -33,6 +33,7 @@
     </div>
   </div>
 
+    <?= $this->renderSection('ulasan') ?>
   <!-- Scripts -->
   <?= $this->include('imports/scripts/basic_scripts') ?>
 

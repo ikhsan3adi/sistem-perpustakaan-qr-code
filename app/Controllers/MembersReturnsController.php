@@ -180,14 +180,19 @@ class MembersReturnsController extends ResourceController
 
         $isLate = $date->isAfter($loanDueDate);
 
+        $ulasan = $this->request->getVar('ulasan');
+        $rating = $this->request->getVar('rating');
+
         if ($isLate) {
             if (!$this->loanModel->update($loan['id'], [
-                'return_date' => $date->toDateTimeString()
+                'return_date' => $date->toDateTimeString(),
+                'attributes' => json_encode(['ulasan' => $ulasan, 'rating' => $rating])
             ])) {
                 session()->setFlashdata(['msg' => 'Update failed', 'error' => true]);
                 return redirect()->to('returns/new?loan-uid=' . $loan['uid']);
             }
-
+            
+            
             $finePerDay = intval(getenv('amountFinesPerDay'));
             $daysLate = $date->today()->difference($loanDueDate)->getDays();
             $totalFine = abs($daysLate) * $loan['quantity'] * $finePerDay;
@@ -203,7 +208,8 @@ class MembersReturnsController extends ResourceController
             deleteLoansQRCode($loan['qr_code']);
             if (!$this->loanModel->update($loan['id'], [
                 'return_date' => $date->toDateTimeString(),
-                'qr_code' => null
+                'qr_code' => null,
+                'attributes' => json_encode(['ulasan' => $ulasan, 'rating' => $rating])
             ])) {
                 session()->setFlashdata(['msg' => 'Update failed', 'error' => true]);
                 return redirect()->to('returns/new?loan-uid=' . $loan['uid']);

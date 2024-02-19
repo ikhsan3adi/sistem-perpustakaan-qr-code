@@ -141,10 +141,97 @@ $daysLate = $now->today()->difference($loanDueDate)->getDays();
             </div>
           </div>
         <?php endif; ?>
+        <div class="col-12 col-md-6 mb-3">
+          <div class="row">
+            <div class="col-12 mb-3">
+              <div class="col-12 mb-3">
+                <label for="ulasan" class="form-label">Ulasan:</label>
+                <textarea class="form-control" id="ulasan" name="ulasan" required></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 mb-3">
+          <div class="row">
+            <div class="col-12 mb-3">
+              <label for="rating" class="form-label">Rating:</label>
+              <div class="rating">
+                <input type="radio" id="star1" name="rating" value="1" />
+                <label for="star1" title="1 star"></label>
+                <input type="radio" id="star2" name="rating" value="2" />
+                <label for="star2" title="2 stars"></label>
+                <input type="radio" id="star3" name="rating" value="3" />
+                <label for="star3" title="3 stars"></label>
+                <input type="radio" id="star4" name="rating" value="4" />
+                <label for="star4" title="4 stars"></label>
+                <input type="radio" id="star5" name="rating" value="5" />
+                <label for="star5" title="5 stars"></label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
       </div>
       <button type="submit" onclick="return confirm('Apakah anda yakin?')" class="btn btn-primary mt-3">Konfirmasi</button>
     </div>
   </div>
 </form>
+<style>
+  .rating {
+    display: flex;
+    margin-top: 5px;
+  }
+
+  .rating input {
+    display: none;
+    /* Sembunyikan input radio */
+  }
+
+  .rating label {
+    cursor: pointer;
+    width: 25px;
+    height: 25px;
+    margin: 0 2px;
+    font-size: 1.5rem;
+    color: #ccc;
+    display: inline-block;
+    /* Menampilkan elemen secara inline */
+  }
+
+  .rating label:before {
+    content: '\2605';
+    /* Unicode untuk karakter bintang */
+  }
+
+  .rating input:checked~label {
+    color: #ccc;
+    /* Warna bintang yang dipilih */
+  }
+
+  .rating input:checked~label:before {
+    content: '\2605';
+    /* Unicode untuk karakter bintang yang dipilih */
+  }
+</style>
+<script>
+  const inputs = document.querySelectorAll('.rating input');
+  const labels = document.querySelectorAll('.rating label');
+
+  inputs.forEach(input => {
+    input.addEventListener('click', function() {
+      const currentRating = this.value;
+      labels.forEach((label, index) => {
+        if (index < currentRating) {
+          label.style.color = '#f39c12'; // Warna bintang yang dipilih
+        } else {
+          label.style.color = '#ccc'; // Warna bintang yang tidak dipilih
+        }
+      });
+    });
+  });
+</script>
+
 
 <?= $this->endSection() ?>

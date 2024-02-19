@@ -114,6 +114,28 @@ class Home extends ResourceController
             'bookStock' => $bookStock
         ];
 
+        if ($this->request->isAJAX()) {
+            $param = $this->request->getVar('param');
+            if (empty($param)) return;
+
+            $loans = $this->loanModel
+                ->select('members.*, books.*, loans.*')
+                ->join('members', 'loans.member_id = members.id', 'LEFT')
+                ->join('books', 'loans.book_id = books.id', 'LEFT')
+                ->Where('books.slug', $param)
+                ->findAll();
+
+            $loans = array_filter($loans, function ($loan) {
+                return !empty($loan['attributes']);
+            });
+
+            if (empty($loans)) {
+                return view('home/return_loans_member/ulasan', ['msg' => 'Loan not found']);
+            }
+
+            return view('home/return_loans_member/ulasan', ['loans' => $loans]);
+        }
+
         return view('home/detail', $data);
     }
 }

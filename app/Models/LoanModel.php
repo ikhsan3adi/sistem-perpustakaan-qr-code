@@ -21,6 +21,7 @@ class LoanModel extends Model
         'loan_date',
         'due_date',
         'return_date',
+        'attributes',
         'qr_code'
     ];
 
