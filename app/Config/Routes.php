@@ -31,15 +31,18 @@ $routes->set404Override();
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->get('/', 'Home::index');
-$routes->get('/book', 'Home::book');
+$routes->get('/', 'Home::book');
+// $routes->get('/book', 'Home::book');
+$routes->get('books/(:any)', 'Home::detail/$1');
+
+
 
 service('auth')->routes($routes);
 
 $routes->group('admin', ['filter' => 'session'], static function (RouteCollection $routes) {
     $routes->get('/', 'Dashboard\DashboardController');
     $routes->get('dashboard', 'Dashboard\DashboardController::dashboard');
-
+    $routes->get('members/(:any)/print', 'Members\MembersController::print/$1');
     $routes->resource('members', ['controller' => 'Members\MembersController']);
     $routes->resource('books', ['controller' => 'Books\BooksController']);
     $routes->resource('categories', ['controller' => 'Books\CategoriesController']);
@@ -63,6 +66,15 @@ $routes->group('admin', ['filter' => 'session'], static function (RouteCollectio
     });
     $routes->resource('users', ['controller' => 'Users\UsersController', 'filter' => 'group:superadmin']);
 });
+
+$routes->get('loans/member/search', 'MembersLoansController::loans');
+$routes->get('loans/books/search', 'MembersLoansController::searchBook');
+$routes->post('loans/books/new', 'MembersLoansController::new');
+$routes->resource('loans', ['controller' => 'MembersLoansController']);
+
+$routes->get('returns/new/search', 'MembersReturnsController::searchLoan');
+$routes->resource('returns', ['controller' => 'MembersReturnsController']);
+
 
 /*
  * --------------------------------------------------------------------

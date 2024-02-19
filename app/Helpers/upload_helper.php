@@ -63,3 +63,23 @@ function deleteLoansQRCode(string|null $filename): bool
         return false;
     }
 }
+
+function deleteUSerProfile(string|null $filename): bool
+{
+    $filePath = USER_PROFILE_PATH . $filename;
+
+    if (!empty($filename) && file_exists($filePath)) {
+        return unlink($filePath);
+    } else {
+        return false;
+    }
+}
+
+function uploadUSerProfile(\CodeIgniter\HTTP\Files\UploadedFile|null $coverImage): string|null
+{
+    $coverImageFileName = $coverImage->getRandomName();
+    // save cover image file
+    $save = $coverImage->move(USER_PROFILE_PATH, $coverImageFileName);
+
+    return $save ? $coverImageFileName : null;
+}

@@ -181,6 +181,8 @@ class MembersController extends ResourceController
             'address'       => 'required|string|min_length[5]|max_length[511]',
             'date_of_birth' => 'required|valid_date',
             'gender'        => 'required|alpha_numeric_punct',
+            'type'          => 'required|alpha_numeric_punct',
+            'profile_picture'     => 'is_image[profile_picture]|mime_in[profile_picture,image/jpg,image/jpeg,image/gif,image/png,image/webp]|max_size[profile_picture,5120]'
         ])) {
             $data = [
                 'validation' => \Config\Services::validation(),
@@ -208,6 +210,11 @@ class MembersController extends ResourceController
             dir: MEMBERS_QR_CODE_PATH,
             filename: $qrCodeLabel
         );
+        $coverImage = $this->request->getFile('profile_picture');
+
+        if ($coverImage->getError() != 4) {
+            $coverImageFileName = uploadUSerProfile($coverImage);
+        }
 
         if (!$this->memberModel->save([
             'uid'           => $uid,
@@ -216,8 +223,10 @@ class MembersController extends ResourceController
             'email'         => $this->request->getVar('email'),
             'phone'         => $this->request->getVar('phone'),
             'address'       => $this->request->getVar('address'),
+            'type'          => $this->request->getVar('type'),
             'date_of_birth' => $this->request->getVar('date_of_birth'),
             'gender'        => $this->request->getVar('gender'),
+            'profile_picture'        => $coverImageFileName ?? null,
             'qr_code'       => $qrCode
         ])) {
             $data = [
@@ -275,6 +284,7 @@ class MembersController extends ResourceController
             'address'       => 'required|string|min_length[5]|max_length[511]',
             'date_of_birth' => 'required|valid_date',
             'gender'        => 'required|alpha_numeric_punct',
+            'type'          => 'required|alpha_numeric_punct',
         ])) {
             $data = [
                 'member'     => $member,
@@ -324,6 +334,7 @@ class MembersController extends ResourceController
             'address'       => $this->request->getVar('address'),
             'date_of_birth' => $this->request->getVar('date_of_birth'),
             'gender'        => $this->request->getVar('gender'),
+            'type'        => $this->request->getVar('type'),
             'qr_code'       => $qrCode
         ])) {
             $data = [
@@ -357,9 +368,31 @@ class MembersController extends ResourceController
             return redirect()->back();
         }
 
+        deleteUSerProfile($member['profile_picture']);
+
         deleteMembersQRCode($member['qr_code']);
 
         session()->setFlashdata(['msg' => 'Member deleted successfully']);
         return redirect()->to('admin/members');
+    }
+    /**
+     * print user the designated resource object from the model
+     *
+     * @return mixed
+     */
+    public function print($uid = null)
+    {
+
+        $member = $this->memberModel->where('uid', $uid)->first();
+
+        if (empty($member)) {
+            throw new PageNotFoundException('Member not found');
+        }
+
+        $data = [
+            'member'            => $member,
+        ];
+
+        return view('members/print' ,$data);
     }
 }

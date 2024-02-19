@@ -95,6 +95,26 @@
             <?= $validation->getError('gender'); ?>
           </div>
         </div>
+
+        <div class="mb-3">
+          <label class="form-label">Type</label>
+          <?php
+          $type = $oldInput['type'] ?? $member['type'] ?? '';
+          ?>
+          <div class="my-2 <?php if ($validation->hasError('type')) : ?>is-invalid<?php endif ?>">
+            
+            <select class="form-select" id="type" name="type" required>
+              <option value="1" <?= ($type == '1' || $type == 'Pelajar') ? 'selected' : ''; ?>>Pelajar</option>
+              <option value="2" <?= ($type == '2' || $type == 'Mahasiswa') ? 'selected' : ''; ?>>Mahasiswa</option>
+              <option value="3" <?= ($type == '3' || $type == 'Umum') ? 'selected' : ''; ?>>Umum</option>
+            </select>
+
+
+          </div>
+          <div class="invalid-feedback">
+            <?= $validation->getError('type'); ?>
+          </div>
+        </div>
       </div>
       <button type="submit" class="btn btn-primary mt-2">Simpan</button>
     </form>

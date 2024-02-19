@@ -1,18 +1,30 @@
-<?= $this->extend('layouts/home_layout') ?>
+<!DOCTYPE html>
+<html lang="en">
 
-<?= $this->section('head') ?>
+<head>
+  <?= $this->include('layouts/head') ?>
+
+  <?= $this->section('head') ?>
 <title><?= lang('Auth.login') ?></title>
 <?= $this->endSection() ?>
 
-<?= $this->section('back'); ?>
-<a href="<?= base_url(); ?>" class="btn btn-outline-primary m-3 position-absolute">
-  <i class="ti ti-arrow-left"></i>
-  Kembali
-</a>
-<?= $this->endSection(); ?>
+  <link rel="stylesheet" href="<?= base_url('assets/css/home.css'); ?>">
+</head>
 
-<?= $this->section('content') ?>
-<div class="container d-flex justify-content-center p-5">
+
+<body class="position-relative">
+
+  <!--  Body Wrapper -->
+  <div class="background">
+  </div>
+
+  <div class="page-wrapper" id="main-wrapper">
+    <!--  Main wrapper -->
+    <div class="body-wrapper position-relative">
+      <div class="container col-xxl-8 px-4 " style="min-height: 100vh;">
+        <!-- Main content -->
+        <div class="w-100">
+        <div class="container d-flex justify-content-center p-5">
   <div class="card col-12 col-md-5 shadow-sm">
     <div class="card-body">
       <h5 class="card-title mb-5"><?= lang('Auth.login') ?></h5>
@@ -75,5 +87,20 @@
     </div>
   </div>
 </div>
+        </div>
 
-<?= $this->endSection() ?>
+        <div class="align-self-end  w-100">
+          <?= $this->include('layouts/footer') ?>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <?= $this->include('imports/scripts/basic_scripts') ?>
+
+  <!-- Extra scripts -->
+  <?= $this->renderSection('scripts') ?>
+</body>
+
+</html>

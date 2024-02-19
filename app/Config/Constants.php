@@ -120,6 +120,28 @@ defined('BOOK_COVER_URI') || define('BOOK_COVER_URI', 'uploads' . DIRECTORY_SEPA
  */
 defined('DEFAULT_BOOK_COVER') || define('DEFAULT_BOOK_COVER', 'default.jpg');
 
+
+/**
+ * book cover path
+ * `public/uploads/book_cover/`
+ */
+defined('USER_PROFILE_PATH') || define('USER_PROFILE_PATH', UPLOADS_PATH . 'user_profile' . DIRECTORY_SEPARATOR);
+
+/**
+ * book cover uri
+ * 
+ * used in `<img src="">`
+ * 
+ * `uploads/book_cover/`
+ */
+defined('USER_PROFILE_URI') || define('USER_PROFILE_URI', 'uploads' . DIRECTORY_SEPARATOR . 'user_profile' . DIRECTORY_SEPARATOR);
+
+/**
+ * Default book cover filename
+ * `default.jpg`
+ */
+defined('DEFAULT_USER_COVER') || define('DEFAULT_USER_COVER', 'default_user.jpg');
+
 /**
  * QR codes path
  * `public/uploads/qr_codes/`
