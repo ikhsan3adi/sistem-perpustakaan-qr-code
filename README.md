@@ -1,6 +1,6 @@
 # BukuHub - Sistem Perpustakaan QR Code
 
-[![PHP Composer](https://github.com/ikhsan3adi/sistem-perpustakaan-qr-code/actions/workflows/php.yml/badge.svg)](https://github.com/ikhsan3adi/sistem-perpustakaan-qr-code/actions/workflows/php.yml)
+[![Continuous Integration](https://github.com/ikhsan3adi/sistem-perpustakaan-qr-code/actions/workflows/ci.yml/badge.svg)](https://github.com/ikhsan3adi/sistem-perpustakaan-qr-code/actions/workflows/ci.yml)
 
 ![Preview](https://github.com/ikhsan3adi/sistem-perpustakaan-qr-code/raw/main/screenshots/home.png)
 
