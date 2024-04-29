@@ -2,14 +2,16 @@
 
 namespace Config;
 
-use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Filters\CSRF;
 use CodeIgniter\Filters\DebugToolbar;
 use CodeIgniter\Filters\Honeypot;
 use CodeIgniter\Filters\InvalidChars;
 use CodeIgniter\Filters\SecureHeaders;
+use CodeIgniter\Filters\ForceHTTPS;
+use CodeIgniter\Filters\PageCache;
+use CodeIgniter\Filters\PerformanceMetrics;
 
-class Filters extends BaseConfig
+class Filters extends \CodeIgniter\Config\Filters
 {
     /**
      * Configures aliases for Filter classes to
@@ -21,6 +23,9 @@ class Filters extends BaseConfig
         'honeypot'      => Honeypot::class,
         'invalidchars'  => InvalidChars::class,
         'secureheaders' => SecureHeaders::class,
+        'forcehttps'    => ForceHTTPS::class,
+        'pagecache'     => PageCache::class,
+        'performance'   => PerformanceMetrics::class,
     ];
 
     /**
@@ -32,11 +37,15 @@ class Filters extends BaseConfig
             // 'honeypot',
             // 'csrf',
             // 'invalidchars',
+            'forcehttps', // Force Global Secure Requests
+            'pagecache',  // Web Page Caching
         ],
         'after' => [
-            'toolbar',
             // 'honeypot',
             // 'secureheaders',
+            'pagecache',   // Web Page Caching
+            'performance', // Performance Metrics
+            'toolbar',     // Debug Toolbar
         ],
     ];
 
