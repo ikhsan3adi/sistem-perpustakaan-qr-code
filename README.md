@@ -35,7 +35,7 @@
 ### Instalasi
 
 - Unduh dan impor kode proyek ini ke dalam direktori proyek anda (htdocs).
-- Penting ⚠️. Ubah nama file `.env.example` menjadi `.env`
+- Penting ⚠️. Jika belum memiliki file `.env`, salin/rename file `.env.example` menjadi `.env`
 - (Opsional) Konfigurasi file `.env` untuk mengatur parameter seperti koneksi database dan pengaturan lainnya sesuai dengan lingkungan pengembangan Anda.
 - Ubah denda per hari di file `.env`
 
