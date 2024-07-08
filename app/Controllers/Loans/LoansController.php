@@ -237,7 +237,7 @@ class LoansController extends ResourceController
      */
     public function new($validation = null, $oldInput = null)
     {
-        if ($this->request->getMethod() !== 'post') {
+        if ($this->request->getMethod() !== 'POST') {
             return redirect()->to('admin/loans/new/members/search');
         }
 
