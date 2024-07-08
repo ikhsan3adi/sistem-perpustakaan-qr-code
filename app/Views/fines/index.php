@@ -27,6 +27,13 @@ if (session()->getFlashdata('msg')) : ?>
       <div class="col-12 col-lg-7">
         <div class="d-flex gap-2 justify-content-md-end">
           <div>
+            <?php if (auth()->user()->inGroup('superadmin')) : ?>
+              <a href=" <?= base_url('admin/fines/settings'); ?>" class="btn btn-outline-danger text-nowrap">
+                Pengaturan Denda
+              </a>
+            <?php endif; ?>
+          </div>
+          <div>
             <form action="" method="get">
               <input type="hidden" name="paid-off" value="<?= $paidOffFilter ? 'true' : 'false'; ?>">
               <div class="input-group mb-3">
