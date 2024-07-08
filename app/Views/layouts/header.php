@@ -18,23 +18,23 @@
     <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
       <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end gap-2" id="headerCollapse">
         <li class="nav-item" id="navBtn">
-          <a href=" <?= base_url('admin/loans/new/members/search'); ?>" target="_blank" class="btn btn-primary">
+          <a href=" <?= base_url('admin/loans/new/members/search'); ?>" target="_blank" class="btn btn-primary text-nowrap">
             Ajukan peminjaman
           </a>
         </li>
         <li class="nav-item" id="navBtn">
-          <a href="<?= base_url('admin/returns/new/search'); ?>" class="btn btn-outline-primary">
+          <a href="<?= base_url('admin/returns/new/search'); ?>" class="btn btn-outline-primary text-nowrap">
             Pengembalian buku
           </a>
         </li>
         <li class="nav-item" id="navBtn">
-          <a href="<?= base_url('admin/fines/returns/search'); ?>" class="btn btn-outline-warning">
+          <a href="<?= base_url('admin/fines/returns/search'); ?>" class="btn btn-outline-warning text-nowrap">
             Bayar denda
           </a>
         </li>
         <?php if (auth()->user()->inGroup('superadmin')) : ?>
           <li class="nav-item" id="navBtn">
-            <a href=" <?= base_url('admin/fines/settings'); ?>" class="btn btn-outline-danger">
+            <a href=" <?= base_url('admin/fines/settings'); ?>" class="btn btn-outline-danger text-nowrap">
               Pengaturan Denda
             </a>
           </li>
