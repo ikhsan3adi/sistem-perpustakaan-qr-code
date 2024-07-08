@@ -43,85 +43,87 @@ if (session()->getFlashdata('msg')) : ?>
         </div>
       </div>
     </div>
-    <table class="table table-hover table-striped">
-      <thead class="table-light">
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">Nama peminjam</th>
-          <th scope="col">Judul buku</th>
-          <th scope="col" class="text-center">Jumlah</th>
-          <th scope="col">Tgl pinjam</th>
-          <th scope="col">Tenggat</th>
-          <th scope="col">Tgl pengembalian</th>
-          <th scope="col" class="text-center">Status</th>
-          <th scope="col" class="text-center">Aksi</th>
-        </tr>
-      </thead>
-      <tbody class="table-group-divider">
-        <?php
-        $i = 1 + ($itemPerPage * ($currentPage - 1));
-
-        $now = Time::now(locale: 'id');
-        ?>
-        <?php if (empty($loans)) : ?>
+    <div class="overflow-x-scroll">
+      <table class="table table-hover table-striped">
+        <thead class="table-light">
           <tr>
-            <td class="text-center" colspan="9"><b>Tidak ada data</b></td>
+            <th scope="col">#</th>
+            <th scope="col">Nama peminjam</th>
+            <th scope="col">Judul buku</th>
+            <th scope="col" class="text-center">Jumlah</th>
+            <th scope="col">Tgl pinjam</th>
+            <th scope="col">Tenggat</th>
+            <th scope="col">Tgl pengembalian</th>
+            <th scope="col" class="text-center">Status</th>
+            <th scope="col" class="text-center">Aksi</th>
           </tr>
-        <?php endif; ?>
-        <?php
-        foreach ($loans as $key => $loan) :
-          $loanCreateDate = Time::parse($loan['loan_date'], locale: 'id');
-          $loanDueDate = Time::parse($loan['due_date'], locale: 'id');
-          $loanReturnDate = Time::parse($loan['return_date'], locale: 'id');
+        </thead>
+        <tbody class="table-group-divider">
+          <?php
+          $i = 1 + ($itemPerPage * ($currentPage - 1));
 
-          $isFined = $loan['fine_id'] != null;
-          $isFinePaid = $isFined ? (($loan['amount_paid'] ?? 0) >= $loan['fine_amount']) : true;
+          $now = Time::now(locale: 'id');
+          ?>
+          <?php if (empty($loans)) : ?>
+            <tr>
+              <td class="text-center" colspan="9"><b>Tidak ada data</b></td>
+            </tr>
+          <?php endif; ?>
+          <?php
+          foreach ($loans as $key => $loan) :
+            $loanCreateDate = Time::parse($loan['loan_date'], locale: 'id');
+            $loanDueDate = Time::parse($loan['due_date'], locale: 'id');
+            $loanReturnDate = Time::parse($loan['return_date'], locale: 'id');
 
-          $isLate = $now->isAfter($loanDueDate);
-        ?>
-          <tr>
-            <th scope="row"><?= $i++; ?></th>
-            <td>
-              <a href="<?= base_url("admin/members/{$loan['member_uid']}"); ?>" class="text-primary-emphasis text-decoration-underline">
-                <p>
-                  <b><?= "{$loan['first_name']} {$loan['last_name']}"; ?></b>
-                </p>
-              </a>
-            </td>
-            <td>
-              <a href="<?= base_url("admin/books/{$loan['slug']}"); ?>">
-                <p class="text-primary-emphasis text-decoration-underline"><b><?= "{$loan['title']} ({$loan['year']})"; ?></b></p>
-                <p class="text-body"><?= "Author: {$loan['author']}"; ?></p>
-              </a>
-            </td>
-            <td class="text-center"><?= $loan['quantity']; ?></td>
-            <td>
-              <b><?= $loanCreateDate->toLocalizedString('dd/MM/y'); ?></b><br>
-              <b><?= $loanCreateDate->toLocalizedString('HH:mm:ss'); ?></b>
-            </td>
-            <td>
-              <b><?= $loanDueDate->toLocalizedString('dd/MM/y'); ?></b>
-            </td>
-            <td class="<?= $isLate ? 'text-danger-emphasis' : ''; ?>">
-              <b><?= $loanReturnDate->toLocalizedString('dd/MM/y'); ?></b><br>
-              <b><?= $loanReturnDate->toLocalizedString('HH:mm:ss'); ?></b>
-            </td>
-            <td class="text-center">
-              <?php if ($isFinePaid) : ?>
-                <span class="badge bg-success rounded-3 fw-semibold"><?= $isFined ? 'Lunas' : 'Selesai'; ?></span>
-              <?php else : ?>
-                <span class="badge bg-danger rounded-3 fw-semibold">Menunggak</span>
-              <?php endif; ?>
-            </td>
-            <td>
-              <a href="<?= base_url("admin/returns/{$loan['uid']}"); ?>" class="d-block btn btn-primary w-100 mb-2">
-                Detail
-              </a>
-            </td>
-          </tr>
-        <?php endforeach; ?>
-      </tbody>
-    </table>
+            $isFined = $loan['fine_id'] != null;
+            $isFinePaid = $isFined ? (($loan['amount_paid'] ?? 0) >= $loan['fine_amount']) : true;
+
+            $isLate = $now->isAfter($loanDueDate);
+          ?>
+            <tr>
+              <th scope="row"><?= $i++; ?></th>
+              <td>
+                <a href="<?= base_url("admin/members/{$loan['member_uid']}"); ?>" class="text-primary-emphasis text-decoration-underline">
+                  <p>
+                    <b><?= "{$loan['first_name']} {$loan['last_name']}"; ?></b>
+                  </p>
+                </a>
+              </td>
+              <td>
+                <a href="<?= base_url("admin/books/{$loan['slug']}"); ?>">
+                  <p class="text-primary-emphasis text-decoration-underline"><b><?= "{$loan['title']} ({$loan['year']})"; ?></b></p>
+                  <p class="text-body"><?= "Author: {$loan['author']}"; ?></p>
+                </a>
+              </td>
+              <td class="text-center"><?= $loan['quantity']; ?></td>
+              <td>
+                <b><?= $loanCreateDate->toLocalizedString('dd/MM/y'); ?></b><br>
+                <b><?= $loanCreateDate->toLocalizedString('HH:mm:ss'); ?></b>
+              </td>
+              <td>
+                <b><?= $loanDueDate->toLocalizedString('dd/MM/y'); ?></b>
+              </td>
+              <td class="<?= $isLate ? 'text-danger-emphasis' : ''; ?>">
+                <b><?= $loanReturnDate->toLocalizedString('dd/MM/y'); ?></b><br>
+                <b><?= $loanReturnDate->toLocalizedString('HH:mm:ss'); ?></b>
+              </td>
+              <td class="text-center">
+                <?php if ($isFinePaid) : ?>
+                  <span class="badge bg-success rounded-3 fw-semibold"><?= $isFined ? 'Lunas' : 'Selesai'; ?></span>
+                <?php else : ?>
+                  <span class="badge bg-danger rounded-3 fw-semibold">Menunggak</span>
+                <?php endif; ?>
+              </td>
+              <td>
+                <a href="<?= base_url("admin/returns/{$loan['uid']}"); ?>" class="d-block btn btn-primary w-100 mb-2">
+                  Detail
+                </a>
+              </td>
+            </tr>
+          <?php endforeach; ?>
+        </tbody>
+      </table>
+    </div>
     <?= $pager->links('returns', 'my_pager'); ?>
   </div>
 </div>
