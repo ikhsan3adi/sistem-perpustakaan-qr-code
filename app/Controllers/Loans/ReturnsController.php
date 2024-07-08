@@ -5,6 +5,7 @@ namespace App\Controllers\Loans;
 use App\Libraries\QRGenerator;
 use App\Models\BookModel;
 use App\Models\FineModel;
+use App\Models\FinesPerDayModel;
 use App\Models\LoanModel;
 use App\Models\MemberModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
@@ -232,7 +233,7 @@ class ReturnsController extends ResourceController
                 return redirect()->to('admin/returns/new?loan-uid=' . $loan['uid']);
             }
 
-            $finePerDay = intval(getenv('amountFinesPerDay'));
+            $finePerDay = FinesPerDayModel::getAmount();
             $daysLate = $date->today()->difference($loanDueDate)->getDays();
             $totalFine = abs($daysLate) * $loan['quantity'] * $finePerDay;
 

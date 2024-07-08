@@ -39,13 +39,6 @@
 - Unduh dan impor kode proyek ini ke dalam direktori proyek anda (htdocs).
 - Penting ⚠️. Jika belum memiliki file `.env`, salin/rename file `.env.example` menjadi `.env`
 - (Opsional) Konfigurasi file `.env` untuk mengatur parameter seperti koneksi database dan pengaturan lainnya sesuai dengan lingkungan pengembangan Anda.
-- Ubah denda per hari di file `.env`
-
-```
-# in rupiah
-amountFinesPerDay = 1000
-```
-
 - Penting ⚠️. Install dependencies yang diperlukan dengan cara menjalankan perintah berikut di terminal:
 
 ```shell
