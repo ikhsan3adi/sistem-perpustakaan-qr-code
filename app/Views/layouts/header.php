@@ -18,14 +18,27 @@
     <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
       <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end gap-2" id="headerCollapse">
         <li class="nav-item" id="navBtn">
-          <a href=" <?= base_url('admin/loans/new/members/search'); ?>" target="_blank" class="btn btn-primary">Ajukan peminjaman</a>
+          <a href=" <?= base_url('admin/loans/new/members/search'); ?>" target="_blank" class="btn btn-primary">
+            Ajukan peminjaman
+          </a>
         </li>
         <li class="nav-item" id="navBtn">
-          <a href="<?= base_url('admin/returns/new/search'); ?>" target="_blank" class="btn btn-outline-primary">Pengembalian buku</a>
+          <a href="<?= base_url('admin/returns/new/search'); ?>" class="btn btn-outline-primary">
+            Pengembalian buku
+          </a>
         </li>
         <li class="nav-item" id="navBtn">
-          <a href="<?= base_url('admin/fines/returns/search'); ?>" target="_blank" class="btn btn-outline-warning">Bayar denda</a>
+          <a href="<?= base_url('admin/fines/returns/search'); ?>" class="btn btn-outline-warning">
+            Bayar denda
+          </a>
         </li>
+        <?php if (auth()->user()->inGroup('superadmin')) : ?>
+          <li class="nav-item" id="navBtn">
+            <a href=" <?= base_url('admin/fines/settings'); ?>" class="btn btn-outline-danger">
+              Pengaturan Denda
+            </a>
+          </li>
+        <?php endif; ?>
         <li class="nav-item dropdown">
           <a class="nav-link nav-icon-hover position-relative" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown" aria-expanded="false">
             <img alt="" width="35" height="35" class="rounded-circle border border-primary" style="background-color: white;">

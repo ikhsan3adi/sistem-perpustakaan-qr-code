@@ -55,6 +55,7 @@ $routes->group('admin', ['filter' => 'session'], static function (RouteCollectio
 
     $routes->get('fines/returns/search', 'Loans\FinesController::searchReturn');
     $routes->get('fines/pay/(:any)', 'Loans\FinesController::pay/$1');
+    $routes->resource('fines/settings', ['controller' => 'Loans\FineSettingsController', 'filter' => 'group:superadmin']);
     $routes->resource('fines', ['controller' => 'Loans\FinesController']);
 
     $routes->group('users', ['filter' => 'group:superadmin'], static function (RouteCollection $routes) {

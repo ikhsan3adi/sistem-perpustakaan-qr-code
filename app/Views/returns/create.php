@@ -7,6 +7,7 @@
 <?= $this->section('content') ?>
 <?php
 
+use App\Models\FinesPerDayModel;
 use CodeIgniter\I18n\Time;
 
 $now = Time::now(locale: 'id');
@@ -100,7 +101,7 @@ $daysLate = $now->today()->difference($loanDueDate)->getDays();
           </div>
         </div>
         <?php if ($isLate) :
-          $finePerDay = intval(getenv('amountFinesPerDay'));
+          $finePerDay = FinesPerDayModel::getAmount();
           $totalFine = abs($daysLate)  * $loan['quantity'] * $finePerDay;
         ?>
           <h5 class="card-title fw-semibold my-3">Denda</h5>
