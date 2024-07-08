@@ -2,7 +2,9 @@
 
 namespace App\Database\Seeds;
 
+use App\Models\LoanModel;
 use CodeIgniter\Database\Seeder;
+use CodeIgniter\I18n\Time;
 
 class FineSeeder extends Seeder
 {
@@ -19,7 +21,9 @@ class FineSeeder extends Seeder
                 'loan_id'       => 4,
                 'amount_paid'   => 15000,
                 'fine_amount'   => 15000,
-                'paid_at'       => '2023-08-24 09:00:00'
+                'paid_at'       => Time::parse((new LoanModel)->find(4)['return_date'])
+                    ->addDays(rand(0, 30))
+                    ->toDateTimeString()
             ],
         ];
 
