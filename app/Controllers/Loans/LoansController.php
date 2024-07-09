@@ -7,6 +7,7 @@ use App\Models\BookModel;
 use App\Models\LoanModel;
 use App\Models\MemberModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
+use CodeIgniter\HTTP\Method;
 use CodeIgniter\I18n\Time;
 use CodeIgniter\RESTful\ResourceController;
 
@@ -237,7 +238,7 @@ class LoansController extends ResourceController
      */
     public function new($validation = null, $oldInput = null)
     {
-        if ($this->request->getMethod() !== 'POST') {
+        if ($this->request->getMethod() !== Method::POST) {
             return redirect()->to('admin/loans/new/members/search');
         }
 
